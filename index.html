@@ -1040,31 +1040,54 @@ function setSpeed(s){
 function speakWord(i,btn){
   if(!currentWords[i])return;
   const text=currentWords[i].en;
-  // 日本語が含まれていれば読まない（文法の日本語答えは音声不要）
-  const hasJapanese=/[　-鿿＀-￯]/.test(text);
-  if(hasJapanese)return;
-  speak(text,btn);
-}
-function speakWord(i,btn){
-  if(currentWords[i]) speak(currentWords[i].en, btn);
+  const hasJP=/[぀-鿿]/.test(text);
+  if(hasJP)return;
+  speakEnglish(text,btn);
 }
 
-function speak(text,btn){
+function speakEnglish(text,btn){
   if(!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('playing'));
-  setTimeout(function(){
+
+  function doSpeak(voice){
     const u=new SpeechSynthesisUtterance(text);
     u.lang='en-US';
     u.rate=speed;
     u.volume=1.0;
     u.pitch=1.0;
+    if(voice) u.voice=voice;
     if(btn){
       btn.classList.add('playing');
       u.onend=function(){btn.classList.remove('playing');};
     }
     window.speechSynthesis.speak(u);
-  },200);
+  }
+
+  const voices=window.speechSynthesis.getVoices();
+  const enVoice=voices.find(v=>v.lang==='en-US')||voices.find(v=>v.lang.startsWith('en'));
+  if(enVoice){
+    doSpeak(enVoice);
+  } else {
+    window.speechSynthesis.onvoiceschanged=function(){
+      const v2=window.speechSynthesis.getVoices();
+      const en=v2.find(v=>v.lang==='en-US')||v2.find(v=>v.lang.startsWith('en'));
+      doSpeak(en||null);
+      window.speechSynthesis.onvoiceschanged=null;
+    };
+    // Chrome用：少し待ってから再試行
+    setTimeout(function(){
+      const v3=window.speechSynthesis.getVoices();
+      const en=v3.find(v=>v.lang==='en-US')||v3.find(v=>v.lang.startsWith('en'));
+      if(en) doSpeak(en);
+    },300);
+  }
+}
+
+function speak(text,btn){
+  const hasJP=/[぀-鿿]/.test(text);
+  if(hasJP)return;
+  speakEnglish(text,btn);
 }
 
 function speakAll(){
@@ -1078,15 +1101,12 @@ function speakNext(){
   if(allIdx>=filtered.length){allIdx=-1;return;}
   const wi=filtered[allIdx];
   const text=currentWords[wi].en;
-  const hasJapanese=/[　-鿿＀-￯]/.test(text);
+  const hasJP=/[぀-鿿]/.test(text);
+  if(hasJP){allIdx++;speakNext();return;}
   const btn=document.querySelector('[data-wi="'+wi+'"]');
-  if(!hasJapanese){
-    speak(text,btn);
-    const dur=(text.split(' ').length*700/speed)+600;
-    allTimer=setTimeout(()=>{allIdx++;speakNext();},dur);
-  } else {
-    allIdx++;speakNext();
-  }
+  speakEnglish(text,btn);
+  const dur=(text.split(' ').length*700/speed)+800;
+  allTimer=setTimeout(()=>{allIdx++;speakNext();},dur);
 }
 
 function stopAll(){
