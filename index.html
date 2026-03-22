@@ -962,38 +962,8 @@ function retryMissed(){
   currentWords=missedIndices.map(i=>saved[i]);
   filtered=currentWords.map((_,j)=>j);
   missedIndices=[];
-  const tb=document.getElementById('wordTable');
-  if(!tb)return;
-  tb.innerHTML='';
   const isGrammar=document.getElementById('unitHeader').textContent.includes('文法');
-  currentWords.forEach((w,i)=>{
-    const tr=document.createElement('tr');
-    tr.id='row-'+i;
-    tr.className=i%2===0?'row-even':'row-odd';
-    const safeEn=w.en.replace(/'/g,"\'");
-    if(isGrammar){
-      tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speak(''+safeEn+'',this)">🔊</button></td>'
-        +'<td style="font-size:13px;color:#333;">'+w.ja+'</td>'
-        +'<td class="ans-cell">'
-        +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-weight:600;font-size:13px;color:#1D9E75;display:inline-block;">'+w.en+'</span>'
-        +' <button id="abtn-'+i+'" class="toggle-ans-btn" onclick="toggleAns('+i+')">見る</button>'
-        +'</td>'
-        +'<td><button class="check-btn ok-btn" onclick="markOk('+i+')">✅</button>'
-        +'<button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
-    } else {
-      tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speak(''+safeEn+'',this)">🔊</button></td>'
-        +'<td><span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+w.kana+'</span><div class="tip">'+w.tip+'</div></td>'
-        +'<td>'
-        +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-size:12px;color:#555;display:inline-block;">'+w.ja+'</span>'
-        +' <button id="abtn-'+i+'" class="toggle-ans-btn" onclick="toggleAns('+i+')">見る</button>'
-        +'</td>'
-        +'<td><button class="check-btn ok-btn" onclick="markOk('+i+')">✅</button>'
-        +'<button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
-    }
-    tb.appendChild(tr);
-  });
+  renderRows(isGrammar);
   updateScore();
   const sb=document.getElementById('scoreBadge');
   if(sb) sb.textContent='🔁 ミス問題のみ '+currentWords.length+'問';
@@ -1063,10 +1033,9 @@ function renderRows(isGrammar){
     const tr=document.createElement('tr');
     tr.id='row-'+i;
     tr.className=i%2===0?'row-even':'row-odd';
-    const safeEn=w.en.replace(/'/g,"\'");
     if(isGrammar){
       tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speak(''+safeEn+'',this)">🔊</button></td>'
+        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
         +'<td style="font-size:13px;color:#333;">'+w.ja+'</td>'
         +'<td class="ans-cell">'
         +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-weight:600;font-size:13px;color:#1D9E75;display:inline-block;">'+w.en+'</span>'
@@ -1076,7 +1045,7 @@ function renderRows(isGrammar){
         +'<button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
     } else {
       tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speak(''+safeEn+'',this)">🔊</button></td>'
+        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
         +'<td><span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+w.kana+'</span><div class="tip">'+w.tip+'</div></td>'
         +'<td>'
         +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-size:12px;color:#555;display:inline-block;">'+w.ja+'</span>'
@@ -1122,6 +1091,9 @@ function setSpeed(s){
   if(nb)nb.classList.toggle('active',s===1.0);
 }
 
+function speakWord(i,btn){
+  if(currentWords[i]) speak(currentWords[i].en, btn);
+}
 function speak(text,btn){
   if(!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
