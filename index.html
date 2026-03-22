@@ -7,17 +7,9 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:2px solid #1D9E75;margin-bottom:12px;}
-  .header-title{
-    font-size:26px !important;
-    font-weight:900 !important;
-    color:#1D9E75 !important;
-    letter-spacing:2px !important;
-    line-height:1.3 !important;
-    -webkit-text-stroke:2px white !important;
-    paint-order:stroke fill !important;
-  }
-  .header-school{font-size:14px;font-weight:700;color:#1D9E75;}
+  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}/* updated:2026-03-22 07:00:14 */
+    .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
+  .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
@@ -87,7 +79,7 @@
 
 <div class="header">
   <div class="header-title">📚 中学英単語&amp;文法演習システム</div>
-  <div class="header-school" style="color:#1D9E75;">志学ゼミナール</div>
+  <div class="header-school">志学ゼミナール</div>
 </div>
 
 <div class="grade-tabs">
@@ -989,7 +981,7 @@ function renderRows(isGrammar){
          +'<div style="font-size:13px;color:#333;font-weight:500;">'+w.ja+'</div>'
         :'<div style="font-size:13px;color:#333;">'+w.ja+'</div>';
       tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
+        +((/[぀-鿿]/.test(w.en))?'<td></td>':'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>')
         +'<td>'+typeTag+questionHtml+'</td>'
         +'<td class="ans-cell">'
         +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-weight:600;font-size:13px;color:#1D9E75;display:inline-block;">'+w.en+'</span>'
@@ -999,7 +991,7 @@ function renderRows(isGrammar){
         +'<button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
     } else {
       tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
-        +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
+        +((/[぀-鿿]/.test(w.en))?'<td></td>':'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>')
         +'<td><span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+w.kana+'</span><div class="tip">'+w.tip+'</div></td>'
         +'<td>'
         +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-size:12px;color:#555;display:inline-block;">'+w.ja+'</span>'
@@ -1085,10 +1077,16 @@ function speakAll(){
 function speakNext(){
   if(allIdx>=filtered.length){allIdx=-1;return;}
   const wi=filtered[allIdx];
+  const text=currentWords[wi].en;
+  const hasJapanese=/[　-鿿＀-￯]/.test(text);
   const btn=document.querySelector('[data-wi="'+wi+'"]');
-  speak(currentWords[wi].en,btn);
-  const dur=(currentWords[wi].en.split(' ').length*700/speed)+600;
-  allTimer=setTimeout(()=>{allIdx++;speakNext();},dur);
+  if(!hasJapanese){
+    speak(text,btn);
+    const dur=(text.split(' ').length*700/speed)+600;
+    allTimer=setTimeout(()=>{allIdx++;speakNext();},dur);
+  } else {
+    allIdx++;speakNext();
+  }
 }
 
 function stopAll(){
