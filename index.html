@@ -1014,7 +1014,7 @@ function openUnit(g,i){
       <button class="all-ans-btn" onclick="resetCheck()">リセット</button>
     </div>
     <input class="search-box" id="searchBox" placeholder="${searchLabel}" oninput="filterTable()">
-    ${isGrammar?'':'<div class="legend"><span>赤下線</span>＝アクセント位置</div>'}
+    ${isGrammar?``:`<div class="legend"><span>赤下線</span>＝アクセント位置</div>`}
     <table>
       <thead>${thead}</thead>
       <tbody id="wordTable"></tbody>
