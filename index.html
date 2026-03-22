@@ -1050,12 +1050,12 @@ function speakEnglish(text, btn) {
   window.speechSynthesis.cancel();
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('playing'));
 
-  function doSpeak(voice) {
-    // 既に呼ばれていたら無視（二重呼び出し防止）
-    if (doSpeak.called) return;
-    doSpeak.called = true;
+  var spoken = false;
 
-    const u = new SpeechSynthesisUtterance(text);
+  function doSpeak(voice) {
+    if (spoken) return;
+    spoken = true;
+    var u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';
     u.rate = speed;
     u.volume = 1.0;
@@ -1063,39 +1063,34 @@ function speakEnglish(text, btn) {
     if (voice) u.voice = voice;
     if (btn) {
       btn.classList.add('playing');
-      u.onend = function () { btn.classList.remove('playing'); };
+      u.onend = function() { btn.classList.remove('playing'); };
     }
-    // cancel後すぐspeakすると失敗するので少し待つ
-    setTimeout(() => window.speechSynthesis.speak(u), 100);
+    setTimeout(function() { window.speechSynthesis.speak(u); }, 100);
   }
-  doSpeak.called = false;
 
-  const voices = window.speechSynthesis.getVoices();
-  const enVoice = voices.find(v => v.name === 'Google US English')
-    || voices.find(v => v.lang === 'en-US' && v.localService)
-    || voices.find(v => v.lang === 'en-US')
-    || voices.find(v => v.lang.startsWith('en'));
+  var voices = window.speechSynthesis.getVoices();
+  var enVoice = voices.find(function(v){ return v.name === 'Google US English'; })
+    || voices.find(function(v){ return v.lang === 'en-US'; })
+    || voices.find(function(v){ return v.lang.startsWith('en'); });
 
   if (enVoice) {
     doSpeak(enVoice);
   } else {
-    // voiceschanged で1回だけ実行
     window.speechSynthesis.addEventListener('voiceschanged', function handler() {
       window.speechSynthesis.removeEventListener('voiceschanged', handler);
-      const v2 = window.speechSynthesis.getVoices();
-      const en = v2.find(v => v.name === 'Google US English')
-        || v2.find(v => v.lang === 'en-US')
-        || v2.find(v => v.lang.startsWith('en'));
+      var v2 = window.speechSynthesis.getVoices();
+      var en = v2.find(function(v){ return v.name === 'Google US English'; })
+        || v2.find(function(v){ return v.lang === 'en-US'; })
+        || v2.find(function(v){ return v.lang.startsWith('en'); });
       doSpeak(en || null);
     });
-  }
-}
-    // Chrome用：少し待ってから再試行
-    setTimeout(function(){
-      const v3=window.speechSynthesis.getVoices();
-      const en=v3.find(v=>v.lang==='en-US')||v3.find(v=>v.lang.startsWith('en'));
-      if(en) doSpeak(en);
-    },300);
+    // voiceschangedが発火しないブラウザ対策
+    setTimeout(function() {
+      var v3 = window.speechSynthesis.getVoices();
+      var en = v3.find(function(v){ return v.lang === 'en-US'; })
+        || v3.find(function(v){ return v.lang.startsWith('en'); });
+      doSpeak(en || null);
+    }, 500);
   }
 }
 
