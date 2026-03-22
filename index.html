@@ -1095,20 +1095,33 @@ function setSpeed(s){
 function speakWord(i,btn){
   if(currentWords[i]) speak(currentWords[i].en, btn);
 }
+let cachedEnVoice=null;
+
+function getEnVoice(cb){
+  const voices=window.speechSynthesis.getVoices();
+  const v=voices.find(v=>v.lang==='en-US')||voices.find(v=>v.lang.startsWith('en-'));
+  if(v){cb(v);return;}
+  // ChromeとFirefoxは非同期で音声リストが届く
+  window.speechSynthesis.onvoiceschanged=()=>{
+    const voices2=window.speechSynthesis.getVoices();
+    const v2=voices2.find(v=>v.lang==='en-US')||voices2.find(v=>v.lang.startsWith('en-'));
+    cb(v2||null);
+  };
+}
+
 function speak(text,btn){
   if(!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('playing'));
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-US';
-  u.rate=speed;
-  u.pitch=1.0;
-  // 英語の音声を明示的に選択
-  const voices=window.speechSynthesis.getVoices();
-  const enVoice=voices.find(v=>v.lang.startsWith('en'));
-  if(enVoice) u.voice=enVoice;
-  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
-  window.speechSynthesis.speak(u);
+  getEnVoice(function(enVoice){
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';
+    u.rate=speed;
+    u.pitch=1.0;
+    if(enVoice) u.voice=enVoice;
+    if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+    window.speechSynthesis.speak(u);
+  });
 }
 
 function speakAll(){
