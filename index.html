@@ -9,11 +9,13 @@
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
   .header{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:2px solid #1D9E75;margin-bottom:12px;}
   .header-title{
-    font-size:24px;font-weight:900;color:#1D9E75;
-    letter-spacing:1px;line-height:1.3;
-    -webkit-text-stroke:3px #fff;
-    paint-order:stroke fill;
-    text-shadow:0 2px 8px rgba(0,0,0,0.10);
+    font-size:26px !important;
+    font-weight:900 !important;
+    color:#1D9E75 !important;
+    letter-spacing:2px !important;
+    line-height:1.3 !important;
+    -webkit-text-stroke:2px white !important;
+    paint-order:stroke fill !important;
   }
   .header-school{font-size:14px;font-weight:700;color:#1D9E75;}
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
@@ -1044,7 +1046,12 @@ function setSpeed(s){
 }
 
 function speakWord(i,btn){
-  if(currentWords[i]) speak(currentWords[i].en, btn);
+  if(!currentWords[i])return;
+  const text=currentWords[i].en;
+  // 日本語が含まれていれば読まない（文法の日本語答えは音声不要）
+  const hasJapanese=/[　-鿿＀-￯]/.test(text);
+  if(hasJapanese)return;
+  speak(text,btn);
 }
 function speakWord(i,btn){
   if(currentWords[i]) speak(currentWords[i].en, btn);
@@ -1058,11 +1065,14 @@ function speak(text,btn){
     const u=new SpeechSynthesisUtterance(text);
     u.lang='en-US';
     u.rate=speed;
-    u.volume=1;
-    u.pitch=1;
-    if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+    u.volume=1.0;
+    u.pitch=1.0;
+    if(btn){
+      btn.classList.add('playing');
+      u.onend=function(){btn.classList.remove('playing');};
+    }
     window.speechSynthesis.speak(u);
-  },100);
+  },200);
 }
 
 function speakAll(){
