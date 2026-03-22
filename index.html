@@ -84,7 +84,7 @@
 <body>
 
 <div class="header">
-  <div class="header-title" style="color:#1D9E75;">📚 中学英単語&amp;文法演習システム</div>
+  <div class="header-title">📚 中学英単語&amp;文法演習システム</div>
   <div class="header-school" style="color:#1D9E75;">志学ゼミナール</div>
 </div>
 
@@ -1054,11 +1054,15 @@ function speak(text,btn){
   if(!window.speechSynthesis)return;
   window.speechSynthesis.cancel();
   document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('playing'));
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-US';
-  u.rate=speed;
-  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
-  window.speechSynthesis.speak(u);
+  setTimeout(function(){
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';
+    u.rate=speed;
+    u.volume=1;
+    u.pitch=1;
+    if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+    window.speechSynthesis.speak(u);
+  },100);
 }
 
 function speakAll(){
