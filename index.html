@@ -73,6 +73,28 @@
   .all-ans-btn{background:#fff;border:1px solid #1D9E75;border-radius:7px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500;color:#1D9E75;}
   .all-ans-btn:hover{background:#f0faf5;}
   #noResult{display:none;text-align:center;padding:16px;font-size:13px;color:#888;}
+
+/* --- 追加する「完全マスター」タブ用の目立つスタイル --- */
+.grade-btn.special-tab {
+    background-color: #ffffff; /* 背景色をホワイトに */
+    border-color: #1D9E75;     /* 枠線をグリーンに */
+    color: #1D9E75;            /* 文字色をグリーンに */
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 18px;
+    position: relative;
+    top: 0.5px;
+  }
+  
+  /* マウスを乗せた時の色（背景グリーン・文字白に反転してクリックできることを強調） */
+  .grade-btn.special-tab:hover {
+    background-color: #1D9E75;
+    color: #ffffff;
+  }
+
+
 </style>
 </head>
 <body>
@@ -86,6 +108,8 @@
   <button class="grade-btn active" onclick="selectGrade('j1',this)">中学1年</button>
   <button class="grade-btn" onclick="selectGrade('j2',this)">中学2年</button>
   <button class="grade-btn" onclick="selectGrade('j3',this)">中学3年</button>
+  
+  <a href="https://shigakusakura-pixel.github.io/grammar/" class="grade-btn special-tab" target="_blank" rel="noopener noreferrer">中学英文法 完全マスター</a>
 </div>
 
 <div id="unitView">
