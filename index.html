@@ -1131,7 +1131,15 @@ function markOk(i){
   tr.classList.add('row-ok');
   missedIndices=missedIndices.filter(x=>x!==i);
   updateScore();
+
+  // 【追加】✅で採点したタイミングでFirebaseに送信
+  if (window.sendLearningRecord) {
+    // 画面に表示されている単元名（unitHeader）を取得して送信します
+    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
+    window.sendLearningRecord(unitName, '問' + (i + 1) + '_正解(OK)');
+  }
 }
+
 function markMiss(i){
   const tr=document.getElementById('row-'+i);
   if(!tr)return;
@@ -1139,7 +1147,14 @@ function markMiss(i){
   tr.classList.add('row-miss');
   if(!missedIndices.includes(i)) missedIndices.push(i);
   updateScore();
+
+  // 【追加】❌で採点したタイミングでFirebaseに送信
+  if (window.sendLearningRecord) {
+    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
+    window.sendLearningRecord(unitName, '問' + (i + 1) + '_ミス(NG)');
+  }
 }
+
 function updateScore(){
   const total=currentWords.length;
   const ok=document.querySelectorAll('tr.row-ok').length;
@@ -1147,6 +1162,7 @@ function updateScore(){
   const sb=document.getElementById('scoreBadge');
   if(sb) sb.textContent='✅ '+ok+' / ❌ '+miss+' / 全'+total+'問';
 }
+
 function retryMissed(){
   if(missedIndices.length===0){alert('ミスした問題がありません！全問正解です🎉');return;}
   const saved=currentWords;
@@ -1383,6 +1399,54 @@ function stopAll(){
 }
 
 showUnitView();
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // ① My スタディ 用のFirebase設定
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQjnlOfeVvWQJHDxGE9cq-jGsYF3uo0PY",
+    authDomain: "mystudy-portal.firebaseapp.com",
+    projectId: "mystudy-portal",
+    storageBucket: "mystudy-portal.firebasestorage.app",
+    messagingSenderId: "62253255474",
+    appId: "1:62253255474:web:817a3cbd1ab3ea63e7e52b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ② URLの「?student=生徒ID」から名札（生徒ID）を取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const studentId = urlParams.get('student') || 'ゲスト';
+
+  // 送信済みの問題を記録するリスト（開閉ごとの重複送信を防ぐため）
+  const sentRecords = new Set();
+
+  // ③ 送信用の処理
+  window.sendLearningRecord = async function(unitId, questionId) {
+    const recordKey = unitId + "-" + questionId;
+
+    // すでに送信済みの問題ならストップ（何もしない）
+    if (sentRecords.has(recordKey)) return;
+    sentRecords.add(recordKey);
+
+    try {
+      await addDoc(collection(db, "learning_records"), {
+        studentId: studentId,
+        subject: "中学英語", // ← 数学から変更しました
+        unit: unitId,
+        questionId: questionId,
+        action: "学習完了", // ← 英単語の学習に合わせて変更可能です
+        timestamp: serverTimestamp()
+      });
+      console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
+    } catch (e) {
+      console.error("記録の送信に失敗しました: ", e);
+    }
+  };
 </script>
 </body>
 </html>
