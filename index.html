@@ -1400,7 +1400,6 @@ function stopAll(){
 
 showUnitView();
 </script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -1422,10 +1421,30 @@ showUnitView();
   const urlParams = new URLSearchParams(window.location.search);
   const studentId = urlParams.get('student') || 'ゲスト';
 
+  // ★修正ポイント1：文法完全マスターへのリンクにも「名札（ID）」をくっつけて引き継ぐ！
+  const grammarLink = document.querySelector('.special-tab');
+  if (grammarLink && studentId !== 'ゲスト') {
+    grammarLink.href = "https://shigakusakura-pixel.github.io/grammar/?student=" + encodeURIComponent(studentId);
+  }
+
+  // ★修正ポイント2：英語アプリを開いた瞬間に「学習スタート」として自動で1回記録する！
+  try {
+    addDoc(collection(db, "learning_records"), {
+      studentId: studentId,
+      subject: "中学英語",
+      unit: "英単語アプリ起動",
+      questionId: "アクセス",
+      action: "学習開始",
+      timestamp: serverTimestamp()
+    });
+  } catch (e) {
+    console.error("アクセス記録のエラー: ", e);
+  }
+
   // 送信済みの問題を記録するリスト（開閉ごとの重複送信を防ぐため）
   const sentRecords = new Set();
 
-  // ③ 送信用の処理
+  // ③ 送信用の処理（✅❌ボタンを押したとき）
   window.sendLearningRecord = async function(unitId, questionId) {
     const recordKey = unitId + "-" + questionId;
 
@@ -1436,10 +1455,10 @@ showUnitView();
     try {
       await addDoc(collection(db, "learning_records"), {
         studentId: studentId,
-        subject: "中学英語", // ← 数学から変更しました
+        subject: "中学英語",
         unit: unitId,
         questionId: questionId,
-        action: "学習完了", // ← 英単語の学習に合わせて変更可能です
+        action: "学習完了",
         timestamp: serverTimestamp()
       });
       console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
