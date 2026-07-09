@@ -119,7 +119,7 @@
 </div>
 
 <div id="wordView">
-  <button class="back-btn" onclick="showUnitView()">← 単元一覧に戻る</button>
+  <button class="back-btn" onclick="finishAndReturn()" style="background:#e8f0fb; border:1px solid #378ADD; padding:8px 12px; border-radius:6px; color:#185FA5; font-weight:bold; margin-bottom:15px; cursor:pointer;">← 学習を記録して単元一覧に戻る</button>
   <div class="unit-header" id="unitHeader"></div>
   <div id="wordContent"></div>
 </div>
@@ -1140,6 +1140,16 @@ function markOk(i){
   }
 }
 
+function markOk(i){
+  const tr=document.getElementById('row-'+i);
+  if(!tr)return;
+  tr.classList.remove('row-miss');
+  tr.classList.add('row-ok');
+  missedIndices=missedIndices.filter(x=>x!==i);
+  updateScore();
+  // 1問ごとの送信は削除しました
+}
+
 function markMiss(i){
   const tr=document.getElementById('row-'+i);
   if(!tr)return;
@@ -1147,22 +1157,30 @@ function markMiss(i){
   tr.classList.add('row-miss');
   if(!missedIndices.includes(i)) missedIndices.push(i);
   updateScore();
+  // 1問ごとの送信は削除しました
+}
 
-  // 【追加】❌で採点したタイミングでFirebaseに送信
-  if (window.sendLearningRecord) {
+// ▼新しく追加：一覧に戻る時にまとめて1回だけ送信する機能▼
+let isSending = false;
+async function finishAndReturn() {
+  if (isSending) return; 
+  
+  const ok = document.querySelectorAll('tr.row-ok').length;
+  const miss = document.querySelectorAll('tr.row-miss').length;
+  const totalAnswered = ok + miss;
+
+  // 1問でも採点していればFirebaseに送信する
+  if (totalAnswered > 0 && window.sendLearningRecord) {
+    isSending = true;
     const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
-    window.sendLearningRecord(unitName, '問' + (i + 1) + '_ミス(NG)');
+    const resultText = `完了 (✅正解:${ok} / ❌ミス:${miss})`;
+    await window.sendLearningRecord(unitName, resultText);
+    isSending = false;
   }
+  
+  showUnitView(); // 画面を一覧に戻す
 }
-
-function updateScore(){
-  const total=currentWords.length;
-  const ok=document.querySelectorAll('tr.row-ok').length;
-  const miss=document.querySelectorAll('tr.row-miss').length;
-  const sb=document.getElementById('scoreBadge');
-  if(sb) sb.textContent='✅ '+ok+' / ❌ '+miss+' / 全'+total+'問';
-}
-
+// ▲ここまで▲
 function retryMissed(){
   if(missedIndices.length===0){alert('ミスした問題がありません！全問正解です🎉');return;}
   const saved=currentWords;
@@ -1399,12 +1417,10 @@ function stopAll(){
 }
 
 showUnitView();
-</script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // ① My スタディ 用のFirebase設定
   const firebaseConfig = {
     apiKey: "AIzaSyBQjnlOfeVvWQJHDxGE9cq-jGsYF3uo0PY",
     authDomain: "mystudy-portal.firebaseapp.com",
@@ -1417,17 +1433,15 @@ showUnitView();
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // ② URLの「?student=生徒ID」から名札（生徒ID）を取得
   const urlParams = new URLSearchParams(window.location.search);
   const studentId = urlParams.get('student') || 'ゲスト';
 
-  // ★修正ポイント1：文法完全マスターへのリンクにも「名札（ID）」をくっつけて引き継ぐ！
   const grammarLink = document.querySelector('.special-tab');
   if (grammarLink && studentId !== 'ゲスト') {
     grammarLink.href = "https://shigakusakura-pixel.github.io/grammar/?student=" + encodeURIComponent(studentId);
   }
 
-  // ★修正ポイント2：英語アプリを開いた瞬間に「学習スタート」として自動で1回記録する！
+  // アプリを開いた瞬間の自動記録（1回）
   try {
     addDoc(collection(db, "learning_records"), {
       studentId: studentId,
@@ -1437,31 +1451,19 @@ showUnitView();
       action: "学習開始",
       timestamp: serverTimestamp()
     });
-  } catch (e) {
-    console.error("アクセス記録のエラー: ", e);
-  }
+  } catch (e) {}
 
-  // 送信済みの問題を記録するリスト（開閉ごとの重複送信を防ぐため）
-  const sentRecords = new Set();
-
-  // ③ 送信用の処理（✅❌ボタンを押したとき）
-  window.sendLearningRecord = async function(unitId, questionId) {
-    const recordKey = unitId + "-" + questionId;
-
-    // すでに送信済みの問題ならストップ（何もしない）
-    if (sentRecords.has(recordKey)) return;
-    sentRecords.add(recordKey);
-
+  // まとめ送信用の処理
+  window.sendLearningRecord = async function(unitId, resultText) {
     try {
       await addDoc(collection(db, "learning_records"), {
         studentId: studentId,
         subject: "中学英語",
         unit: unitId,
-        questionId: questionId,
+        questionId: resultText, // ここに「完了 (✅正解:10 / ❌ミス:2)」と記録されます
         action: "学習完了",
         timestamp: serverTimestamp()
       });
-      console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
     } catch (e) {
       console.error("記録の送信に失敗しました: ", e);
     }
