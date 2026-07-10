@@ -1131,23 +1131,6 @@ function markOk(i){
   tr.classList.add('row-ok');
   missedIndices=missedIndices.filter(x=>x!==i);
   updateScore();
-
-  // 【追加】✅で採点したタイミングでFirebaseに送信
-  if (window.sendLearningRecord) {
-    // 画面に表示されている単元名（unitHeader）を取得して送信します
-    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
-    window.sendLearningRecord(unitName, '問' + (i + 1) + '_正解(OK)');
-  }
-}
-
-function markOk(i){
-  const tr=document.getElementById('row-'+i);
-  if(!tr)return;
-  tr.classList.remove('row-miss');
-  tr.classList.add('row-ok');
-  missedIndices=missedIndices.filter(x=>x!==i);
-  updateScore();
-  // 1問ごとの送信は削除しました
 }
 
 function markMiss(i){
@@ -1157,7 +1140,6 @@ function markMiss(i){
   tr.classList.add('row-miss');
   if(!missedIndices.includes(i)) missedIndices.push(i);
   updateScore();
-  // 1問ごとの送信は削除しました
 }
 
 // ▼新しく追加：一覧に戻る時にまとめて1回だけ送信する機能▼
@@ -1181,6 +1163,7 @@ async function finishAndReturn() {
   showUnitView(); // 画面を一覧に戻す
 }
 // ▲ここまで▲
+
 function retryMissed(){
   if(missedIndices.length===0){alert('ミスした問題がありません！全問正解です🎉');return;}
   const saved=currentWords;
@@ -1193,6 +1176,7 @@ function retryMissed(){
   const sb=document.getElementById('scoreBadge');
   if(sb) sb.textContent='🔁 ミス問題のみ '+currentWords.length+'問';
 }
+
 function resetCheck(){
   missedIndices=[];
   document.querySelectorAll('tr.row-ok,tr.row-miss').forEach(tr=>{
@@ -1264,8 +1248,6 @@ function renderRows(isGrammar){
       const typeTag=isFill
         ?'<span style="font-size:10px;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;margin-right:4px;">穴埋め</span>'
         :'<span style="font-size:10px;background:#d4edda;color:#155724;border-radius:4px;padding:1px 6px;margin-right:4px;">日→英</span>';
-      // For fill: show hint as context + blank sentence
-      // For trans: show Japanese sentence
       const questionHtml=isFill
         ?'<div style="font-size:11px;color:#888;margin-bottom:2px;">'+w.hint+'</div>'
          +'<div style="font-size:13px;color:#333;font-weight:500;">'+w.ja+'</div>'
@@ -1374,7 +1356,6 @@ function speakEnglish(text, btn) {
         || v2.find(function(v){ return v.lang.startsWith('en'); });
       doSpeak(en || null);
     });
-    // voiceschangedが発火しないブラウザ対策
     setTimeout(function() {
       var v3 = window.speechSynthesis.getVoices();
       var en = v3.find(function(v){ return v.lang === 'en-US'; })
@@ -1417,6 +1398,8 @@ function stopAll(){
 }
 
 showUnitView();
+</script>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -1460,7 +1443,7 @@ showUnitView();
         studentId: studentId,
         subject: "中学英語",
         unit: unitId,
-        questionId: resultText, // ここに「完了 (✅正解:10 / ❌ミス:2)」と記録されます
+        questionId: resultText,
         action: "学習完了",
         timestamp: serverTimestamp()
       });
