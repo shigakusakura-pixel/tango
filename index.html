@@ -7,8 +7,8 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
-  .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
+  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}/* updated:2026-03-22 07:00:14 */
+    .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
@@ -74,10 +74,11 @@
   .all-ans-btn:hover{background:#f0faf5;}
   #noResult{display:none;text-align:center;padding:16px;font-size:13px;color:#888;}
 
-  .grade-btn.special-tab {
-    background-color: #ffffff;
-    border-color: #1D9E75;
-    color: #1D9E75;
+/* --- 追加する「完全マスター」タブ用の目立つスタイル --- */
+.grade-btn.special-tab {
+    background-color: #ffffff; /* 背景色をホワイトに */
+    border-color: #1D9E75;    /* 枠線をグリーンに */
+    color: #1D9E75;            /* 文字色をグリーンに */
     font-weight: 700;
     text-decoration: none;
     display: inline-flex;
@@ -87,6 +88,7 @@
     top: 0.5px;
   }
   
+  /* マウスを乗せた時の色（背景グリーン・文字白に反転してクリックできることを強調） */
   .grade-btn.special-tab:hover {
     background-color: #1D9E75;
     color: #ffffff;
@@ -115,13 +117,13 @@
 </div>
 
 <div id="wordView">
-  <button class="back-btn" onclick="finishAndReturn()" style="background:#e8f0fb; border:1px solid #378ADD; padding:8px 12px; border-radius:6px; color:#185FA5; font-weight:bold; margin-bottom:15px; cursor:pointer;">← 学習を記録して単元一覧に戻る</button>
+  <button class="back-btn" onclick="showUnitView()">← 単元一覧に戻る</button>
   <div class="unit-header" id="unitHeader"></div>
   <div id="wordContent"></div>
 </div>
 
 <script>
-// ===== データ定義 =====
+// ===== 正常に動作していたコードのデータ構造を維持 =====
 const j1_u0 = [
   {en:"Nice to meet you",kana:"<span class='accent'>ナ</span>イス トゥ ミート ユー",ja:"はじめまして",tip:"挨拶の定番フレーズ！"},
   {en:"meet",kana:"<span class='accent'>ミ</span>ート",ja:"会う",tip:"Nice to meet you のmeet"},
@@ -363,7 +365,7 @@ const j2_u01 = [
   {en:"painting",kana:"<span class='accent'>ペ</span>インティング",ja:"絵をかくこと",tip:"paint＋ing"},
   {en:"wall",kana:"<span class='accent'>ウ</span>ォール",ja:"壁",tip:"ウォールのwall"},
   {en:"surprised",kana:"サ<span class='accent'>プ</span>ライズド",ja:"驚いた、驚き",tip:"surpriseの過去分詞"},
-  {en:"area",kana:"<span class='accent'>エ</span>アリア",ja:"区域、場所、地域",tip:"エリアのarea"},
+  {en:"area",kana:"<span class='accent'>エ</span>аリア",ja:"区域、場所、地域",tip:"エリアのarea"},
   {en:"India",kana:"<span class='accent'>イ</span>ンディア",ja:"インド",tip:"インドの英語発音"},
   {en:"mosque",kana:"<span class='accent'>モ</span>スク",ja:"モスク",tip:"イスラム教の礼拝堂"},
   {en:"culture",kana:"<span class='accent'>カ</span>ルチャー",ja:"文化、文明",tip:"カルチャーのculture"},
@@ -475,7 +477,7 @@ const j3_w50 = [
   {en:"match",kana:"<span class='accent'>マ</span>ッチ",ja:"試合、競技",tip:"マッチ棒のmatch！試合にも"},
   {en:"positive",kana:"<span class='accent'>ポ</span>ジティヴ",ja:"前向きな、積極的な",tip:"ポジティブ思考のpositive"},
   {en:"in addition",kana:"イン ア<span class='accent'>ディ</span>ション",ja:"追加として、さらに",tip:"文頭でよく使う接続表現"},
-  {en:"ignore",kana:"イグ<span class='accent'>ノ</span>ア",ja:"を無視する",tip:"ignoreはスルーすること"},
+  {en:"ignore",kana:"イグ<span class='accent'>ノ</span>а",ja:"を無視する",tip:"ignoreはスルーすること"},
   {en:"existence",kana:"イグ<span class='accent'>ジ</span>ステンス",ja:"存在",tip:"exist（存在する）の名詞形"},
   {en:"root",kana:"<span class='accent'>ルー</span>ト",ja:"根、根元",tip:"ルーツ（roots）のroot"},
   {en:"express",kana:"イク<span class='accent'>ス</span>プレス",ja:"表現する",tip:"express自分！"},
@@ -584,6 +586,7 @@ const j3_u3 = [
   {en:"instead",kana:"イン<span class='accent'>ス</span>テッド",ja:"そのかわりに、代わりに",tip:"instead ofで〜の代わりに"},
 ];
 
+// ===== 文法演習データ =====
 const g_j1_1 = [
   {type:"fill",hint:"私はタクヤです。",ja:"＿＿＿ Takuya.",en:"I'm",tip:"I am = I'm"},
   {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
@@ -593,7 +596,6 @@ const g_j1_1 = [
   {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
   {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
   {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
-  {type:"trans",hint:"",ja:"私は新しい先生です。",en:"I am a new teacher.",tip:"I am a new teacher."},
 ];
 const g_j1_2 = [
   {ja:"1つのボール",en:"a ball",tip:"単数はa/anをつける",type:"trans"},
@@ -683,12 +685,7 @@ const db = {
 
 let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
 
-// 各学年の表紙画像を確実に表示させるための正しいSVGプレースホルダー（またはダミー画像データ）
-const COVER_IMGS = {
-  "j1": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='130' viewBox='0 0 100 130'><rect width='100' height='130' fill='%231D9E75'/><text x='50' y='65' fill='white' font-size='16' font-weight='bold' text-anchor='middle'>中学1年</text></svg>",
-  "j2": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='130' viewBox='0 0 100 130'><rect width='100' height='130' fill='%23185FA5'/><text x='50' y='65' fill='white' font-size='16' font-weight='bold' text-anchor='middle'>中学2年</text></svg>",
-  "j3": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='130' viewBox='0 0 100 130'><rect width='100' height='130' fill='%23A32D2D'/><text x='50' y='65' fill='white' font-size='16' font-weight='bold' text-anchor='middle'>中学3年</text></svg>"
-};
+const COVER_IMGS={"j1":"data:image/jpeg;base64,/9j/4R6wRXhpZgAATU0AKgAAAAgADAEAAAMAAAABAZAAAAEBAAMAAAABAlgAAAECAAMAAAADAAAAngEGAAMAAAABAAIAAAESAAMAAAABAAEAAAEVAAMAAAABAAMAAAEaAAUAAAABAAAApAEbAAUAAAABAAAArAEoAAMAAAABAAIAAAExAAIAAAAhAAAAtAEyAAIAAAAUAAAA1YdpAAQAAAABAAAA7AAAASQACAAIAAgACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyKelasdGVzdAIK","j2":"data:image/jpeg;base64,/9j/4R+IRXhpZgAATU0AKgAAAAgADAEAAAMAAAABAZAAAAEBAAMAAAABAlgAAAECAAMAAAADAAAAngEGAAMAAAABAAIAAAESAAMAAAABAAEAAAEVAAMAAAABAAMAAAEaAAUAAAABAAAApAEbAAUAAAABAAAArAEoAAMAAAABAAIAAAExAAIAAAAhAAAAtAEyAAIAAAAUAAAA1YdpAAQAAAABAAAA7AAAASQACAAIAAgACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyKelasdGVzdAIK","j3":"data:image/jpeg;base64,/9j/4SEHRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAhAAAAcgEyAAIAAAAUAAAAk4dpAAQAAAABAAAAqAAAANQACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyKelasdGVzdAIK"};
 
 function selectGrade(g,btn){
   currentGrade=g;
@@ -752,6 +749,11 @@ function markOk(i){
   tr.classList.add('row-ok');
   missedIndices=missedIndices.filter(x=>x!==i);
   updateScore();
+
+  if (window.sendLearningRecord) {
+    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
+    window.sendLearningRecord(unitName, '問' + (i + 1) + '_正解(OK)');
+  }
 }
 
 function markMiss(i){
@@ -761,35 +763,19 @@ function markMiss(i){
   tr.classList.add('row-miss');
   if(!missedIndices.includes(i)) missedIndices.push(i);
   updateScore();
+
+  if (window.sendLearningRecord) {
+    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
+    window.sendLearningRecord(unitName, '問' + (i + 1) + '_ミス(NG)');
+  }
 }
 
 function updateScore(){
-  const ok = document.querySelectorAll('tr.row-ok').length;
-  const miss = document.querySelectorAll('tr.row-miss').length;
-  const total = currentWords.length;
-  const sb = document.getElementById('scoreBadge');
-  if (sb) {
-    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}${currentWords === j1_grammar3 || currentWords === g_j1_1 || currentWords === g_j1_2 || currentWords === g_j2_1 || currentWords === g_j2_2 || currentWords === g_j2_3 || currentWords === g_j3_1 || currentWords === j3_grammar2 ? '問' : '語'})`;
-  }
-}
-
-let isSending = false;
-async function finishAndReturn() {
-  if (isSending) return; 
-  
-  const ok = document.querySelectorAll('tr.row-ok').length;
-  const miss = document.querySelectorAll('tr.row-miss').length;
-  const totalAnswered = ok + miss;
-
-  if (totalAnswered > 0 && window.sendLearningRecord) {
-    isSending = true;
-    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
-    const resultText = `完了 (✅正解:${ok} / ❌ミス:${miss})`;
-    await window.sendLearningRecord(unitName, resultText);
-    isSending = false;
-  }
-  
-  showUnitView();
+  const total=currentWords.length;
+  const ok=document.querySelectorAll('tr.row-ok').length;
+  const miss=document.querySelectorAll('tr.row-miss').length;
+  const sb=document.getElementById('scoreBadge');
+  if(sb) sb.textContent='✅ '+ok+' / ❌ '+miss+' / 全'+total+'問';
 }
 
 function retryMissed(){
@@ -870,6 +856,7 @@ function renderRows(isGrammar){
     const tr=document.createElement('tr');
     tr.id='row-'+i;
     tr.className=i%2===0?'row-even':'row-odd';
+    const safeEn=w.en.replace(/'/g,"\'");
     if(isGrammar){
       const isFill=w.type==='fill';
       const typeTag=isFill
@@ -1030,7 +1017,7 @@ showUnitView();
   };
 
   const app = initializeApp(firebaseConfig);
-  const firestoreDb = getFirestore(app);
+  const db = getFirestore(app);
 
   const urlParams = new URLSearchParams(window.location.search);
   const studentId = urlParams.get('student') || 'ゲスト';
@@ -1040,27 +1027,23 @@ showUnitView();
     grammarLink.href = "https://shigakusakura-pixel.github.io/grammar/?student=" + encodeURIComponent(studentId);
   }
 
-  try {
-    addDoc(collection(firestoreDb, "learning_records"), {
-      studentId: studentId,
-      subject: "中学英語",
-      unit: "英単語アプリ起動",
-      questionId: "アクセス",
-      action: "学習開始",
-      timestamp: serverTimestamp()
-    });
-  } catch (e) {}
+  const sentRecords = new Set();
 
-  window.sendLearningRecord = async function(unitId, resultText) {
+  window.sendLearningRecord = async function(unitId, questionId) {
+    const recordKey = unitId + "-" + questionId;
+    if (sentRecords.has(recordKey)) return;
+    sentRecords.add(recordKey);
+
     try {
-      await addDoc(collection(firestoreDb, "learning_records"), {
+      await addDoc(collection(db, "learning_records"), {
         studentId: studentId,
         subject: "中学英語",
         unit: unitId,
-        questionId: resultText,
+        questionId: questionId,
         action: "学習完了",
         timestamp: serverTimestamp()
       });
+      console.log(`生徒 ${studentId} の記録送信成功: 単元 ${unitId} / 問題 ${questionId}`);
     } catch (e) {
       console.error("記録の送信に失敗しました: ", e);
     }
