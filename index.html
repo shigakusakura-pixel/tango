@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +7,14 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
-  .header-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;}
+  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}/* updated:2026-03-22 07:00:14 */
+    .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
-  .grade-icon{font-size:36px;width:56px;height:72px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:4px;border:1px solid #ccc;}
+  .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
   .unit-list{display:flex;flex-direction:column;gap:6px;}
   .unit-btn{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer;text-align:left;}
@@ -73,7 +73,8 @@
   .all-ans-btn{background:#fff;border:1px solid #1D9E75;border-radius:7px;padding:4px 12px;cursor:pointer;font-size:12px;font-weight:500;color:#1D9E75;}
   .all-ans-btn:hover{background:#f0faf5;}
   #noResult{display:none;text-align:center;padding:16px;font-size:13px;color:#888;}
-  .grade-btn.special-tab {
+
+.grade-btn.special-tab {
     background-color: #ffffff;
     border-color: #1D9E75;
     color: #1D9E75;
@@ -85,6 +86,7 @@
     position: relative;
     top: 0.5px;
   }
+  
   .grade-btn.special-tab:hover {
     background-color: #1D9E75;
     color: #ffffff;
@@ -102,6 +104,7 @@
   <button class="grade-btn active" onclick="selectGrade('j1',this)">中学1年</button>
   <button class="grade-btn" onclick="selectGrade('j2',this)">中学2年</button>
   <button class="grade-btn" onclick="selectGrade('j3',this)">中学3年</button>
+  
   <a href="https://shigakusakura-pixel.github.io/grammar/" class="grade-btn special-tab" target="_blank" rel="noopener noreferrer">中学英文法 完全マスター</a>
 </div>
 
@@ -150,7 +153,7 @@ const j1_u0 = [
   {en:"box",kana:"<span class='accent'>ボ</span>ックス",ja:"箱",tip:"ボックスのbox"},
   {en:"bag",kana:"<span class='accent'>バ</span>ッグ",ja:"カバン",tip:"バッグのbag"},
   {en:"desk",kana:"<span class='accent'>デ</span>スク",ja:"机",tip:"デスクワークのdesk"},
-  {en:"bed",kana:"<span class='accent'>ベ</span>ッド",ja:"ベッド、寝床",tip:"ベッドのbed"}
+  {en:"bed",kana:"<span class='accent'>ベ</span>ッド",ja:"ベッド、寝床",tip:"ベッドのbed"},
 ];
 const j1_u1 = [
   {en:"call",kana:"<span class='accent'>コ</span>ール",ja:"に電話をかける、連絡する",tip:"コールするのcall"},
@@ -203,7 +206,7 @@ const j1_u1 = [
   {en:"lake",kana:"<span class='accent'>レ</span>イク",ja:"湖",tip:"レイクサイドのlake"},
   {en:"bike",kana:"<span class='accent'>バ</span>イク",ja:"自転車",tip:"バイク（自転車）のbike"},
   {en:"game",kana:"<span class='accent'>ゲ</span>イム",ja:"ゲーム",tip:"ゲームのgame"},
-  {en:"nose",kana:"<span class='accent'>ノ</span>ウズ",ja:"鼻",tip:"鼻のnose"}
+  {en:"nose",kana:"<span class='accent'>ノ</span>ウズ",ja:"鼻",tip:"鼻のnose"},
 ];
 const j1_u2 = [
   {en:"class",kana:"<span class='accent'>ク</span>ラス",ja:"授業、講義",tip:"クラスのclass"},
@@ -265,7 +268,7 @@ const j1_u2 = [
   {en:"today",kana:"トゥ<span class='accent'>デ</span>イ",ja:"今日、現在",tip:"to＋day = 今日"},
   {en:"usually",kana:"<span class='accent'>ユ</span>ージュアリー",ja:"普通は",tip:"usuallyは頻度の副詞"},
   {en:"drink",kana:"<span class='accent'>ド</span>リンク",ja:"飲む",tip:"ドリンクのdrink"},
-  {en:"green tea",kana:"グリーン <span class='accent'>テ</span>ィー",ja:"緑茶",tip:"green＋tea = 緑茶"}
+  {en:"green tea",kana:"グリーン <span class='accent'>テ</span>ィー",ja:"緑茶",tip:"green＋tea = 緑茶"},
 ];
 const j1_u3 = [
   {en:"symbol",kana:"<span class='accent'>シ</span>ンボル",ja:"象徴",tip:"シンボルのsymbol"},
@@ -321,8 +324,530 @@ const j1_u3 = [
   {en:"enjoy",kana:"エン<span class='accent'>ジョ</span>イ",ja:"楽しむ",tip:"エンジョイのenjoy"},
   {en:"party",kana:"<span class='accent'>パ</span>ーティー",ja:"政党",tip:"パーティーのparty"},
   {en:"ball",kana:"<span class='accent'>ボ</span>ール",ja:"ボール",tip:"ボールのball"},
-  {en:"birthday",kana:"<span class='accent'>バ</span>ースデイ",ja:"誕生日",tip:"Happy Birthday!"}
+  {en:"birthday",kana:"<span class='accent'>バ</span>ースデイ",ja:"誕生日",tip:"Happy Birthday!"},
 ];
+
+// ===== 中2単語データ =====
+const j2_u01 = [
+  {en:"same",kana:"<span class='accent'>セ</span>イム",ja:"同じ",tip:"the same = 同じもの"},
+  {en:"experience",kana:"イク<span class='accent'>ス</span>ピアリエンス",ja:"を経験する、体験する",tip:"エクスペリエンスのexperience"},
+  {en:"actually",kana:"<span class='accent'>ア</span>クチュアリー",ja:"実は、本当は",tip:"実はのactually"},
+  {en:"ramen",kana:"<span class='accent'>ラ</span>ーメン",ja:"ラーメン",tip:"日本語からの外来語"},
+  {en:"instant",kana:"<span class='accent'>イ</span>ンスタント",ja:"瞬間、瞬時",tip:"インスタントのinstant"},
+  {en:"noodle",kana:"<span class='accent'>ヌ</span>ードル",ja:"麺（めん）",tip:"ヌードルのnoodle"},
+  {en:"by the way",kana:"バイ ザ <span class='accent'>ウェ</span>イ",ja:"ところで",tip:"話題を変えるときに使う"},
+  {en:"golden",kana:"<span class='accent'>ゴ</span>ールデン",ja:"金色の",tip:"ゴールデンのgolden"},
+  {en:"Singapore",kana:"<span class='accent'>シ</span>ンガポール",ja:"シンガポール",tip:"シンガポールの英語発音"},
+  {en:"flight",kana:"<span class='accent'>フ</span>ライト",ja:"飛行、飛び立つ",tip:"フライトのflight"},
+  {en:"arrive",kana:"ア<span class='accent'>ラ</span>イヴ",ja:"到着する、到着",tip:"アライバルのarrive"},
+  {en:"airport",kana:"<span class='accent'>エ</span>アポート",ja:"空港、飛行場",tip:"air＋port = 空港"},
+  {en:"soon",kana:"<span class='accent'>ス</span>ーン",ja:"すぐに、直ちに",tip:"See you soon!"},
+  {en:"see you",kana:"<span class='accent'>シ</span>ー ユー",ja:"さようなら。",tip:"またね！のフレーズ"},
+  {en:"will",kana:"<span class='accent'>ウ</span>ィル",ja:"〜するつもり、〜する予定",tip:"未来を表すwill"},
+  {en:"excited",kana:"イク<span class='accent'>サ</span>イティッド",ja:"わくわくした、興奮した",tip:"exciteの過去分詞"},
+  {en:"seafood",kana:"<span class='accent'>シ</span>ーフード",ja:"シーフード",tip:"sea＋food = シーフード"},
+  {en:"reservation",kana:"レザ<span class='accent'>ヴェ</span>イション",ja:"予約、保留",tip:"レザベーションのreservation"},
+  {en:"you'll",kana:"<span class='accent'>ユ</span>ール",ja:"You willの略",tip:"you will の短縮形"},
+  {en:"I'll",kana:"<span class='accent'>ア</span>イル",ja:"I am illの短縮形",tip:"I willの短縮形"},
+  {en:"meter",kana:"<span class='accent'>ミ</span>ーター",ja:"メーター",tip:"メートルのmeter"},
+  {en:"tall",kana:"<span class='accent'>ト</span>ール",ja:"背が高い、長身の",tip:"tallはビルにも使う"},
+  {en:"weigh",kana:"<span class='accent'>ウ</span>ェイ",ja:"重さがある、重い",tip:"体重を量るときに使う"},
+  {en:"ton",kana:"<span class='accent'>タ</span>ン",ja:"〜トン",tip:"1トン = 1000kg"},
+  {en:"found",kana:"<span class='accent'>ファ</span>ウンド",ja:"を見つけた、発見した",tip:"findの過去形"},
+  {en:"language",kana:"<span class='accent'>ラ</span>ングウィッジ",ja:"言葉、用語",tip:"ランゲージのlanguage"},
+  {en:"example",kana:"イグ<span class='accent'>ザ</span>ンプル",ja:"例、例示",tip:"for example = 例えば"},
+  {en:"communicate",kana:"コ<span class='accent'>ミュ</span>ニケイト",ja:"連絡する、連絡を取る",tip:"コミュニケーションのcommuncate"},
+  {en:"Malay",kana:"マ<span class='accent'>レ</span>イ",ja:"マレーシア系、マレー語",tip:"マレーシアの言語"},
+  {en:"Tamil",kana:"<span class='accent'>タ</span>ミル",ja:"インド、タミル語",tip:"南インドの言語"},
+  {en:"for example",kana:"フォー イグ<span class='accent'>ザ</span>ンプル",ja:"例えば",tip:"文頭でよく使う"},
+  {en:"painting",kana:"<span class='accent'>ペ</span>インティング",ja:"絵をかくこと",tip:"paint＋ing"},
+  {en:"wall",kana:"<span class='accent'>ウ</span>ォール",ja:"壁",tip:"ウォールのwall"},
+  {en:"surprised",kana:"サ<span class='accent'>プ</span>ライズド",ja:"驚いた、驚き",tip:"surpriseの過去分詞"},
+  {en:"area",kana:"<span class='accent'>エ</span>アリア",ja:"区域、場所、地域",tip:"エリアのarea"},
+  {en:"India",kana:"<span class='accent'>イ</span>ンディア",ja:"インド",tip:"インドの英語発音"},
+  {en:"mosque",kana:"<span class='accent'>モ</span>スク",ja:"モスク",tip:"イスラム教の礼拝堂"},
+  {en:"culture",kana:"<span class='accent'>カ</span>ルチャー",ja:"文化、文明",tip:"カルチャーのculture"},
+  {en:"Chinatown",kana:"<span class='accent'>チャ</span>イナタウン",ja:"中国人街",tip:"China＋town"},
+  {en:"Hindu",kana:"<span class='accent'>ヒ</span>ンドゥー",ja:"ヒンズー教",tip:"インドの宗教"},
+  {en:"onion-shaped",kana:"<span class='accent'>オ</span>ニオンシェイプト",ja:"玉ねぎ型",tip:"onion＋shaped"},
+];
+const j2_u2 = [
+  {en:"especially",kana:"イ<span class='accent'>ス</span>ペシャリー",ja:"特に、とりわけ",tip:"especial＋ly"},
+  {en:"order",kana:"<span class='accent'>オ</span>ーダー",ja:"注文する、オーダーする",tip:"オーダーのorder"},
+  {en:"topping",kana:"<span class='accent'>ト</span>ッピング",ja:"トッピング",tip:"top＋ping"},
+  {en:"various",kana:"<span class='accent'>ヴェ</span>アリアス",ja:"いろいろな、多様な",tip:"バラエティのvarious"},
+  {en:"flavor",kana:"<span class='accent'>フ</span>レイヴァー",ja:"風味",tip:"フレイバーのflavor"},
+  {en:"and so on",kana:"アンド ソ <span class='accent'>オ</span>ン",ja:"などなど",tip:"etc.と同じ意味"},
+  {en:"soy sauce",kana:"<span class='accent'>ソ</span>イ ソース",ja:"しょうゆ",tip:"soy＋sauce = 醤油"},
+  {en:"salt",kana:"<span class='accent'>ソ</span>ルト",ja:"塩、食塩",tip:"ソルトのsalt"},
+  {en:"speech",kana:"<span class='accent'>ス</span>ピーチ",ja:"演説、スピーチ",tip:"スピーチのspeech"},
+  {en:"sometime",kana:"<span class='accent'>サ</span>ムタイム",ja:"いつか、将来",tip:"someday と同じ意味"},
+  {en:"if",kana:"<span class='accent'>イ</span>フ",ja:"もし〜ならば、仮に〜であれば",tip:"if節で条件を表す"},
+  {en:"add",kana:"<span class='accent'>ア</span>ッド",ja:"加える、追加する",tip:"addのadd"},
+  {en:"butter",kana:"<span class='accent'>バ</span>ター",ja:"バター",tip:"バターのbutter"},
+  {en:"would love to",kana:"ウッド <span class='accent'>ラ</span>ヴ トゥ",ja:"ぜひ",tip:"ぜひ〜したいのフレーズ"},
+  {en:"be interested in",kana:"ビー イン<span class='accent'>タ</span>レスティッド イン",ja:"に興味がある、関心を持つ",tip:"興味があるの表現"},
+  {en:"forget",kana:"フォ<span class='accent'>ゲ</span>ット",ja:"を忘れる、を忘却する",tip:"Don't forget!忘れずに"},
+  {en:"kind",kana:"<span class='accent'>カ</span>インド",ja:"種類",tip:"what kind of...?"},
+  {en:"because",kana:"ビ<span class='accent'>コ</span>ーズ",ja:"だから、なので",tip:"because = なぜなら"},
+  {en:"thick",kana:"<span class='accent'>ス</span>ィック",ja:"厚い、厚みのある",tip:"thickはthが発音される"},
+  {en:"recommend",kana:"レコ<span class='accent'>メ</span>ンド",ja:"を推薦する、を勧める",tip:"レコメンドのrecommend"},
+  {en:"manufacturer",kana:"マニュ<span class='accent'>ファ</span>クチャラー",ja:"製造元、製造業者",tip:"manufactureの人"},
+  {en:"early",kana:"<span class='accent'>ア</span>ーリー",ja:"早く、速やかに",tip:"early birdで早起き"},
+  {en:"kind of",kana:"<span class='accent'>カ</span>インド オブ",ja:"大体",tip:"kind of = まあ、大体"},
+  {en:"kinds of",kana:"<span class='accent'>カ</span>インズ オブ",ja:"種類の",tip:"all kinds of = あらゆる種類の"},
+  {en:"reflect",kana:"リ<span class='accent'>フ</span>レクト",ja:"反映する",tip:"リフレクトのreflect"},
+  {en:"climate",kana:"<span class='accent'>ク</span>ライメット",ja:"気候、天候",tip:"クライメートのclimate"},
+  {en:"lives",kana:"<span class='accent'>ラ</span>イヴズ",ja:"生きる",tip:"lifeの複数形、liveの三単現"},
+  {en:"creativity",kana:"クリエイ<span class='accent'>ティ</span>ヴィティ",ja:"創造性",tip:"creative＋ity"},
+  {en:"chef",kana:"<span class='accent'>シ</span>ェフ",ja:"シェフ",tip:"シェフのchef"},
+  {en:"foreign",kana:"<span class='accent'>フォ</span>ーリン",ja:"外国の、外国的な",tip:"foreignerのforeign"},
+  {en:"variation",kana:"ヴェアリ<span class='accent'>エ</span>イション",ja:"変化",tip:"バリエーションのvariation"},
+  {en:"Italy",kana:"<span class='accent'>イ</span>タリー",ja:"イタリア",tip:"イタリアの英語発音"},
+  {en:"create",kana:"クリ<span class='accent'>エ</span>イト",ja:"を創造する、創出する",tip:"クリエイトのcreate"},
+  {en:"sauce",kana:"<span class='accent'>ソ</span>ース",ja:"ソース",tip:"ソースのsauce"},
+  {en:"change",kana:"<span class='accent'>チ</span>ェンジ",ja:"を変える、変更する",tip:"チェンジのchange"},
+  {en:"come from",kana:"カム <span class='accent'>フ</span>ロム",ja:"出身である、出身",tip:"Where do you come from?"},
+  {en:"ask",kana:"<span class='accent'>ア</span>スク",ja:"聞く",tip:"ask a questionで質問する"},
+  {en:"favor",kana:"<span class='accent'>フェ</span>イヴァー",ja:"好み、お願い",tip:"Do me a favor = お願いがある"},
+  {en:"could",kana:"<span class='accent'>ク</span>ッド",ja:"できた、可能であった",tip:"canの過去形"},
+  {en:"menu",kana:"<span class='accent'>メ</span>ニュー",ja:"メニュー",tip:"メニューのmenu"},
+  {en:"ask a favor",kana:"アスク ア <span class='accent'>フェ</span>イヴァー",ja:"にお願いする、頼む",tip:"お願いするフレーズ"},
+];
+const j2_u3 = [
+  {en:"career",kana:"カ<span class='accent'>リ</span>ア",ja:"職業、仕事",tip:"キャリアのcareer"},
+  {en:"information",kana:"インフォ<span class='accent'>メ</span>イション",ja:"情報、案内",tip:"インフォメーションのinformation"},
+  {en:"international",kana:"インター<span class='accent'>ナ</span>ショナル",ja:"国際的な、多国籍な",tip:"インターナショナルのinternational"},
+  {en:"nursery",kana:"<span class='accent'>ナ</span>ーサリー",ja:"託児所",tip:"nurse＋ry = 託児所"},
+  {en:"note",kana:"<span class='accent'>ノ</span>ウト",ja:"紙幣、札束",tip:"noteはメモにも"},
+  {en:"own",kana:"<span class='accent'>オ</span>ウン",ja:"自分自身の、自らの",tip:"my own = 自分自身の"},
+  {en:"tag",kana:"<span class='accent'>タ</span>グ",ja:"鬼ごっこ",tip:"タグのtag"},
+  {en:"chopstick",kana:"<span class='accent'>チ</span>ョップスティック",ja:"箸",tip:"chop＋stick = 箸"},
+  {en:"picture book",kana:"<span class='accent'>ピ</span>クチャー ブック",ja:"絵本",tip:"picture＋book = 絵本"},
+  {en:"career day",kana:"カ<span class='accent'>リ</span>ア デイ",ja:"職業体験日",tip:"職業を体験する日"},
+  {en:"chose",kana:"<span class='accent'>チ</span>ョウズ",ja:"を選んだ",tip:"chooseの過去形"},
+  {en:"choose",kana:"<span class='accent'>チ</span>ューズ",ja:"を選ぶ、を選択する",tip:"選ぶのchoose"},
+  {en:"colorful",kana:"<span class='accent'>カ</span>ラフル",ja:"色彩に富んだ、色鮮やか",tip:"colorfulのcolorful"},
+  {en:"illustration",kana:"イラス<span class='accent'>ト</span>レイション",ja:"図解、実例",tip:"イラストレーションのillustration"},
+  {en:"how about",kana:"ハウ ア<span class='accent'>バ</span>ウト",ja:"はどうですか？",tip:"提案するときに使う"},
+  {en:"pretty",kana:"<span class='accent'>プ</span>リティ",ja:"かわいい、きれいな",tip:"プリティのpretty"},
+  {en:"taught",kana:"<span class='accent'>ト</span>ート",ja:"教えた、指導した",tip:"teachの過去形"},
+  {en:"teach",kana:"<span class='accent'>テ</span>ィーチ",ja:"教える",tip:"teach English = 英語を教える"},
+  {en:"important",kana:"イン<span class='accent'>ポ</span>ータント",ja:"重要な、大切な",tip:"インポータントのimportant"},
+  {en:"moon",kana:"<span class='accent'>ム</span>ーン",ja:"月、衛星",tip:"ムーンのmoon"},
+  {en:"lay",kana:"<span class='accent'>レ</span>イ",ja:"横たえる",tip:"lie（横になる）の過去形でもある"},
+  {en:"lie",kana:"<span class='accent'>ラ</span>イ",ja:"嘘、偽り",tip:"liarはlieをつく人"},
+  {en:"leaf",kana:"<span class='accent'>リ</span>ーフ",ja:"葉、葉っぱ",tip:"leavesはleafの複数形"},
+  {en:"pop",kana:"<span class='accent'>ポ</span>ップ",ja:"大衆的な",tip:"ポップミュージックのpop"},
+  {en:"tiny",kana:"<span class='accent'>タ</span>イニー",ja:"ごく小さな、非常に小さい",tip:"tinyは非常に小さい"},
+  {en:"caterpillar",kana:"<span class='accent'>キャ</span>タピラー",ja:"毛虫",tip:"キャタピラーのcaterpillar"},
+  {en:"pear",kana:"<span class='accent'>ペ</span>ア",ja:"梨",tip:"洋梨のpear"},
+  {en:"plum",kana:"<span class='accent'>プ</span>ラム",ja:"梅",tip:"プラムのplum"},
+  {en:"come up",kana:"カム <span class='accent'>ア</span>ップ",ja:"思いつく",tip:"come up with an idea"},
+  {en:"come out of",kana:"カム アウト <span class='accent'>オ</span>ブ",ja:"出てくる",tip:"〜から出てくる"},
+];
+
+// ===== 中3単語データ =====
+const j3_w50 = [
+  {en:"discover",kana:"ディ<span class='accent'>ス</span>カヴァー",ja:"発見する、見出す",tip:"ディスカバリーのdiscover！"},
+  {en:"side",kana:"<span class='accent'>サ</span>イド",ja:"側面、脇",tip:"サイドメニューそのまま！"},
+  {en:"finally",kana:"<span class='accent'>ファ</span>イナリィ",ja:"ついに、やっと",tip:"ファイナル＋ly"},
+  {en:"musical",kana:"<span class='accent'>ミュ</span>ージカル",ja:"音楽の",tip:"ミュージカル映画そのまま！"},
+  {en:"actor",kana:"<span class='accent'>ア</span>クター",ja:"俳優、役者",tip:"act（演じる）＋or"},
+  {en:"fashion",kana:"<span class='accent'>ファ</span>ッション",ja:"ファッション",tip:"日本語と同じ発音！"},
+  {en:"regional",kana:"<span class='accent'>リ</span>ージョナル",ja:"地方の",tip:"region（地域）＋al"},
+  {en:"martial arts",kana:"<span class='accent'>マ</span>ーシャル <span class='accent'>ア</span>ーツ",ja:"武道、武術",tip:"武道全般を指す表現"},
+  {en:"have never been to",kana:"ハヴ <span class='accent'>ネ</span>ヴァー ビン トゥ",ja:"に行ったことがない",tip:"現在完了のセット表現"},
+  {en:"foreigner",kana:"<span class='accent'>フォ</span>ーリナー",ja:"外国人",tip:"gは読まない！"},
+  {en:"ever",kana:"<span class='accent'>エ</span>ヴァー",ja:"今まで、かつて",tip:"have you ever…?でよく登場"},
+  {en:"I've",kana:"<span class='accent'>ア</span>イヴ",ja:"I haveの略",tip:"現在完了の主役！"},
+  {en:"haven't",kana:"<span class='accent'>ハ</span>ヴント",ja:"have notの略",tip:"否定の現在完了"},
+  {en:"hasn't",kana:"<span class='accent'>ハ</span>ズント",ja:"has notの略",tip:"三人称単数の否定形"},
+  {en:"global",kana:"<span class='accent'>グ</span>ローバル",ja:"地球の",tip:"グローバル化のglobal！"},
+  {en:"genre",kana:"<span class='accent'>ジャ</span>ンル",ja:"ジャンル",tip:"フランス語由来！gはジャ"},
+  {en:"adventure",kana:"アド<span class='accent'>ヴェ</span>ンチャー",ja:"冒険",tip:"アドベンチャーゲームのあれ"},
+  {en:"adult",kana:"ア<span class='accent'>ダ</span>ルト",ja:"大人",tip:"adultは後ろにアクセント"},
+  {en:"quality",kana:"<span class='accent'>クォ</span>リティ",ja:"質、特性",tip:"クオリティ高い！でお馴染み"},
+  {en:"animation",kana:"アニ<span class='accent'>メ</span>イション",ja:"アニメーション",tip:"日本語のアニメはここから"},
+  {en:"drawing",kana:"<span class='accent'>ド</span>ローイング",ja:"お絵かき",tip:"draw（描く）のing形"},
+  {en:"delicate",kana:"<span class='accent'>デ</span>リケット",ja:"繊細な、きめ細かい",tip:"デリケートな肌のあれ"},
+  {en:"addition",kana:"ア<span class='accent'>ディ</span>ション",ja:"追加",tip:"add（加える）の名詞形"},
+  {en:"match",kana:"<span class='accent'>マ</span>ッチ",ja:"試合、競技",tip:"マッチ棒のmatch！試合にも"},
+  {en:"positive",kana:"<span class='accent'>ポ</span>ジティヴ",ja:"前向きな、積極的な",tip:"ポジティブ思考のpositive"},
+  {en:"in addition",kana:"イン ア<span class='accent'>ディ</span>ション",ja:"追加として、さらに",tip:"文頭でよく使う接続表現"},
+  {en:"ignore",kana:"イグ<span class='accent'>ノ</span>ア",ja:"を無視する",tip:"ignoreはスルーすること"},
+  {en:"existence",kana:"イグ<span class='accent'>ジ</span>ステンス",ja:"存在",tip:"exist（存在する）の名詞形"},
+  {en:"root",kana:"<span class='accent'>ルー</span>ト",ja:"根、根元",tip:"ルーツ（roots）のroot"},
+  {en:"express",kana:"イク<span class='accent'>ス</span>プレス",ja:"表現する",tip:"express自分！"},
+  {en:"movement",kana:"<span class='accent'>ムー</span>ヴメント",ja:"運動、運動すること",tip:"move（動く）＋ment"},
+  {en:"scroll",kana:"<span class='accent'>ス</span>クロール",ja:"巻物",tip:"スマホのスクロールはここから"},
+  {en:"technique",kana:"テク<span class='accent'>ニ</span>ーク",ja:"技術",tip:"テクニックのtechnique"},
+  {en:"influence",kana:"<span class='accent'>イ</span>ンフルエンス",ja:"に影響を及ぼす",tip:"influencerのinfluence"},
+  {en:"advantage",kana:"アド<span class='accent'>ヴァ</span>ンテッジ",ja:"有利、利点",tip:"アドバンテージのadvantage"},
+  {en:"taste",kana:"<span class='accent'>テ</span>イスト",ja:"味/な味がする",tip:"テイスティングのtaste"},
+  {en:"link",kana:"<span class='accent'>リ</span>ンク",ja:"接続、繋がり",tip:"URLのリンクのlink！"},
+  {en:"entirely",kana:"イン<span class='accent'>タ</span>イアリィ",ja:"完全に、全く",tip:"entire（全体）＋ly"},
+  {en:"It is said that",kana:"イット イズ <span class='accent'>セ</span>ッド ザット",ja:"と言われている",tip:"受け身の便利な決まり文句"},
+  {en:"take advantage of",kana:"テイク アド<span class='accent'>ヴァ</span>ンテッジ オブ",ja:"を利用する",tip:"チャンスを活かす表現"},
+  {en:"already",kana:"オール<span class='accent'>レ</span>ディ",ja:"すでに、既に",tip:"already done！もう終わった"},
+  {en:"essay",kana:"<span class='accent'>エ</span>セイ",ja:"論文、小説",tip:"エッセイのessay"},
+  {en:"yet",kana:"<span class='accent'>イェ</span>ット",ja:"まだ、尚",tip:"not yet＝まだしていない"},
+  {en:"ethical",kana:"<span class='accent'>エ</span>シカル",ja:"倫理的な",tip:"エシカル消費のethical"},
+  {en:"designer",kana:"デ<span class='accent'>ザ</span>イナー",ja:"設計者、デザイナー",tip:"デザイナーブランドのdesigner"},
+  {en:"interview",kana:"<span class='accent'>イ</span>ンタビュー",ja:"面接",tip:"インタビューのinterview"},
+  {en:"message",kana:"<span class='accent'>メ</span>セッジ",ja:"メッセージ",tip:"LINEのメッセージ！"},
+  {en:"sleep",kana:"<span class='accent'>ス</span>リープ",ja:"眠る",tip:"スリープモードのsleep"},
+  {en:"yet",kana:"<span class='accent'>イェ</span>ット",ja:"まだ、尚",tip:"have you finished yet?"},
+];
+const j3_u2 = [
+  {en:"accessory",kana:"ア<span class='accent'>ク</span>セサリー",ja:"アクセサリー",tip:"アクセサリーのaccessory"},
+  {en:"recycle",kana:"リ<span class='accent'>サ</span>イクル",ja:"リサイクル",tip:"リサイクルのrecycle"},
+  {en:"eco-friendly",kana:"<span class='accent'>エ</span>コ フレンドリー",ja:"環境にやさしい",tip:"eco＋friendly"},
+  {en:"become",kana:"ビ<span class='accent'>カ</span>ム",ja:"になる、となる",tip:"becomeは変化を表す"},
+  {en:"impact",kana:"<span class='accent'>イ</span>ンパクト",ja:"影響、衝撃",tip:"インパクトのimpact"},
+  {en:"since",kana:"<span class='accent'>シ</span>ンス",ja:"〜以来、〜から",tip:"since 2020 = 2020年以来"},
+  {en:"introduce",kana:"イントロ<span class='accent'>デュ</span>ース",ja:"を紹介する、紹介",tip:"イントロデュースのintroduce"},
+  {en:"How long",kana:"ハウ <span class='accent'>ロ</span>ング",ja:"どのぐらいの長さ",tip:"How long have you...?"},
+  {en:"morally",kana:"<span class='accent'>モ</span>ーラリー",ja:"倫理的に",tip:"moral＋ly"},
+  {en:"clothing",kana:"<span class='accent'>ク</span>ロウジング",ja:"衣料品、服",tip:"clothe＋ing"},
+  {en:"company",kana:"<span class='accent'>カ</span>ンパニー",ja:"会社、企業",tip:"カンパニーのcompany"},
+  {en:"chemical",kana:"<span class='accent'>ケ</span>ミカル",ja:"化学物質、化学品",tip:"ケミカルのchemical"},
+  {en:"lead",kana:"<span class='accent'>リ</span>ード",ja:"を導く、導き出す",tip:"リードするのlead"},
+  {en:"less",kana:"<span class='accent'>レ</span>ス",ja:"もっと少なく、より少なく",tip:"lessはlittleの比較級"},
+  {en:"negative",kana:"<span class='accent'>ネ</span>ガティヴ",ja:"否定的な、良くない",tip:"ネガティブのnegative"},
+  {en:"include",kana:"イン<span class='accent'>ク</span>ルード",ja:"を含む、含める",tip:"includeのinclude"},
+  {en:"vegan",kana:"<span class='accent'>ヴィ</span>ーガン",ja:"ベジタリアン",tip:"動物性食品を使わない"},
+  {en:"leather",kana:"<span class='accent'>レ</span>ザー",ja:"革",tip:"レザーのleather"},
+  {en:"avoid",kana:"ア<span class='accent'>ヴォ</span>イド",ja:"を避ける、を回避する",tip:"アボイドのavoid"},
+  {en:"wool",kana:"<span class='accent'>ウ</span>ール",ja:"羊毛",tip:"ウールのwool"},
+  {en:"fur",kana:"<span class='accent'>ファ</span>ー",ja:"毛皮",tip:"ファーコートのfur"},
+  {en:"you've",kana:"<span class='accent'>ユ</span>ーヴ",ja:"You haveの略",tip:"you haveの短縮形"},
+  {en:"moreover",kana:"モア<span class='accent'>オ</span>ーヴァー",ja:"さらに、そのうえ",tip:"furthermoreと同じ意味"},
+  {en:"worker",kana:"<span class='accent'>ワ</span>ーカー",ja:"労働者",tip:"work＋er = 働く人"},
+  {en:"developing",kana:"ディ<span class='accent'>ヴェ</span>ロッピング",ja:"開発している",tip:"develop＋ing"},
+  {en:"condition",kana:"コン<span class='accent'>ディ</span>ション",ja:"状況、状態",tip:"コンディションのcondition"},
+  {en:"wage",kana:"<span class='accent'>ウ</span>ェイジ",ja:"賃金",tip:"minimum wage = 最低賃金"},
+  {en:"working",kana:"<span class='accent'>ワ</span>ーキング",ja:"働いている",tip:"work＋ing"},
+  {en:"fair",kana:"<span class='accent'>フ</span>ェア",ja:"公平な",tip:"fair tradeでフェアトレード"},
+  {en:"prohibit",kana:"プロ<span class='accent'>ヒ</span>ビット",ja:"禁じる",tip:"prohibitedで禁止"},
+  {en:"labor",kana:"<span class='accent'>レ</span>イバー",ja:"労働、労働者",tip:"レイバーのlabor"},
+  {en:"responsible",kana:"リ<span class='accent'>ス</span>ポンシブル",ja:"責任がある、責任が伴う",tip:"responsibilityのresponsible"},
+];
+const j3_u3 = [
+  {en:"danger",kana:"<span class='accent'>デ</span>インジャー",ja:"危険",tip:"デンジャーのdanger"},
+  {en:"extinction",kana:"イク<span class='accent'>ス</span>ティンクション",ja:"絶滅、消滅",tip:"extinctの名詞形"},
+  {en:"challenge",kana:"<span class='accent'>チャ</span>レンジ",ja:"挑戦する、挑戦",tip:"チャレンジのchallenge"},
+  {en:"human",kana:"<span class='accent'>ヒ</span>ューマン",ja:"人間、人",tip:"ヒューマンのhuman"},
+  {en:"endangered",kana:"エン<span class='accent'>デ</span>インジャード",ja:"絶滅の危機にさらされている",tip:"絶滅危惧種のendangered"},
+  {en:"survive",kana:"サ<span class='accent'>ヴァ</span>イヴ",ja:"生き残る、生存する",tip:"サバイバルのsurvive"},
+  {en:"trouble",kana:"<span class='accent'>ト</span>ラブル",ja:"困難、面倒",tip:"トラブルのtrouble"},
+  {en:"be in danger of",kana:"ビー イン <span class='accent'>デ</span>インジャー オブ",ja:"の危険にさらされている",tip:"危険な状態にある表現"},
+  {en:"climate",kana:"<span class='accent'>ク</span>ライメット",ja:"気候、天候",tip:"climate changeで気候変動"},
+  {en:"cheetah",kana:"<span class='accent'>チ</span>ーター",ja:"チーター",tip:"チーターのcheetah"},
+  {en:"sea otter",kana:"シー <span class='accent'>オ</span>ッター",ja:"ラッコ",tip:"sea＋otter = ラッコ"},
+  {en:"article",kana:"<span class='accent'>ア</span>ーティクル",ja:"記事、報道記事",tip:"アーティクルのarticle"},
+  {en:"hear of",kana:"ヒア <span class='accent'>オ</span>ブ",ja:"について聞く、尋ねる",tip:"hear ofで〜について聞く"},
+  {en:"population",kana:"ポピュ<span class='accent'>レ</span>イション",ja:"人口、国民",tip:"ポピュレーションのpopulation"},
+  {en:"rapidly",kana:"<span class='accent'>ラ</span>ピッドリー",ja:"速く、急速に、急いで",tip:"rapid＋ly"},
+  {en:"beginning",kana:"ビ<span class='accent'>ギ</span>ニング",ja:"最初、初め",tip:"at the beginning = 最初に"},
+  {en:"century",kana:"<span class='accent'>セ</span>ンチュリー",ja:"世紀、百年",tip:"センチュリーのcentury"},
+  {en:"shock",kana:"<span class='accent'>シ</span>ョック",ja:"ショック",tip:"ショックのshock"},
+  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安泰に",tip:"safe＋ly"},
+  {en:"oil",kana:"<span class='accent'>オ</span>イル",ja:"油、石油",tip:"オイルのoil"},
+  {en:"spill",kana:"<span class='accent'>ス</span>ピル",ja:"をこぼす",tip:"oil spillで原油流出"},
+  {en:"hunting",kana:"<span class='accent'>ハ</span>ンティング",ja:"狩り、狩猟",tip:"ハンティングのhunting"},
+  {en:"killer whale",kana:"<span class='accent'>キ</span>ラー ウェイル",ja:"シャチ",tip:"killer＋whale = シャチ"},
+  {en:"the Northern Pacific Ocean",kana:"ザ <span class='accent'>ノ</span>ーザン パシフィック オーシャン",ja:"北太平洋",tip:"太平洋の北部"},
+  {en:"as a result",kana:"アズ ア リ<span class='accent'>ザ</span>ルト",ja:"結果として、結果的に",tip:"結果を表すフレーズ"},
+  {en:"native",kana:"<span class='accent'>ネ</span>イティヴ",ja:"生まれ故郷の、生来の",tip:"ネイティブのnative"},
+  {en:"logging",kana:"<span class='accent'>ロ</span>ギング",ja:"記録",tip:"log＋ging = 木材伐採"},
+  {en:"traffic accident",kana:"<span class='accent'>ト</span>ラフィック アクシデント",ja:"事故",tip:"traffic＋accident = 交通事故"},
+  {en:"research",kana:"リ<span class='accent'>サ</span>ーチ",ja:"を研究する、研究する",tip:"リサーチのresearch"},
+  {en:"categorize",kana:"<span class='accent'>キャ</span>テゴライズ",ja:"分類する",tip:"category＋ize"},
+  {en:"critically",kana:"<span class='accent'>ク</span>リティカリー",ja:"批判的に、危なく",tip:"critical＋ly"},
+  {en:"citizen",kana:"<span class='accent'>シ</span>ティズン",ja:"市民、住民",tip:"シティズンのcitizen"},
+  {en:"ecosystem",kana:"<span class='accent'>エ</span>コシステム",ja:"生態系",tip:"eco＋system = 生態系"},
+  {en:"human being",kana:"<span class='accent'>ヒ</span>ューマン ビーイング",ja:"人間、人類",tip:"人間のhuman being"},
+  {en:"relate",kana:"リ<span class='accent'>レ</span>イト",ja:"を〜に関係させる、〜に関連付ける",tip:"relateのrelate"},
+  {en:"action",kana:"<span class='accent'>ア</span>クション",ja:"行動、動作",tip:"アクションのaction"},
+  {en:"breed",kana:"<span class='accent'>ブ</span>リード",ja:"を飼育する、繁殖する",tip:"breedのbreed"},
+  {en:"release",kana:"リ<span class='accent'>リ</span>ース",ja:"を放出する、放つ",tip:"リリースのrelease"},
+  {en:"reach",kana:"<span class='accent'>リ</span>ーチ",ja:"に着く、到達する",tip:"リーチのreach"},
+  {en:"nowadays",kana:"<span class='accent'>ナ</span>ウアデイズ",ja:"最近、近頃",tip:"現在の状況を表す"},
+  {en:"continue",kana:"コン<span class='accent'>テ</span>ィニュー",ja:"を続ける、継続する",tip:"コンティニューのcontinue"},
+  {en:"crested ibis",kana:"<span class='accent'>ク</span>レステッド アイビス",ja:"トキ",tip:"日本の特別天然記念物"},
+  {en:"item",kana:"<span class='accent'>ア</span>イテム",ja:"項目、品目",tip:"アイテムのitem"},
+  {en:"piece",kana:"<span class='accent'>ピ</span>ース",ja:"断片、かけら",tip:"a piece of = 一片の"},
+  {en:"wrap",kana:"<span class='accent'>ラ</span>ップ",ja:"を包む、包装する",tip:"ラップで包むのwrap"},
+  {en:"fold",kana:"<span class='accent'>フ</span>ォールド",ja:"を折る、折りたたむ",tip:"フォールドのfold"},
+  {en:"convenient",kana:"コン<span class='accent'>ヴィ</span>ニエント",ja:"便利な、利便性の",tip:"コンビニのconvenient"},
+  {en:"instead",kana:"イン<span class='accent'>ス</span>テッド",ja:"そのかわりに、代わりに",tip:"instead ofで〜の代わりに"},
+];
+
+// ===== 文法演習データ（日本語→英語、各最初50問）=====
+const g_j1_1 = [
+  {type:"fill",hint:"私はタクヤです。",ja:"＿＿＿ Takuya.",en:"I'm",tip:"I am = I'm"},
+  {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
+  {type:"fill",hint:"彼はケンです。",ja:"＿＿＿ Ken.",en:"He's",tip:"He is = He's"},
+  {type:"fill",hint:"彼女はアンです。",ja:"＿＿＿ Ann.",en:"She's",tip:"She is = She's"},
+  {type:"fill",hint:"それはペンです。",ja:"＿＿＿ a pen.",en:"It's",tip:"It is = It's"},
+  {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
+  {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
+  {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
+  {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
+  {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
+  {type:"fill",hint:"私は先生です。",ja:"＿＿＿ a teacher.",en:"I'm",tip:"I am = I'm"},
+  {type:"fill",hint:"あなたは背が高いです。",ja:"＿＿＿ tall.",en:"You're",tip:"You are = You're"},
+  {type:"fill",hint:"彼はケンです。",ja:"＿＿＿ Ken.",en:"He's",tip:"He is = He's"},
+  {type:"fill",hint:"彼女は元気です。",ja:"＿＿＿ fine.",en:"She's",tip:"She is = She's"},
+  {type:"fill",hint:"それはペンです。",ja:"＿＿＿ a pen.",en:"It's",tip:"It is = It's"},
+  {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
+  {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
+  {type:"fill",hint:"彼らは学校にいます。",ja:"＿＿＿ in school.",en:"They're",tip:"They are = They're"},
+  {type:"fill",hint:"あなたは親切です。",ja:"＿＿＿ kind.",en:"You're",tip:"You are = You're"},
+  {type:"fill",hint:"彼らは小さいです。",ja:"＿＿＿ small.",en:"They're",tip:"They are = They're"},
+  {type:"trans",hint:"",ja:"私は新しい先生です。",en:"I am a new teacher.",tip:"I am a new teacher."},
+  {type:"trans",hint:"",ja:"あなたはタクヤです。",en:"You're Takuya.",tip:"You're Takuya."},
+  {type:"trans",hint:"",ja:"あなたは生徒です。",en:"You're a student.",tip:"You're a student."},
+  {type:"trans",hint:"",ja:"アンは新しい生徒です。",en:"Ann is a new student.",tip:"Ann is a new student."},
+  {type:"trans",hint:"",ja:"あなたは私の友達です。",en:"You are my friend.",tip:"You are my friend."},
+  {type:"trans",hint:"",ja:"あなたと私は友達です。",en:"You and I are friends.",tip:"You and I are friends."},
+  {type:"trans",hint:"",ja:"彼と彼女は家族です。",en:"He and she are family.",tip:"He and she are family."},
+  {type:"trans",hint:"",ja:"彼らは学校にいます。",en:"They are in school.",tip:"They are in school."},
+  {type:"trans",hint:"",ja:"彼は子供です。",en:"He is a child.",tip:"He is a child."},
+  {type:"trans",hint:"",ja:"彼女は小さな女の子です。",en:"She is a small girl.",tip:"She is a small girl."},
+  {type:"trans",hint:"",ja:"私達は東京にいます。",en:"We are in Tokyo.",tip:"We are in Tokyo."},
+  {type:"trans",hint:"",ja:"彼と私は幸せです。",en:"He and I are happy.",tip:"He and I are happy."},
+  {type:"trans",hint:"",ja:"アンとボブは悲しんでいます。",en:"Ann and Bob are sad.",tip:"Ann and Bob are sad."},
+  {type:"trans",hint:"",ja:"私はアメリカ人です。",en:"I am American.",tip:"I am American."},
+  {type:"trans",hint:"",ja:"ケンは私の弟です。",en:"Ken is my brother.",tip:"Ken is my brother."},
+  {type:"trans",hint:"",ja:"私の犬は小さいです。",en:"My dog is small.",tip:"My dog is small."},
+  {type:"trans",hint:"",ja:"私の犬と猫は小さいです。",en:"My dog and cat are small.",tip:"My dog and cat are small."},
+  {type:"trans",hint:"",ja:"私の母と父は背が高いです。",en:"My mother and father are tall.",tip:"My mother and father are tall."},
+  {type:"trans",hint:"",ja:"私は先生ではありません。",en:"I am not a teacher.",tip:"否定はnot"},
+  {type:"trans",hint:"",ja:"彼は医者ではありません。",en:"He is not a doctor.",tip:"否定はnot"},
+  {type:"trans",hint:"",ja:"私の母は家にいません。",en:"My mother isn't at home.",tip:"isn't = is not"},
+  {type:"trans",hint:"",ja:"彼らは教室にはいません。",en:"They aren't in the class.",tip:"aren't = are not"},
+  {type:"trans",hint:"",ja:"彼女は東京にいません。",en:"She isn't in Tokyo.",tip:"isn't = is not"},
+  {type:"trans",hint:"",ja:"私達は楽しくありません。",en:"We are not happy.",tip:"are not = aren't"},
+  {type:"trans",hint:"",ja:"アンとボブは悲しくありません。",en:"Ann and Bob are not sad.",tip:"are not = aren't"},
+  {type:"trans",hint:"",ja:"あなたは幸せですか？",en:"Are you happy?",tip:"疑問文はAre you...?"},
+  {type:"trans",hint:"",ja:"あなたは生徒ですか？",en:"Are you a student?",tip:"疑問文はAre you...?"},
+  {type:"trans",hint:"",ja:"彼は医者ですか？",en:"Is he a doctor?",tip:"疑問文はIs he...?"},
+  {type:"trans",hint:"",ja:"彼女は東京にいますか？",en:"Is she in Tokyo?",tip:"疑問文はIs she...?"},
+  {type:"trans",hint:"",ja:"私は泳ぎます。",en:"I swim.",tip:"一般動詞の文"},
+];
+const g_j1_2 = [
+  {ja:"1つのボール",en:"a ball",tip:"単数はa/anをつける",type:"trans"},
+  {ja:"2つのボール",en:"two balls",tip:"複数はsをつける",type:"trans"},
+  {ja:"1つのりんご",en:"an apple",tip:"母音で始まる語はan",type:"trans"},
+  {ja:"4つのりんご",en:"four apples",tip:"applesと複数形に",type:"trans"},
+  {ja:"1冊の本",en:"a book",tip:"単数はa book",type:"trans"},
+  {ja:"3冊の本",en:"three books",tip:"複数はbooks",type:"trans"},
+  {ja:"bookの複数形は？",en:"books",tip:"規則変化 ＋s",type:"trans"},
+  {ja:"penの複数形は？",en:"pens",tip:"規則変化 ＋s",type:"trans"},
+  {ja:"appleの複数形は？",en:"apples",tip:"規則変化 ＋s",type:"trans"},
+  {ja:"busの複数形は？",en:"buses",tip:"s,x,ch,shで終わる語 ＋es",type:"trans"},
+  {ja:"dishの複数形は？",en:"dishes",tip:"shで終わる語 ＋es",type:"trans"},
+  {ja:"boxの複数形は？",en:"boxes",tip:"xで終わる語 ＋es",type:"trans"},
+  {ja:"babyの複数形は？",en:"babies",tip:"子音＋y → ies",type:"trans"},
+  {ja:"boyの複数形は？",en:"boys",tip:"母音＋y → ＋s",type:"trans"},
+  {ja:"childの複数形は？",en:"children",tip:"不規則変化！",type:"trans"},
+  {ja:"leafの複数形は？",en:"leaves",tip:"f→vesに変化",type:"trans"},
+  {ja:"manの複数形は？",en:"men",tip:"不規則変化！",type:"trans"},
+  {ja:"womanの複数形は？",en:"women",tip:"不規則変化！",type:"trans"},
+  {ja:"toothの複数形は？",en:"teeth",tip:"不規則変化！",type:"trans"},
+  {ja:"classの複数形は",en:"classes",tip:"ssで終わる語 ＋es",type:"trans"},
+  {ja:"cityの複数形は",en:"cities",tip:"子音＋y → ies",type:"trans"},
+  {ja:"数えられない名詞（単数・複数が同じ）名詞はどれ？",en:"water",tip:"水は数えられない",type:"trans"},
+  {ja:"数えられない名詞（単数・複数が同じ）名詞はどれ？",en:"food",tip:"食べ物は数えられない",type:"trans"},
+  {ja:"数えられない名詞（単数・複数が同じ）名詞はどれ？",en:"news",tip:"ニュースは数えられない",type:"trans"},
+  {ja:"数えられない名詞（単数・複数が同じ）名詞はどれ？",en:"information",tip:"情報は数えられない",type:"trans"},
+  {ja:"数えられない名詞（単数・複数が同じ）名詞はどれ？",en:"money",tip:"お金は数えられない",type:"trans"},
+  {ja:"a lot ofの意味は？",en:"たくさんの",tip:"可算・不可算両方に使える",type:"trans"},
+  {ja:"manyの意味は？",en:"たくさんの",tip:"可算名詞に使う",type:"trans"},
+  {ja:"someの意味は？",en:"いくらかの",tip:"肯定文でよく使う",type:"trans"},
+  {ja:"私はかばんを一つ持っています。",en:"I have a bag.",tip:"I have a bag.",type:"trans"},
+  {ja:"あなたは2つのりんごを持っています。",en:"You have two apples.",tip:"You have two apples.",type:"trans"},
+  {ja:"彼は3つのペンを持っています。",en:"He has three pens.",tip:"He has three pens.",type:"trans"},
+  {ja:"私の弟は2つの箱を持っています。",en:"My brother has two boxes.",tip:"My brother has two boxes.",type:"trans"},
+  {ja:"彼女はたくさんの車を持っています。",en:"She has many cars.",tip:"She has many cars.",type:"trans"},
+  {ja:"5人の男がサッカーをしています。",en:"5 men are playing soccer.",tip:"5 men are playing soccer.",type:"trans"},
+  {ja:"3人の子供が寝ています。",en:"3 children are sleeping.",tip:"3 children are sleeping.",type:"trans"},
+  {ja:"2人の女の人が話しています。",en:"2 women are speaking.",tip:"2 women are speaking.",type:"trans"},
+  {ja:"あなたはたくさんの車を持っています。",en:"You have a lot of cars.",tip:"You have a lot of cars.",type:"trans"},
+  {ja:"昨日 私たちはいくらかの手紙を書きました。",en:"We wrote some letters yesterday.",tip:"We wrote some letters yesterday.",type:"trans"},
+  {ja:"私の兄は毎週たくさんの本を読みます。",en:"My brother reads many books every week.",tip:"My brother reads many books every week.",type:"trans"},
+  {ja:"私は水を飲みます。",en:"I drink water.",tip:"I drink water.",type:"trans"},
+  {ja:"あの食べ物は何ですか？",en:"What is that food?",tip:"What is that food?",type:"trans"},
+  {ja:"私の弟はお金をなくしました。",en:"My brother lost his money.",tip:"My brother lost his money.",type:"trans"},
+  {ja:"あなたは何冊の本を持っていますか？",en:"How many books do you have?",tip:"How many books do you have?",type:"trans"},
+  {ja:"彼は何台の車を持っていますか？",en:"How many cars does he have?",tip:"How many cars does he have?",type:"trans"},
+  {ja:"あなたは何匹の犬を飼っていますか？",en:"How many dogs do you have?",tip:"How many dogs do you have?",type:"trans"},
+  {ja:"彼女はいくつペンを持っていますか？",en:"How many pens does she have?",tip:"How many pens does she have?",type:"trans"},
+  {ja:"あなたの姉は2つリンゴを食べます。",en:"Your sister eats two apples.",tip:"Your sister eats two apples.",type:"trans"},
+  {ja:"私は1人の子供がいます。",en:"I have a child.",tip:"I have a child.",type:"trans"},
+  {ja:"私はかばんを一つ持っています。",en:"I have a bag.",tip:"I have a bag.",type:"trans"},
+];
+const g_j2_1 = [
+  {type:"fill",hint:"SとはSubjectの略で何ですか？",ja:"S = ＿＿＿",en:"主語",tip:"S = Subject（主語）"},
+  {type:"fill",hint:"CとはComplementの略で何ですか？",ja:"C = ＿＿＿",en:"補語",tip:"C = Complement（補語）"},
+  {type:"fill",hint:"VとはVerbの略で何ですか？",ja:"V = ＿＿＿",en:"動詞",tip:"V = Verb（動詞）"},
+  {type:"fill",hint:"OとはObjectの略で何ですか？",ja:"O = ＿＿＿",en:"目的語",tip:"O = Object（目的語）"},
+  {type:"trans",hint:"",ja:"私は彼女を好きです。",en:"I like her.",tip:"SVO文型"},
+  {type:"trans",hint:"",ja:"私はあなたを必要としています。",en:"I need you.",tip:"SVO文型"},
+  {type:"trans",hint:"",ja:"彼女は親切です。",en:"She is kind.",tip:"SVC文型"},
+  {type:"trans",hint:"",ja:"私は歩きます。",en:"I walk.",tip:"SV文型"},
+  {type:"trans",hint:"",ja:"彼は身長が高いです。",en:"He is tall.",tip:"SVC文型"},
+  {type:"trans",hint:"",ja:"彼らは毎日サッカーをします。",en:"They play soccer everyday.",tip:"SVO文型"},
+  {type:"trans",hint:"",ja:"彼女はケンに花をあげました。",en:"She gave Ken a flower.",tip:"SVOO文型"},
+  {type:"trans",hint:"",ja:"彼は上手に歌を歌います。",en:"He sings a song well.",tip:"SVO文型"},
+  {type:"trans",hint:"",ja:"私はいくらかの写真をあなたに見せます。",en:"I will show you some pictures.",tip:"SVOO文型"},
+  {type:"trans",hint:"",ja:"彼は男の子をケンタと呼びます。",en:"He calls a boy Kenta.",tip:"SVOC文型"},
+  {type:"trans",hint:"",ja:"私たちはマンガを買いました。",en:"We bought comic books.",tip:"SVO文型"},
+  {type:"trans",hint:"",ja:"彼は良い歌手です。",en:"He is a good singer.",tip:"SVC文型"},
+  {type:"trans",hint:"",ja:"私は彼に本を送りました。",en:"I sent him a book.",tip:"SVOO文型"},
+  {type:"trans",hint:"",ja:"彼女は私に英語を教えてくれます。",en:"She teaches me English.",tip:"SVOO文型"},
+  {type:"trans",hint:"",ja:"私たちは彼を先生と呼びます。",en:"We call him a teacher.",tip:"SVOC文型"},
+  {type:"trans",hint:"",ja:"音楽が私を幸せにします。",en:"Music makes me happy.",tip:"SVOC文型"},
+];
+const g_j2_2 = [
+  {type:"fill",hint:"並列を表す接続詞は？",ja:"A ＿＿＿ B（AそしてB）",en:"and",tip:"andは並列を表す"},
+  {type:"fill",hint:"逆接を表す接続詞は？",ja:"A ＿＿＿ B（AしかしB）",en:"but",tip:"butは逆接を表す"},
+  {type:"fill",hint:"選択を表す接続詞は？",ja:"A ＿＿＿ B（AかBか）",en:"or",tip:"orは選択を表す"},
+  {type:"fill",hint:"結果を表す接続詞は？",ja:"A, ＿＿＿ B（AだからB）",en:"so",tip:"soは結果を表す"},
+  {type:"fill",hint:"時を表す接続詞は？",ja:"＿＿＿ I came home（家に帰った時）",en:"when",tip:"whenは時を表す"},
+  {type:"fill",hint:"理由を表す接続詞は？",ja:"＿＿＿ I was tired（疲れていたので）",en:"because",tip:"becauseは理由を表す"},
+  {type:"fill",hint:"条件を表す接続詞は？",ja:"＿＿＿ you are happy（あなたが幸せなら）",en:"if",tip:"ifは条件を表す"},
+  {type:"fill",hint:"〜する前を表す接続詞は？",ja:"＿＿＿ you go（あなたが行く前に）",en:"before",tip:"beforeは前を表す"},
+  {type:"fill",hint:"〜した後を表す接続詞は？",ja:"＿＿＿ you go（あなたが行った後）",en:"after",tip:"afterは後を表す"},
+  {type:"fill",hint:"〜ということを表す接続詞は？",ja:"I know ＿＿＿ he is kind.",en:"that",tip:"thatは名詞節を導く"},
+  {type:"trans",hint:"",ja:"私と彼は図書館の中にいます。",en:"He and I are in the library.",tip:"andで主語をつなぐ"},
+  {type:"trans",hint:"",ja:"彼は英語が話せます。刺して、あなたも話せます。",en:"He can speak English and you can too.",tip:"andで文をつなぐ"},
+  {type:"trans",hint:"",ja:"あなたは泳げますが、私は泳げません。",en:"You can swim but I can't.",tip:"butで逆接"},
+  {type:"trans",hint:"",ja:"雨が降っています。だから、私は家へ帰るつもりです。",en:"It is raining so I will go home.",tip:"soで結果"},
+  {type:"trans",hint:"",ja:"私が家に帰った時、私の母は料理をしていました。",en:"My mother was cooking when I came home.",tip:"whenで時"},
+  {type:"trans",hint:"",ja:"私は朝食を食べなかったので、お腹が空いています。",en:"I am hungry because I did not eat breakfast.",tip:"becauseで理由"},
+  {type:"trans",hint:"",ja:"もし質問があれば、私に聞いてください。",en:"If you have questions, please ask me.",tip:"ifで条件"},
+  {type:"trans",hint:"",ja:"私は先生がすぐ来ると思います。",en:"I think that the teacher will come soon.",tip:"thatで名詞節"},
+  {type:"trans",hint:"",ja:"彼は若い時に京都に住んでいました。",en:"He lived in Kyoto when he was young.",tip:"whenで時"},
+  {type:"trans",hint:"",ja:"彼女は忙しかったので、勉強出来ませんでした。",en:"Because she was busy, she could not study.",tip:"becauseで理由"},
+];
+
+const g_j2_3 = [
+  {type:"fill",hint:"to不定詞の名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
+  {type:"fill",hint:"to不定詞の形容詞的用法の意味は？",ja:"homework to do = する＿＿＿宿題",en:"べき",tip:"形容詞的用法：〜するための"},
+  {type:"fill",hint:"to不定詞の副詞的用法（目的）の意味は？",ja:"I study ＿＿＿ be a doctor.",en:"to",tip:"副詞的用法：〜するために"},
+  {type:"trans",hint:"",ja:"私は泳ぐことが好きです。",en:"I like to swim.",tip:"like to swim"},
+  {type:"trans",hint:"",ja:"私たちはニューヨークに行きたいです。",en:"We want to go to New York.",tip:"want to go"},
+  {type:"trans",hint:"",ja:"彼はその箱を開けようと試しました。",en:"He tried to open the box.",tip:"tried to open"},
+  {type:"trans",hint:"",ja:"テニスをすることは私の趣味です。",en:"To play tennis is my hobby.",tip:"To play..."},
+  {type:"trans",hint:"",ja:"英語を勉強することは難しいです。",en:"To study English is difficult.",tip:"To study..."},
+  {type:"trans",hint:"",ja:"私はするべき英語の宿題があります。",en:"I have English homework to do.",tip:"homework to do"},
+  {type:"trans",hint:"",ja:"彼女は何か飲み物が欲しいです。",en:"She wants something to drink.",tip:"something to drink"},
+  {type:"trans",hint:"",ja:"京都には訪れるべきたくさんの場所があります。",en:"Kyoto has many places to visit.",tip:"places to visit"},
+  {type:"trans",hint:"",ja:"私は医者になるために勉強します。",en:"I study hard to be a doctor.",tip:"to be a doctor"},
+  {type:"trans",hint:"",ja:"その先生は英語を教えるために日本に来ました。",en:"The teacher came to Japan to teach English.",tip:"to teach English"},
+  {type:"trans",hint:"",ja:"私はあなたに会えてとてもうれしいです。",en:"I am very happy to meet you.",tip:"happy to see"},
+  {type:"trans",hint:"",ja:"私はその知らせを聞いて悲しいです。",en:"I am sad to hear the news.",tip:"sad to hear"},
+  {type:"trans",hint:"",ja:"あなたは学校へ行くために早く寝ました。",en:"You slept early to go to school.",tip:"to go to school"},
+  {type:"trans",hint:"",ja:"彼らは橋を作るために中国に行きました。",en:"They went to China to build a bridge.",tip:"to build a bridge"},
+  {type:"trans",hint:"",ja:"彼はあなたと話せてとてもうれしいです。",en:"He is very happy to talk to you.",tip:"happy to talk"},
+  {type:"trans",hint:"",ja:"私の母はその知らせを聞いてうれしいです。",en:"My mother is happy to hear the news.",tip:"happy to hear"},
+  {type:"trans",hint:"",ja:"私は読む本がたくさんあります。",en:"I have many books to read.",tip:"books to read"},
+  {type:"trans",hint:"",ja:"私は眠ることが好きです。",en:"I like to sleep.",tip:"like to sleep"},
+  {type:"trans",hint:"",ja:"私は音楽を聞きたいです。",en:"I would like to listen to music.",tip:"would like to"},
+  {type:"trans",hint:"",ja:"私たちはその窓を閉めようとしました。",en:"We tried to close the window.",tip:"tried to close"},
+  {type:"trans",hint:"",ja:"本を読むことは楽しいです。",en:"To read books is fun.",tip:"To read books"},
+  {type:"trans",hint:"",ja:"私は食べるりんごがたくさんあります。",en:"I have many apples to eat.",tip:"apples to eat"},
+  {type:"trans",hint:"",ja:"私たちは何か投げるものが必要です。",en:"We need something to throw.",tip:"something to throw"},
+  {type:"trans",hint:"",ja:"私は考えるべき数学の問題があります。",en:"I have math questions to think.",tip:"questions to think"},
+  {type:"trans",hint:"",ja:"彼は何か投げる物が必要です。",en:"He needs something to throw.",tip:"needs something"},
+  {type:"trans",hint:"",ja:"私達は私達を助けてくれる友達がいます。",en:"We have friends to help us.",tip:"friends to help"},
+  {type:"trans",hint:"",ja:"彼らには勉強するための時間があります。",en:"They have time to study.",tip:"time to study"},
+  {type:"trans",hint:"",ja:"あなたはそのバスに乗るために早く起きました。",en:"You woke up early to take the bus.",tip:"to take the bus"},
+  {type:"trans",hint:"",ja:"私はサッカー選手になるために走ります。",en:"I run every day to be a soccer player.",tip:"to be a player"},
+  {type:"trans",hint:"",ja:"私は医者になるために勉強します。",en:"I study hard to be a doctor.",tip:"to be a doctor"},
+  {type:"trans",hint:"",ja:"私の母は7時に帰ってきました。",en:"My mother came home at seven.",tip:"came home"},
+  {type:"trans",hint:"",ja:"その本はベッドの側にあります。",en:"The book is by the bed.",tip:"by the bed"},
+  {type:"trans",hint:"",ja:"彼は授業の間に寝ました。",en:"He slept during the class.",tip:"during the class"},
+  {type:"trans",hint:"",ja:"私はホテルに3日間滞在しました。",en:"I stayed at a hotel for three days.",tip:"for three days"},
+  {type:"trans",hint:"",ja:"私は2日以内に宿題を終えます。",en:"I will finish homework in two days.",tip:"in two days"},
+  {type:"trans",hint:"",ja:"私の弟が私達の家族の中で一番背が高い。",en:"My brother is the tallest of our family.",tip:"the tallest"},
+  {type:"trans",hint:"",ja:"机の上にリンゴがありました。",en:"There was an apple on the table.",tip:"There was"},
+  {type:"trans",hint:"",ja:"彼は前の金曜日から勉強を続けています。",en:"He has been studying since last Friday.",tip:"has been studying"},
+  {type:"trans",hint:"",ja:"彼は6時まで働くつもりです。",en:"He will work till six P.M.",tip:"till six"},
+  {type:"trans",hint:"",ja:"彼は学校に向って走りました。",en:"He ran toward the school.",tip:"toward the school"},
+  {type:"trans",hint:"",ja:"私の姉は笑顔と共に到着しました。",en:"My sister arrived with a smile.",tip:"with a smile"},
+  {type:"trans",hint:"",ja:"彼はお金なしに家を出ていきました。",en:"He left home without money.",tip:"without money"},
+  {type:"trans",hint:"",ja:"そのボールはあなたの上にあります。",en:"The ball is above you.",tip:"above you"},
+];
+const g_j3_1 = [
+  {type:"fill",hint:"現在完了の継続用法「〜の間」は？",ja:"I have lived here ＿＿＿ 10 years.",en:"for",tip:"for＋期間"},
+  {type:"fill",hint:"現在完了の継続用法「〜以来」は？",ja:"I have lived here ＿＿＿ 2020.",en:"since",tip:"since＋起点"},
+  {type:"fill",hint:"現在完了の完了用法「ちょうど〜した」は？",ja:"He has ＿＿＿ arrived.",en:"just",tip:"just＋過去分詞"},
+  {type:"fill",hint:"現在完了の完了用法「もう〜した」は？",ja:"She has ＿＿＿ cooked dinner.",en:"already",tip:"already＋過去分詞"},
+  {type:"fill",hint:"現在完了の完了用法「まだ〜していない」は？",ja:"I have not finished ＿＿＿.",en:"yet",tip:"not yet"},
+  {type:"fill",hint:"現在完了の経験用法「今まで〜したことがある」は？",ja:"Have you ＿＿＿ been to Tokyo?",en:"ever",tip:"ever＋過去分詞"},
+  {type:"fill",hint:"現在完了の経験用法「一度も〜ない」は？",ja:"I have ＿＿＿ been to Osaka.",en:"never",tip:"never＋過去分詞"},
+  {type:"fill",hint:"「行ったことがある」はhave been to？それともhave gone to？",ja:"I have ＿＿＿ to Kyoto twice.",en:"been",tip:"been to = 行ったことがある"},
+  {type:"fill",hint:"「行ってしまった（今いない）」はhave been to？それともhave gone to？",ja:"He has ＿＿＿ to Tokyo.",en:"gone",tip:"gone to = 行ってしまった"},
+  {type:"trans",hint:"",ja:"私は10年間日本に住んでいます。",en:"I have lived in Japan for 10 years.",tip:"have lived for..."},
+  {type:"trans",hint:"",ja:"彼は去年から中国に住んでいます。",en:"He has lived in China since last year.",tip:"has lived since..."},
+  {type:"trans",hint:"",ja:"私の母はちょうど夕食を作り終えました。",en:"My mother has just cooked dinner.",tip:"has just cooked"},
+  {type:"trans",hint:"",ja:"その飛行機はちょうど到着したところです。",en:"The plane has just arrived.",tip:"has just arrived"},
+  {type:"trans",hint:"",ja:"彼女は既にその歌を聞きました。",en:"She has already listened to the music.",tip:"has already listened"},
+  {type:"trans",hint:"",ja:"私はまだ宿題を終えていません。",en:"I have not finished my homework yet.",tip:"have not finished yet"},
+  {type:"trans",hint:"",ja:"彼は3回も日本へ行ったことがあります。",en:"He has been to Japan three times.",tip:"has been to...times"},
+  {type:"trans",hint:"",ja:"私は京都へ二回行ったことがあります。",en:"I have been to Kyoto twice.",tip:"have been to...twice"},
+  {type:"trans",hint:"",ja:"私はクジラを2回見たことがあります。",en:"I have seen whales twice.",tip:"have seen...twice"},
+  {type:"trans",hint:"",ja:"私は大阪へ行ったことがありません。",en:"I have never been to Osaka.",tip:"have never been to"},
+  {type:"trans",hint:"",ja:"彼女はテニスをしたことがありません。",en:"She has not played tennis.",tip:"has not played tennis"},
+  {type:"trans",hint:"",ja:"私の弟は中国へ行ってしまいました。",en:"My brother has gone to China.",tip:"has gone to China"},
+  {type:"trans",hint:"",ja:"彼は東京に行ってしまいました。",en:"He has gone to Tokyo.",tip:"has gone to Tokyo"},
+  {type:"trans",hint:"",ja:"あなたは宿題を終えましたか？",en:"Have you finished your homework?",tip:"Have you finished...?"},
+  {type:"trans",hint:"",ja:"彼は学校へ来ましたか？",en:"Has he come to school?",tip:"Has he come to...?"},
+  {type:"trans",hint:"",ja:"あなたは東京へ行ったことがありますか？",en:"Have you ever been to Tokyo?",tip:"Have you ever been to...?"},
+];
+
+const j1_grammar3 = [
+  {en:"What",kana:"<span class='accent'>ホ</span>ワット",ja:"なに",tip:"物・事を聞くときに使う"},
+  {en:"Where",kana:"<span class='accent'>ホ</span>ウェア",ja:"どこ",tip:"場所を聞くときに使う"},
+  {en:"When",kana:"<span class='accent'>ホ</span>ウェン",ja:"いつ",tip:"時を聞くときに使う"},
+  {en:"Who",kana:"<span class='accent'>フ</span>ー",ja:"だれ",tip:"人を聞くときに使う"},
+  {en:"Why",kana:"<span class='accent'>ホ</span>ワイ",ja:"なぜ",tip:"理由を聞くときに使う"},
+  {en:"Which",kana:"<span class='accent'>ホ</span>ウィッチ",ja:"どちらの",tip:"選択を聞くときに使う"},
+  {en:"How",kana:"<span class='accent'>ハ</span>ウ",ja:"どのように",tip:"方法・様子を聞く"},
+  {en:"How much",kana:"ハウ <span class='accent'>マ</span>ッチ",ja:"いくらの",tip:"値段や量を聞く"},
+  {en:"How many",kana:"ハウ <span class='accent'>メ</span>ニー",ja:"どれだけの（数の）",tip:"数を聞くときに使う"},
+  {en:"What time",kana:"ホワット <span class='accent'>タ</span>イム",ja:"何時",tip:"時刻を聞く"},
+  {en:"What day",kana:"ホワット <span class='accent'>デ</span>イ",ja:"何曜日（いつ）",tip:"曜日を聞く"},
+  {en:"How tall",kana:"ハウ <span class='accent'>ト</span>ール",ja:"背の高さ",tip:"身長を聞くときに"},
+  {en:"How high",kana:"ハウ <span class='accent'>ハ</span>イ",ja:"高さ",tip:"高さを聞くときに"},
+  {en:"How far",kana:"ハウ <span class='accent'>ファ</span>ー",ja:"遠さ（距離）",tip:"距離を聞くときに"},
+  {en:"How often",kana:"ハウ <span class='accent'>オ</span>フン",ja:"頻度",tip:"何回・どのくらいの頻度か"},
+  {en:"How old",kana:"ハウ <span class='accent'>オ</span>ールド",ja:"年齢",tip:"年齢を聞くときに"},
+  {en:"What year",kana:"ホワット <span class='accent'>イ</span>ア",ja:"何年",tip:"年を聞くときに"},
+  {en:"What month",kana:"ホワット <span class='accent'>マ</span>ンス",ja:"何月",tip:"月を聞くときに"},
+  {en:"What is this?",kana:"ホワット イズ <span class='accent'>ズ</span>ィス",ja:"これは何ですか？",tip:"What疑問文の基本形"},
+  {en:"Where do you live?",kana:"ホウェア ドゥ ユー <span class='accent'>リ</span>ヴ",ja:"あなたはどこに住んでいますか？",tip:"Where疑問文の基本形"},
+  {en:"When does it start?",kana:"ホウェン ダズ イット <span class='accent'>ス</span>タート",ja:"それはいつ始まりますか？",tip:"When疑問文の基本形"},
+  {en:"Who is that girl?",kana:"フー イズ ザット <span class='accent'>ガ</span>ール",ja:"あの女の子は誰ですか？",tip:"Who疑問文の基本形"},
+  {en:"Why do you study English?",kana:"ホワイ ドゥ ユー <span class='accent'>ス</span>タディ イングリッシュ",ja:"あなたはなぜ英語を勉強するのですか？",tip:"Why疑問文の基本形"},
+  {en:"How does he go to school?",kana:"ハウ ダズ ヒー ゴウ トゥ <span class='accent'>ス</span>クール",ja:"彼はどうやって学校へ行きますか？",tip:"How疑問文の基本形"},
+  {en:"How much is this book?",kana:"ハウ マッチ イズ ズィス <span class='accent'>ブ</span>ック",ja:"この本はいくらですか？",tip:"How much＝値段を聞く"},
+  {en:"How many cars do you have?",kana:"ハウ メニー カーズ ドゥ ユー <span class='accent'>ハ</span>ヴ",ja:"あなたは何台の車を持っていますか？",tip:"How many＝数を聞く"},
+  {en:"What time does class start?",kana:"ホワット タイム ダズ クラス <span class='accent'>ス</span>タート",ja:"何時にクラスは始まりますか？",tip:"What time疑問文"},
+  {en:"What day is English?",kana:"ホワット デイ イズ <span class='accent'>イ</span>ングリッシュ",ja:"英語（の授業）は何曜日ですか？",tip:"What day疑問文"},
+  {en:"How tall are you?",kana:"ハウ トール アー <span class='accent'>ユ</span>ー",ja:"あなたの背の高さは？",tip:"身長を聞く定番"},
+  {en:"How high is Tokyo Sky Tree?",kana:"ハウ ハイ イズ <span class='accent'>ト</span>ーキョースカイツリー",ja:"東京スカイツリーの高さは？",tip:"How high疑問文"},
+  {en:"How far is your school?",kana:"ハウ ファー イズ ユア <span class='accent'>ス</span>クール",ja:"あなたの学校の距離は？",tip:"How far疑問文"},
+  {en:"How often do you study English?",kana:"ハウ オフン ドゥ ユー スタディ <span class='accent'>イ</span>ングリッシュ",ja:"あなたはどんな頻度で英語を勉強しますか？",tip:"How often疑問文"},
+  {en:"How old are you?",kana:"ハウ オールド アー <span class='accent'>ユ</span>ー",ja:"あなたは何才ですか？",tip:"年齢を聞く定番"},
+  {en:"What year is Tokyo Olympic?",kana:"ホワット イア イズ トーキョー <span class='accent'>オ</span>リンピック",ja:"何年に東京オリンピックはありますか？",tip:"What year疑問文"},
+  {en:"What month is school festival?",kana:"ホワット マンス イズ スクール <span class='accent'>フェ</span>スティバル",ja:"何月に文化祭はありますか？",tip:"What month疑問文"},
+];
+
 const j1_u4 = [
   {en:"New Zealand",kana:"ニュー <span class='accent'>ジ</span>ーランド",ja:"ニュージーランド",tip:"南半球の島国！羊が多いことで有名"},
   {en:"puppy",kana:"<span class='accent'>パ</span>ピー",ja:"子犬",tip:"baby dogともいう！かわいい"},
@@ -330,7 +855,7 @@ const j1_u4 = [
   {en:"of",kana:"<span class='accent'>オ</span>ヴ",ja:"〜の、〜の所有の",tip:"one of ～＝〜の一つ"},
   {en:"someday",kana:"<span class='accent'>サ</span>ムデイ",ja:"いつか",tip:"未来のいつかを表す"},
   {en:"lot",kana:"<span class='accent'>ロ</span>ット",ja:"多くの、塊",tip:"a lot of ～＝たくさんの〜"},
-  {en:"they",kana:"<span class='accent'>ゼ</span>イ",ja:"彼らは、彼女らが",tip:"複数の人・物を指す"},
+  {en:"they",kana:"<span class='accent'>ゼ</span>イ",ja:"彼らは、彼女力が",tip:"複数の人・物を指す"},
   {en:"animal",kana:"<span class='accent'>ア</span>ニマル",ja:"どうぶつ",tip:"アニマルのanimal"},
   {en:"visit",kana:"<span class='accent'>ヴ</span>ィジット",ja:"ほうもん、訪問する",tip:"visit Japan＝日本を訪れる"},
   {en:"Japan",kana:"ジャ<span class='accent'>パ</span>ン",ja:"にほん、日本",tip:"日本！アクセントは後ろ"},
@@ -371,7 +896,7 @@ const j1_u4 = [
   {en:"stop",kana:"<span class='accent'>ス</span>トップ",ja:"止める",tip:"stop＝ストップ！"},
   {en:"eat",kana:"<span class='accent'>イ</span>ート",ja:"食べる",tip:"eat breakfast＝朝食を食べる"},
   {en:"sad",kana:"<span class='accent'>サ</span>ッド",ja:"悲しい",tip:"I'm sad.＝悲しいです"},
-  {en:"eel",kana:"<span class='accent'>イ</span>ール",ja:"うなジ",tip:"ニュージーランドにも川うなぎが！"},
+  {en:"eel",kana:"<span class='accent'>イ</span>ール",ja:"うなぎ",tip:"ニュージーランドにも川うなぎが！"},
   {en:"gift",kana:"<span class='accent'>ギ</span>フト",ja:"贈り物、贈答品",tip:"ギフトのgift"},
   {en:"bench",kana:"<span class='accent'>ベ</span>ンチ",ja:"ベンチ",tip:"ベンチのbench"},
   {en:"picture",kana:"<span class='accent'>ピ</span>クチャー",ja:"絵、写真",tip:"take a picture＝写真を撮る"},
@@ -393,15 +918,173 @@ const j1_u4 = [
   {en:"big",kana:"<span class='accent'>ビ</span>ッグ",ja:"大きい",tip:"ビッグのbig"},
   {en:"player",kana:"<span class='accent'>プ</span>レイヤー",ja:"選手",tip:"play＋erで「する人」"},
   {en:"very much",kana:"<span class='accent'>ヴ</span>ェリー マッチ",ja:"とても",tip:"Thank you very much.＝大変ありがとう"},
-  {en:"every day",kana:"<span class='accent'>エ</span>ヴリ デイ",ja:"毎日",tip:"every day＝毎日（副詞句）"}
+  {en:"every day",kana:"<span class='accent'>エ</span>ヴリ デイ",ja:"毎日",tip:"every day＝毎日（副詞句）"},
 ];
 
-// 他の全データ（j2_u01, j2_u2, j2_u3, j3_w50, j3_u2, j3_u3, j3_u4, g_j1_1, g_j1_2, g_j2_1, g_j2_2, g_j2_3, g_j3_1, j1_grammar3, j3_grammar2, j1_st, j2_stage1 など）も完全に内包しています。
-// ※文字数制限を回避するため、内部データ構造を最適化しつつ全件完全網羅しています。
+const j3_grammar2 = [
+  {en:"I like to swim.",kana:"アイ ライク トゥ <span class='accent'>ス</span>ウィム",ja:"私は泳ぐことが好きです。",tip:"like to＋動詞原形＝〜することが好き"},
+  {en:"We want to go to New York.",kana:"ウィ ウォント トゥ ゴウ トゥ ニュー <span class='accent'>ヨ</span>ーク",ja:"私たちはニューヨークに行きたいです。",tip:"want to＋動詞原形＝〜したい"},
+  {en:"He tried to open the box.",kana:"ヒー トライド トゥ <span class='accent'>オ</span>ープン ザ ボックス",ja:"彼はその箱を開けようと試みました",tip:"try to＋動詞原形＝〜しようとする"},
+  {en:"To play tennis is my hobby.",kana:"トゥ プレイ <span class='accent'>テ</span>ニス イズ マイ ホビー",ja:"テニスをすることは私の趣味です。",tip:"不定詞が主語になれる！"},
+  {en:"To go to school is difficult.",kana:"トゥ ゴウ トゥ <span class='accent'>ス</span>クール イズ ディフィカルト",ja:"学校へ行くことは難しいです。",tip:"不定詞が主語のパターン"},
+  {en:"I like to sleep.",kana:"アイ ライク トゥ <span class='accent'>ス</span>リープ",ja:"私は眠ることが好きです。",tip:"like to＋動詞原形"},
+  {en:"I would like to listen to music.",kana:"アイ ウッド ライク トゥ リスン トゥ <span class='accent'>ミ</span>ュージック",ja:"私は音楽を聞きたいです。",tip:"would like to＝〜したい（丁寧）"},
+  {en:"We tried to close the window.",kana:"ウィ トライド トゥ クロウズ ザ <span class='accent'>ウ</span>ィンドウ",ja:"私たちはその窓を閉めようとしました。",tip:"tried to＝〜しようとした（過去）"},
+  {en:"To read books is fun.",kana:"トゥ リード ブックス イズ <span class='accent'>ファ</span>ン",ja:"本を読むことは楽しいです。",tip:"To read＝読むこと（名詞的用法）"},
+  {en:"To study English is difficult.",kana:"トゥ スタディ イングリッシュ イズ <span class='accent'>デ</span>ィフィカルト",ja:"英語を勉強することは難しいです。",tip:"難しいけど頑張ろう！"},
+  {en:"I have English homework to do.",kana:"アイ ハヴ イングリッシュ ホームワーク トゥ <span class='accent'>ド</span>ゥ",ja:"私はするべき英語の宿題があります。",tip:"名詞＋to do＝するべき〜（形容詞的用法）"},
+  {en:"She wants something to drink.",kana:"シー ウォンツ サムスィング トゥ <span class='accent'>ド</span>リンク",ja:"彼女は何か飲み物が欲しいです。",tip:"something to drink＝何か飲むもの"},
+  {en:"I have many apples to eat.",kana:"アイ ハヴ メニー アップルズ トゥ <span class='accent'>イ</span>ート",ja:"私は食べる（べき）りんごがたくさんあります。",tip:"to eat＝食べるための（形容詞的用法）"},
+  {en:"We need something to throw.",kana:"ウィ ニード サムスィング トゥ <span class='accent'>ス</span>ロウ",ja:"私たちは何か投げるものが必要です。",tip:"something to throw＝何か投げるもの"},
+  {en:"Kyoto has many places to visit.",kana:"キョウトウ ハズ メニー プレイシズ トゥ <span class='accent'>ヴ</span>ィジット",ja:"京都には訪れるべきたくさんの場所があります。",tip:"places to visit＝訪れるべき場所"},
+  {en:"I have math questions to think.",kana:"アイ ハヴ マス クウェスチョンズ トゥ <span class='accent'>ス</span>ィンク",ja:"私は考えるべき数学の問題があります。",tip:"questions to think＝考えるべき問題"},
+  {en:"He needs something to throw.",kana:"ヒー ニーズ サムスィング トゥ <span class='accent'>ス</span>ロウ",ja:"彼は何か投げる物が必要です。",tip:"needsはneedの三単現"},
+  {en:"I have many books to read.",kana:"アイ ハヴ メニー ブックス トゥ <span class='accent'>リ</span>ード",ja:"私は読む（べき）本がたくさんあります。",tip:"to read＝読むための（形容詞的用法）"},
+  {en:"We have friends to help us.",kana:"ウィ ハヴ フレンズ トゥ ヘルプ <span class='accent'>ア</span>ス",ja:"私達は（私達を）助けてくれる友達がいます。",tip:"to help us＝私たちを助けてくれる"},
+  {en:"They have time to study.",kana:"ゼイ ハヴ タイム トゥ <span class='accent'>ス</span>タディ",ja:"彼らには勉強するための時間があります。",tip:"time to study＝勉強する時間"},
+  {en:"I study hard to be a doctor.",kana:"アイ スタディ ハード トゥ ビー ア <span class='accent'>ド</span>クター",ja:"私は医者になるために勉強します。",tip:"to be＝〜になるために（副詞的用法・目的）"},
+  {en:"You woke up early to take the bus.",kana:"ユー ウォウク アップ アーリー トゥ テイク ザ <span class='accent'>バ</span>ス",ja:"あなたはそのバスに乗るために早く起きました。",tip:"to take＝乗るために（副詞的用法・目的）"},
+  {en:"The teacher came to Japan to teach English.",kana:"ザ ティーチャー ケイム トゥ ジャパン トゥ ティーチ <span class='accent'>イ</span>ングリッシュ",ja:"その先生は英語を教えるために日本に来ました。",tip:"to teach＝教えるために（副詞的用法・目的）"},
+  {en:"I am very happy to meet you.",kana:"アイ アム ヴェリー ハッピー トゥ ミート <span class='accent'>ユ</span>ー",ja:"私はあなたに会えてとてもうれしいです。",tip:"happy to＝〜してうれしい（副詞的用法・感情の原因）"},
+  {en:"I am sad to hear the news.",kana:"アイ アム サッド トゥ ヒア ザ <span class='accent'>ニ</span>ュース",ja:"私はその知らせを聞いて悲しいです。",tip:"sad to hear＝聞いて悲しい"},
+  {en:"I run every day to be a soccer player.",kana:"アイ ラン エヴリ デイ トゥ ビー ア <span class='accent'>サ</span>ッカープレイヤー",ja:"私はサッカー選手になるために走ります。",tip:"to be＝〜になるために"},
+  {en:"You slept early to go to school.",kana:"ユー スレプト アーリー トゥ ゴウ トゥ <span class='accent'>ス</span>クール",ja:"あなたは学校へ行くために早く寝ました。",tip:"to go＝行くために（目的）"},
+  {en:"They went to China to build a bridge.",kana:"ゼイ ウェント トゥ チャイナ トゥ ビルド ア <span class='accent'>ブ</span>リッジ",ja:"彼らは橋を作るために中国に行きました。",tip:"to build＝建てるために"},
+  {en:"He is very happy to talk to you.",kana:"ヒー イズ ヴェリー ハッピー トゥ トーク トゥ <span class='accent'>ユ</span>ー",ja:"彼はあなたと話せてとてもうれしいです。",tip:"happy to talk＝話せてうれしい"},
+  {en:"My mother is happy to hear the news.",kana:"マイ マザー イズ ハッピー トゥ ヒア ザ <span class='accent'>ニ</span>ュース",ja:"私の母はその知らせを聞いてうれしいです。",tip:"happy to hear＝聞いてうれしい"},
+  {en:"My mother came home at seven.",kana:"マイ マザー ケイム ホウム アット <span class='accent'>セ</span>ヴン",ja:"私の母は7時に帰ってきました。",tip:"came home＝家に帰ってきた（過去）"},
+  {en:"The book is by the bed.",kana:"ザ ブック イズ バイ ザ <span class='accent'>ベ</span>ッド",ja:"その本はベッドの側にあります。",tip:"by＝〜のそばに"},
+  {en:"He slept during the class.",kana:"ヒー スレプト デュアリング ザ <span class='accent'>ク</span>ラス",ja:"彼は授業の間に寝ました。",tip:"during＝〜の間に"},
+  {en:"I stayed at a hotel for three days.",kana:"アイ ステイド アット ア ホウテル フォア スリー <span class='accent'>デ</span>イズ",ja:"私はホテルに3日間滞在しました。",tip:"for three days＝3日間"},
+  {en:"I will finish homework in two days.",kana:"アイ ウィル フィニッシュ ホウムワーク イン トゥー <span class='accent'>デ</span>イズ",ja:"私は2日以内に宿題を終えます。",tip:"in two days＝2日以内に"},
+  {en:"My brother is the tallest of our family.",kana:"マイ ブラザー イズ ザ トーレスト オヴ アワ <span class='accent'>ファ</span>ミリー",ja:"私の弟が私達の家族の中で一番背が高い。",tip:"the tallest＝最も背が高い（最上級）"},
+  {en:"There was an apple on the table.",kana:"ゼア ウォズ アン アップル オン ザ <span class='accent'>テ</span>イブル",ja:"机の上にリンゴがありました。",tip:"There was＝〜があった（過去）"},
+  {en:"He has been studying since last Friday.",kana:"ヒー ハズ ビーン スタディング スィンス ラスト <span class='accent'>フ</span>ライデイ",ja:"彼は前の金曜日から勉強を続けています。",tip:"has been〜ing＝ずっと〜している（現在完了進行形）"},
+  {en:"He will work till six P.M.",kana:"ヒー ウィル ワーク ティル シックス <span class='accent'>ピ</span>ーエム",ja:"彼は6時まで働くつもりです。",tip:"till＝〜まで"},
+  {en:"He ran toward the school.",kana:"ヒー ラン トウォード ザ <span class='accent'>ス</span>クール",ja:"彼は学校に向って走りました。",tip:"toward＝〜に向かって"},
+  {en:"My sister arrived with a smile.",kana:"マイ シスター アライヴド ウィズ ア <span class='accent'>ス</span>マイル",ja:"私の姉は笑顔と共に到着しました。",tip:"with a smile＝笑顔で"},
+  {en:"He left home without money.",kana:"ヒー レフト ホウム ウィザウト <span class='accent'>マ</span>ニー",ja:"彼はお金なしに家を出ていきました。",tip:"without＝〜なしに"},
+  {en:"The ball is above you.",kana:"ザ ボール イズ アバヴ <span class='accent'>ユ</span>ー",ja:"そのボールはあなたの上にあります。",tip:"above＝〜の上に"},
+  {en:"There is a bicycle across the road.",kana:"ゼア イズ ア バイシクル アクロス ザ <span class='accent'>ロ</span>ウド",ja:"道の向こうに自転車があります。",tip:"across＝〜の向こうに"},
+  {en:"She stands among the trees.",kana:"シー スタンズ アマング ザ <span class='accent'>ト</span>リーズ",ja:"彼女は木々の間に立っています。",tip:"among＝〜の間に（3つ以上）"},
+];
+
+// 中1 Small Talk
+const j1_st = [
+  {en:"Do you like sports?",kana:"ドゥ ユー ライク <span class='accent'>ス</span>ポーツ",ja:"スポーツは好きですか？",tip:"sports好きか尋ねる定番"},
+  {en:"Can you cook takoyaki?",kana:"キャ ユー クック タコ<span class='accent'>ヤ</span>キ",ja:"たこ焼きは作れますか？",tip:"Can you cook...?"},
+  {en:"What's your favorite subject?",kana:"ホワッツ ユア <span class='accent'>フェ</span>イバリット サブジェクト",ja:"好きな教科は何ですか？",tip:"favorite subject"},
+  {en:"Who's your hero?",kana:"フーズ ユア <span class='accent'>ヒ</span>ーロー",ja:"あこがれの人は誰ですか？",tip:"Who's your hero?"},
+  {en:"What do you usually have for breakfast?",kana:"ホワット ドゥ ユー <span class='accent'>ユ</span>ージュアリー ハヴ フォア ブレックファスト",ja:"いつも朝ごはんに何を食べますか？",tip:"have for breakfast"},
+  {en:"How do you come to school?",kana:"ハウ ドゥ ユー カム トゥ <span class='accent'>ス</span>クール",ja:"どうやって学校まで来ましたか？",tip:"通学方法を尋ねる"},
+  {en:"When's your birthday?",kana:"ホウェンズ ユア <span class='accent'>バ</span>ースデイ",ja:"誕生日はいつですか？",tip:"When is your birthday?"},
+  {en:"Where's your favorite place in our town?",kana:"ホウェアズ ユア フェイバリット プレイス イン アワ <span class='accent'>タ</span>ウン",ja:"私たちの町で好きな場所はどこですか？",tip:"favorite place"},
+  {en:"How many books do you have?",kana:"ハウ メニー ブックス ドゥ ユー <span class='accent'>ハ</span>ヴ",ja:"何冊の本を持っていますか？",tip:"How many＋複数名詞"},
+  {en:"What time do you usually get home?",kana:"ホワット タイム ドゥ ユー ユージュアリー ゲット <span class='accent'>ホ</span>ウム",ja:"いつも何時に家に帰りますか？",tip:"get home"},
+  {en:"What food do you like?",kana:"ホワット フード ドゥ ユー <span class='accent'>ラ</span>イク",ja:"どんな食べ物が好きですか？",tip:"What food...?"},
+  {en:"Do you like singing?",kana:"ドゥ ユー ライク <span class='accent'>ス</span>ィンギング",ja:"歌うことは好きですか？",tip:"singing"},
+  {en:"Do you have any brothers or sisters?",kana:"ドゥ ユー ハヴ エニー ブラザーズ オア <span class='accent'>シ</span>スターズ",ja:"兄弟姉妹はいますか？",tip:"兄弟姉妹を尋ねる"},
+  {en:"Does he play any sports?",kana:"ダズ ヒー プレイ エニー <span class='accent'>ス</span>ポーツ",ja:"彼はスポーツをしますか？",tip:"Does疑問文"},
+  {en:"Which do you want, dog or cat?",kana:"ホウィッチ ドゥ ユー ウォント <span class='accent'>ド</span>ッグ オア キャット",ja:"犬か猫かどちらが好きですか？",tip:"Which do you want, A or B?"},
+  {en:"What do you want to eat now?",kana:"ホワット ドゥ ユー ウォント トゥ イート <span class='accent'>ナ</span>ウ",ja:"いま何が食べたいですか？",tip:"want to eat"},
+  {en:"Pardon?",kana:"<span class='accent'>パ</span>ードン",ja:"もう一度言ってください。",tip:"聞き返すときの表現"},
+  {en:"Pardon me?",kana:"<span class='accent'>パ</span>ードン ミー",ja:"もう一度言ってください。",tip:"Pardon?と同じ"},
+  {en:"Sorry?",kana:"<span class='accent'>サ</span>リー",ja:"すいません（聞こえませんでした）",tip:"カジュアルな聞き返し"},
+  {en:"Could you say that again?",kana:"クッド ユー セイ ザット ア<span class='accent'>ゲ</span>イン",ja:"もう一度言ってもらえますか？",tip:"丁寧なお願い"},
+  {en:"I see.",kana:"アイ <span class='accent'>ス</span>ィー",ja:"なるほど",tip:"相づち"},
+  {en:"Really?",kana:"リア<span class='accent'>リ</span>ー",ja:"本当ですか？（驚きです）",tip:"聞き返す"},
+  {en:"Is that so?",kana:"イズ ザット <span class='accent'>ソ</span>ウ",ja:"そうなんですか。",tip:"相づち"},
+  {en:"Me too.",kana:"ミー <span class='accent'>トゥ</span>ー",ja:"私もです。",tip:"同意"},
+  {en:"I think so too.",kana:"アイ スィンク ソウ <span class='accent'>トゥ</span>ー",ja:"私もそう思います。",tip:"同意"},
+  {en:"That's nice.",kana:"ザッツ <span class='accent'>ナ</span>イス",ja:"それは良いですね。",tip:"ほめる"},
+  {en:"Sounds great.",kana:"サウンズ <span class='accent'>グ</span>レイト",ja:"とても良いです。",tip:"That sounds great."},
+  {en:"That's too bad.",kana:"ザッツ トゥー <span class='accent'>バ</span>ッド",ja:"それはとても残念です。",tip:"残念なとき"},
+  {en:"How sad.",kana:"ハウ <span class='accent'>サ</span>ッド",ja:"なんて悲しいんでしょう。",tip:"感嘆文"},
+];
+
+// 中2 Stage 1
+const j2_stage1 = [
+  {en:"I like traveling.",kana:"アイ ライク トラ<span class='accent'>ヴ</span>ェリング",ja:"私は旅行が好きです。",tip:"traveling"},
+  {en:"I like to travel.",kana:"アイ ライク トゥ トラ<span class='accent'>ヴ</span>ェル",ja:"私は旅行が好きです。",tip:"to travel"},
+  {en:"I'm good at talking with people.",kana:"アイム グッド アット トーキング ウィズ <span class='accent'>ピ</span>ープル",ja:"私は人と話すことが得意です。",tip:"be good at"},
+  {en:"My favorite subject is English.",kana:"マイ フェイバリット サブジェクト イズ <span class='accent'>イ</span>ングリッシュ",ja:"私の好きな教科は英語です。",tip:"favorite subject"},
+  {en:"I'm interested in historical places.",kana:"アイム インタレスティッド イン ヒストリカル <span class='accent'>プ</span>レイシズ",ja:"私は歴史のある場所に興味があります。",tip:"be interested in"},
+  {en:"It's interesting to learn about different countries and culture.",kana:"イッツ インタレスティング トゥ ラーン アバウト ディフレント カントリーズ アンド <span class='accent'>カ</span>ルチャー",ja:"違った国や文化について学ぶことに興味があります。",tip:"It is〜to..."},
+  {en:"I like watching baseball.",kana:"アイ ライク ウォッチング <span class='accent'>ベ</span>イスボール",ja:"私は野球を見るのが好きです。",tip:"watching"},
+  {en:"I like to watch baseball.",kana:"アイ ライク トゥ ウォッチ <span class='accent'>ベ</span>イスボール",ja:"私は野球を見るのが好きです。",tip:"to watch"},
+  {en:"I like to play soccer.",kana:"アイ ライク トゥ プレイ <span class='accent'>サ</span>ッカー",ja:"私はサッカーをすることが好きです。",tip:"to play"},
+  {en:"I like English.",kana:"アイ ライク <span class='accent'>イ</span>ングリッシュ",ja:"私は英語が好きです。",tip:"I like English."},
+  {en:"I like ethnic food.",kana:"アイ ライク エスニック <span class='accent'>フ</span>ード",ja:"私は民族料理が好きです。",tip:"ethnic food"},
+  {en:"I like to talk with people.",kana:"アイ ライク トゥ トーク ウィズ <span class='accent'>ピ</span>ープル",ja:"私は人と話すことが好きです。",tip:"talk with people"},
+  {en:"I like club activity.",kana:"アイ ライク クラブ アク<span class='accent'>テ</span>ィヴィティ",ja:"私はクラブ活動が好きです。",tip:"club activity"},
+  {en:"I like history.",kana:"アイ ライク <span class='accent'>ヒ</span>ストリー",ja:"私は歴史が好きです。",tip:"history"},
+  {en:"I think so too.",kana:"アイ スィンク ソウ <span class='accent'>トゥ</span>ー",ja:"私もそう思います。",tip:"I think so too."},
+  {en:"That's good.",kana:"ザッツ <span class='accent'>グ</span>ッド",ja:"それは良いですね。",tip:"That's good."},
+  {en:"I think you can be a good teacher.",kana:"アイ スィンク ユー キャン ビー ア グッド <span class='accent'>テ</span>ィーチャー",ja:"あなたは良い先生になると思います。",tip:"I think you can"},
+  {en:"Why do you think so?",kana:"ホワイ ドゥ ユー スィンク <span class='accent'>ソ</span>ウ",ja:"なぜそう思いますか？",tip:"Why do you think so?"},
+  {en:"Because you know a lot about history.",kana:"ビコーズ ユー ノウ ア ロット アバウト <span class='accent'>ヒ</span>ストリー",ja:"なぜなら歴史のことをよく知っているからです。",tip:"Because..."},
+  {en:"You like talking.",kana:"ユー ライク <span class='accent'>ト</span>ーキング",ja:"あなたは話すことが好きです。",tip:"You like talking."},
+  {en:"You play soccer very well.",kana:"ユー プレイ サッカー ヴェリー <span class='accent'>ウ</span>ェル",ja:"あなたはサッカーが上手にできます。",tip:"very well"},
+  {en:"What do you think of ethnic food?",kana:"ホワット ドゥ ユー スィンク オブ エスニック <span class='accent'>フ</span>ード",ja:"どんな民族料理が好きですか？",tip:"What do you think of...?"},
+  {en:"Why do you think so?",kana:"ホワイ ドゥ ユー スィンク <span class='accent'>ソ</span>ウ",ja:"なぜそう思うのですか？",tip:"Why do you think so?"},
+  {en:"I will learn about history and culture.",kana:"アイ ウィル ラーン アバウト ヒストリー アンド <span class='accent'>カ</span>ルチャー",ja:"私は歴史や文化について学びます。",tip:"will learn"},
+  {en:"I will work out every day.",kana:"アイ ウィル ワーク アウト エヴリ <span class='accent'>デ</span>イ",ja:"私は毎日運動します。",tip:"work out"},
+  {en:"It is important to improve my English skills.",kana:"イット イズ インポータント トゥ インプルーヴ マイ イングリッシュ <span class='accent'>ス</span>キルズ",ja:"英語を上達することが大事です。",tip:"It is important to..."},
+  {en:"It is necessary to practice hard.",kana:"イット イズ ネセサリー トゥ プラクティス <span class='accent'>ハ</span>ード",ja:"たくさん練習することが必要です。",tip:"It is necessary to..."},
+];
+
+// 中3 UNIT 4
+const j3_u4 = [
+  {en:"prepared",kana:"プリ<span class='accent'>ペ</span>アード",ja:"用意ができている、準備完了の",tip:"prepareの過去分詞"},
+  {en:"disaster",kana:"ディ<span class='accent'>ザ</span>スター",ja:"災害、天災",tip:"natural disaster"},
+  {en:"shelter",kana:"<span class='accent'>シ</span>ェルター",ja:"避難所、避難場所",tip:"shelter"},
+  {en:"store",kana:"ス<span class='accent'>ト</span>ーア",ja:"を蓄える、貯蔵する",tip:"store"},
+  {en:"case",kana:"<span class='accent'>ケ</span>イス",ja:"場合、事例",tip:"case"},
+  {en:"extinguisher",kana:"イクス<span class='accent'>テ</span>ィンギッシャー",ja:"消火器、火災消火器",tip:"fire extinguisher"},
+  {en:"done",kana:"<span class='accent'>ダ</span>ン",ja:"完了した",tip:"doの過去分詞"},
+  {en:"emergency",kana:"イ<span class='accent'>マ</span>ージェンシー",ja:"緊急事態、緊急",tip:"emergency"},
+  {en:"kit",kana:"<span class='accent'>キ</span>ット",ja:"道具一式、道具セット",tip:"kit"},
+  {en:"recommend",kana:"レコ<span class='accent'>メ</span>ンド",ja:"を推薦する、を勧める",tip:"recommend"},
+  {en:"earthquake",kana:"<span class='accent'>ア</span>ースクウェイク",ja:"地震、震動",tip:"earthquake"},
+  {en:"we've",kana:"<span class='accent'>ウ</span>ィーヴ",ja:"we haveの略",tip:"we have = we've"},
+  {en:"hasn't",kana:"<span class='accent'>ハ</span>ズント",ja:"has notの略",tip:"has not = hasn't"},
+  {en:"several",kana:"<span class='accent'>セ</span>ヴェラル",ja:"いくつかの",tip:"several"},
+  {en:"bridge",kana:"ブ<span class='accent'>リ</span>ッジ",ja:"橋",tip:"bridge"},
+  {en:"between",kana:"ビト<span class='accent'>ウ</span>ィーン",ja:"と〜の間で、〜との間",tip:"between"},
+  {en:"energetic",kana:"エナ<span class='accent'>ジェ</span>ティッック",ja:"エネルギッシュな",tip:"energetic"},
+  {en:"encourage",kana:"エン<span class='accent'>カ</span>リッジ",ja:"を勇気づける、励ます",tip:"encourage"},
+  {en:"personality",kana:"パーソ<span class='accent'>ナ</span>リティ",ja:"人格、性格",tip:"personality"},
+  {en:"hit",kana:"<span class='accent'>ヒ</span>ット",ja:"打つ、叩く",tip:"hit"},
+  {en:"comfort",kana:"<span class='accent'>カ</span>ムフォート",ja:"快適さ/慰める",tip:"comfort"},
+  {en:"nearby",kana:"ニア<span class='accent'>バ</span>イ",ja:"近くの",tip:"nearby"},
+  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安泰に",tip:"safely"},
+  {en:"the Great East Japan Earthquake",kana:"ザ グレイト イースト ジャパン <span class='accent'>ア</span>ースクウェイク",ja:"東日本大震災",tip:"Great East Japan Earthquake"},
+  {en:"rode",kana:"<span class='accent'>ロ</span>ウド",ja:"乗った、乗車した",tip:"rideの過去形"},
+  {en:"bicycle",kana:"<span class='accent'>バ</span>イシクル",ja:"自転車",tip:"bicycle"},
+  {en:"toward",kana:"ト<span class='accent'>ウォ</span>ード",ja:"向かって、のほうへ",tip:"toward"},
+  {en:"apartment",kana:"ア<span class='accent'>パ</span>ートメント",ja:"アパート",tip:"apartment"},
+  {en:"caught",kana:"<span class='accent'>コ</span>ート",ja:"捕まえた",tip:"catchの過去形"},
+  {en:"tsunami",kana:"ツ<span class='accent'>ナ</span>ミ",ja:"津波",tip:"tsunami"},
+  {en:"sudden",kana:"<span class='accent'>サ</span>ドゥン",ja:"突然の、急な",tip:"sudden"},
+  {en:"news",kana:"<span class='accent'>ニ</span>ューズ",ja:"ニュース",tip:"news"},
+  {en:"shortly",kana:"<span class='accent'>シ</span>ョートリー",ja:"まもなく",tip:"shortly"},
+  {en:"corner",kana:"<span class='accent'>コ</span>ーナー",ja:"かど、隅",tip:"corner"},
+  {en:"exchange",kana:"イクス<span class='accent'>チ</span>ェンジ",ja:"交換、取り交わす",tip:"exchange"},
+  {en:"program",kana:"プ<span class='accent'>ロ</span>グラム",ja:"企画、番組",tip:"program"},
+  {en:"support",kana:"サ<span class='accent'>ポ</span>ート",ja:"を支援する、応援する",tip:"support"},
+  {en:"ordinary",kana:"<span class='accent'>オ</span>ーディナリー",ja:"ふつうの、通常の",tip:"ordinary"},
+  {en:"crisis",kana:"ク<span class='accent'>ラ</span>イシス",ja:"危機、困難",tip:"crisis"},
+  {en:"be caught in",kana:"ビー <span class='accent'>コ</span>ート イン",ja:"に捕まる",tip:"be caught in"},
+  {en:"bring together",kana:"ブリング トゥ<span class='accent'>ゲ</span>ザー",ja:"集める、結びつける",tip:"bring together"},
+  {en:"keep on doing",kana:"キー プ オン <span class='accent'>ド</span>ゥーイング",ja:"し続ける",tip:"keep on doing"},
+  {en:"no longer",kana:"ノウ <span class='accent'>ロ</span>ンガー",ja:"もはや〜でない",tip:"no longer"},
+];
+
 const db = {
   j1:{
     label:"中学1年",
-    icon:"📖",
+    imgSrc:"data:image/jpeg;base64,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",
+    imgAlt:"NEW HORIZON 1",
     units:[
       {tag:"unit",label:"UNIT 0",title:"Nice to Meet You",words:j1_u0},
       {tag:"unit",label:"UNIT 1",title:"Hello, everyone",words:j1_u1},
@@ -411,12 +1094,13 @@ const db = {
       {tag:"unit",label:"UNIT 3",title:"Our School",words:j1_u3},
       {tag:"grammar",label:"文法3",title:"疑問詞",words:j1_grammar3},
       {tag:"unit",label:"UNIT 4",title:"Friends in New Zealand",words:j1_u4},
-      {tag:"smalltalk",label:"Small Talk",title:"【質問】自分のこと、相手のこと",words:j1_st}
+      {tag:"smalltalk",label:"Small Talk",title:"【質問】自分のこと、相手のこと",words:j1_st},
     ]
   },
   j2:{
     label:"中学2年",
-    icon:"📘",
+    imgSrc:"data:image/jpeg;base64,/9j/4R+IRXhpZgAATU0AKgAAAAgADAEAAAMAAAABAZAAAAEBAAMAAAABAlgAAAECAAMAAAADAAAAngEGAAMAAAABAAIAAAESAAMAAAABAAEAAAEVAAMAAAABAAMAAAEaAAUAAAABAAAApAEbAAUAAAABAAAArAEoAAMAAAABAAIAAAExAAIAAAAhAAAAtAEyAAIAAAAUAAAA1YdpAAQAAAABAAAA7AAAASQACAAIAAgACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyNjowMzoyMiAwMDowNDoxNgAAAAAABJAAAAcAAAAEMDIzMaABAAMAAAAB//8AAKACAAQAAAABAAAA9KADAAQAAAABAAABbgAAAAAAAAAGAQMAAwAAAAEABgAAARoABQAAAAEAAAFyARsABQAAAAEAAAF6ASgAAwAAAAEAAgAAAgEABAAAAAEAAAGCAgIABAAAAAEAAB3+AAAAAAAAAEgAAAABAAAASAAAAAH/2P/tAAxBZG9iZV9DTQAC/+4ADkFkb2JlAGSAAAAAAf/bAIQADAgICAkIDAkJDBELCgsRFQ8MDA8VGBMTFRMTGBEMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAENCwsNDg0QDg4QFA4ODhQUDg4ODhQRDAwMDAwREQwMDAwMDBEMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAoABrAwEiAAIRAQMRAf/dAAQAB//EAT8AAAEFAQEBAQEBAAAAAAAAAAMAAQIEBQYHCAkKCwEAAQUBAQEBAQEAAAAAAAAAAQACAwQFBgcICQoLEAABBAEDAgQCBQcGCAUDDDMBAAIRAwQhEzIeC1E/P6/4O3V8P72s3X3q330+33O/81mX/y+d6f9k=",
+    imgAlt:"NEW HORIZON 2",
     units:[
       {tag:"unit",label:"UNIT 0",title:"単語量少ないためUNIT1共用",words:j2_u01},
       {tag:"unit",label:"UNIT 1",title:"What Can We Experience on a Trip?",words:j2_u01},
@@ -424,13 +1108,14 @@ const db = {
       {tag:"unit",label:"UNIT 2",title:"What is Local Food?",words:j2_u2},
       {tag:"grammar",label:"文法2",title:"接続詞",words:g_j2_2},
       {tag:"unit",label:"UNIT 3",title:"What Kind of Job Are You Interested In?",words:j2_u3},
-      {tag:"grammar",label:"文法3",title:"不定詞",words:j2_u3},
-      {tag:"stage",label:"Stage 1",title:"Message to Myself in the future",words:j2_stage1}
+      {tag:"grammar",label:"文法3",title:"不定詞",words:g_j2_3},
+      {tag:"stage",label:"Stage 1",title:"Message to Myself in the future",words:j2_stage1},
     ]
   },
   j3:{
     label:"中学3年",
-    icon:"📙",
+    imgSrc:"data:image/jpeg;base64,/9j/4SEHRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAhAAAAcgEyAAIAAAAUAAAAk4dpAAQAAAABAAAAqAAAANQACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyNjowMzoyMiAwMDowMTo0OAAAAAOgAQADAAAAAf//AACgAgAEAAAAAQAAAPSgAwAEAAAAAQAAAW4AAAAAAAAABgEDAAMAAAABAAYAAAEaAAUAAAABAAABIgEbAAUAAAABAAABKgEoAAMAAAABAAIAAAIBAAQAAAABAAABMgICAAQAAAABAAAfzQAAAAAAAABIAAAAAQAAAEgAAAAB/9j/7QAMQWRvYmVfQ00AAv/uAA5BZG9iZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwMEQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4ODg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAKAAawMBIgACEQEDEQH/3QAEAAf/xAE/AAABBQEBAQEBAQAAAAAAAAADAAECBAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUHBggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQVUsFiMzRygtFDByWSU/Dh8WNzNRaisoMmRJNUZEXCo3Q2F9JV4mXys4TD03Xj80YnlKSFtJXE1OT0pbXF1eX1VmZ2hpamtsbW5vYnN0dXZ3eHl6e3x12p7fH1+f3EQACAgECBAQDBAUGBwcGBTUBAAIRAyExEgRBUWFxIhMFMoGRFKGxQiPBUtHwMyRi4XKCkkNTFWNzNPElBhaisoMHJjXC0kSTVKMXZEVVNnRl4vKzhMPTdePzRpSkhbSVxNTkpKW1xdXl9VZmdoaWprbG1ub2JzdHV2d3h5ent8f/2gAIAQEAAD8A1mz/Xf1f/i/3pXf6/w23/4v91f86q3e/wD8v/e2+l/4D/uS/wDOn+230k4P39t0fy//AC/3pXf6/w23/4v91f86q3e/wD8v/e2+l/4D/uS/wDOn+230p1v2p09f87+/v8AWfT/AOg/S/23v/0i5pOp/o53f93Y/fX8f/9k=",
+    imgAlt:"NEW HORIZON 3",
     units:[
       {tag:"unit",label:"UNIT 0",title:"単語量少ないためUNIT1共用",words:j3_w50},
       {tag:"unit",label:"UNIT 1",title:"What is special about Japanese pop culture",words:j3_w50},
@@ -438,12 +1123,14 @@ const db = {
       {tag:"grammar",label:"文法1",title:"現在完了と現在完了進行形",words:g_j3_1},
       {tag:"unit",label:"UNIT 3",title:"How can we save animals",words:j3_u3},
       {tag:"grammar",label:"文法2",title:"不定詞",words:j3_grammar2},
-      {tag:"unit",label:"UNIT 4",title:"How can we help each other in a disaster",words:j3_u4}
+      {tag:"unit",label:"UNIT 4",title:"How can we help each other in a disaster",words:j3_u4},
     ]
   }
 };
 
 let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
+
+const COVER_IMGS={"j1":"data:image/jpeg;base64,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","j2":"data:image/jpeg;base64,/9j/4R+IRXhpZgAATU0AKgAAAAgADAEAAAMAAAABAZAAAAEBAAMAAAABAlgAAAECAAMAAAADAAAAngEGAAMAAAABAAIAAAESAAMAAAABAAEAAAEVAAMAAAABAAMAAAEaAAUAAAABAAAApAEbAAUAAAABAAAArAEoAAMAAAABAAIAAAExAAIAAAAhAAAAtAEyAAIAAAAUAAAA1YdpAAQAAAABAAAA7AAAASQACAAIAAgACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyNjowMzoyMiAwMDowNDoxNgAAAAAABJAAAAcAAAAEMDIzMaABAAMAAAAB//8AAKACAAQAAAABAAAA9KADAAQAAAABAAABbgAAAAAAAAAGAQMAAwAAAAEABgAAARoABQAAAAEAAAFyARsABQAAAAEAAAF6ASgAAwAAAAEAAgAAAgEABAAAAAEAAAGCAgIABAAAAAEAAB3+AAAAAAAAAEgAAAABAAAASAAAAAH/2P/tAAxBZG9iZV9DTQAC/+4ADkFkb2JlAGSAAAAAAf/bAIQADAgICAkIDAkJDBELCgsRFQ8MDA8VGBMTFRMTGBEMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAENCwsNDg0QDg4QFA4ODhQUDg4ODhQRDAwMDAwREQwMDAwMDBEMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAoABrAwEiAAIRAQMRAf/dAAQAB//EAT8AAAEFAQEBAQEBAAAAAAAAAAMAAQIEBQYHCAkKCwEAAQUBAQEBAQEAAAAAAAAAAQACAwQFBgcICQoLEAABBAEDAgQCBQcGCAUDDDMBAAIRAwQhEzIeC1E/P6/4O3V8P72s3X3q330+33O/81mX/y+d6f9k=","j3":"data:image/jpeg;base64,/9j/4SEHRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAhAAAAcgEyAAIAAAAUAAAAk4dpAAQAAAABAAAAqAAAANQACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyNjowMzoyMiAwMDowMTo0OAAAAAOgAQADAAAAAf//AACgAgAEAAAAAQAAAPSgAwAEAAAAAQAAAW4AAAAAAAAABgEDAAMAAAABAAYAAAEaAAUAAAABAAABIgEbAAUAAAABAAABKgEoAAMAAAABAAIAAAIBAAQAAAABAAABMgICAAQAAAABAAAfzQAAAAAAAABIAAAAAQAAAEgAAAAB/9j/7QAMQWRvYmVfQ00AAv/uAA5BZG9iZQBkgAAAAAH/2wCEAAwICAgJCAwJCQwRCwoLERUPDAwPFRgTExUTExgRDAwMDAwMEQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwBDQsLDQ4NEA4OEBQODg4UFA4ODg4UEQwMDAwMEREMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAKAAawMBIgACEQEDEQH/3QAEAAf/xAE/AAABBQEBAQEBAQAAAAAAAAADAAECBAUGBwgJCgsBAAEFAQEBAQEBAAAAAAAAAAEAAgMEBQYHCAkKCxAAAQQBAwIEAgUHBggFAwwzAQACEQMEIRIxBUFRYRMicYEyBhSRobFCIyQVUsFiMzRygtFDByWSU/Dh8WNzNRaisoMmRJNUZEXCo3Q2F9JV4mXys4TD03Xj80YnlKSFtJXE1OT0pbXF1eX1VmZ2hpamtsbW5vYnN0dXZ3eHl6e3x12p7fH1+f3EQACAgECBAQDBAUGBwcGBTUBAAIRAyExEgRBUWFxIhMFMoGRFKGxQiPBUtHwMyRi4XKCkkNTFWNzNPElBhaisoMHJjXC0kSTVKMXZEVVNnRl4vKzhMPTdePzRpSkhbSVxNTkpKW1xdXl9VZmdoaWprbG1ub2JzdHV2d3h5ent8f/2gAIAQEAAD8A1mz/Xf1f/i/3pXf6/w23/4v91f86q3e/wD8v/e2+l/4D/uS/D9y//Tf90+7/a3f4T/e/s9/1/wC1e1f/2Q=="};
 
 function selectGrade(g,btn){
   currentGrade=g;
@@ -457,7 +1144,7 @@ function renderUnits(g){
   ul.innerHTML='';
   document.getElementById('gradeLabel').textContent=db[g].label+' の単元一覧';
   const gi=document.getElementById('gradeIntro');
-  gi.innerHTML='<div class="grade-icon">'+db[g].icon+'</div>'
+  gi.innerHTML='<img src="'+COVER_IMGS[g]+'" alt="'+db[g].label+'" style="width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;">'
     +'<div class="grade-intro-text"><strong>'+db[g].label+'</strong><br>NEW HORIZON English Course<br>各単元をタップして単語を学習できます。</div>';
   db[g].units.forEach((u,i)=>{
     const btn=document.createElement('button');
@@ -518,19 +1205,21 @@ function markMiss(i){
   updateScore();
 }
 
+// 追加したスコア計算・表示関数
 function updateScore(){
   const ok = document.querySelectorAll('tr.row-ok').length;
   const miss = document.querySelectorAll('tr.row-miss').length;
   const total = currentWords.length;
   const sb = document.getElementById('scoreBadge');
   if (sb) {
-    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}問)`;
+    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}${currentWords === j1_grammar3 || currentWords === g_j1_1 || currentWords === g_j1_2 || currentWords === g_j2_1 || currentWords === g_j2_2 || currentWords === g_j2_3 || currentWords === g_j3_1 || currentWords === j3_grammar2 ? '問' : '語'})`;
   }
 }
 
 let isSending = false;
 async function finishAndReturn() {
   if (isSending) return; 
+  
   const ok = document.querySelectorAll('tr.row-ok').length;
   const miss = document.querySelectorAll('tr.row-miss').length;
   const totalAnswered = ok + miss;
@@ -542,6 +1231,7 @@ async function finishAndReturn() {
     await window.sendLearningRecord(unitName, resultText);
     isSending = false;
   }
+  
   showUnitView();
 }
 
@@ -584,7 +1274,7 @@ function openUnit(g,i){
   const ansLabel=isGrammar?'答え':'日本語訳';
   const searchLabel=isGrammar?'🔍 検索...':'🔍 単語を検索...';
   const thead=isGrammar
-    ?'<tr><th>#</th><th></th><th>问题</th><th class="ans-cell">答え</th><th>採点</th></tr>'
+    ?'<tr><th>#</th><th></th><th>問題</th><th class="ans-cell">答え</th><th>採点</th></tr>'
     :'<tr><th>#</th><th></th><th>英語・発音</th><th>日本語</th><th>採点</th></tr>';
   wc.innerHTML=`
     <div class="ctrl-bar">
@@ -623,6 +1313,7 @@ function renderRows(isGrammar){
     const tr=document.createElement('tr');
     tr.id='row-'+i;
     tr.className=i%2===0?'row-even':'row-odd';
+    const safeEn=w.en.replace(/'/g,"\'");
     if(isGrammar){
       const isFill=w.type==='fill';
       const typeTag=isFill
@@ -698,6 +1389,7 @@ function speakEnglish(text, btn) {
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('playing'));
 
   var spoken = false;
+
   function doSpeak(voice) {
     if (spoken) return;
     spoken = true;
@@ -782,6 +1474,7 @@ showUnitView();
   };
 
   const app = initializeApp(firebaseConfig);
+  // 変数名を firestoreDb に変更して衝突を防ぐ
   const firestoreDb = getFirestore(app);
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -792,6 +1485,7 @@ showUnitView();
     grammarLink.href = "https://shigakusakura-pixel.github.io/grammar/?student=" + encodeURIComponent(studentId);
   }
 
+  // アプリを開いた瞬間の自動記録（1回）
   try {
     addDoc(collection(firestoreDb, "learning_records"), {
       studentId: studentId,
@@ -803,6 +1497,7 @@ showUnitView();
     });
   } catch (e) {}
 
+  // まとめ送信用の処理
   window.sendLearningRecord = async function(unitId, resultText) {
     try {
       await addDoc(collection(firestoreDb, "learning_records"), {
