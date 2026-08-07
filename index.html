@@ -403,7 +403,60 @@ const j1_u5 = [
   {en:"fried egg",ja:"目玉焼き",tip:"eat fried eggs"},
   {en:"on top of",ja:"の上に",tip:"on top of the rice"}
 ];
-
+// 中1 UNIT 6 A Rakugo Performer from the U.K.
+const j1_u6 = [
+  {en:"him",ja:"彼を、その男性を",tip:"call him = 彼を呼ぶ"},
+  {en:"say",ja:"を言う、を述べる",tip:"say hello = 挨拶する"},
+  {en:"everything",ja:"何でも、全て",tip:"everything is fine"},
+  {en:"show",ja:"を見せる、を示す",tip:"show me = 私に見せて"},
+  {en:"here",ja:"ここに",tip:"come here = ここに来て"},
+  {en:"performer",ja:"演者",tip:"rakugo performer = 落語家"},
+  {en:"the U.K.",ja:"イギリス",tip:"United Kingdomの略"},
+  {en:"together",ja:"一緒に",tip:"work together"},
+  {en:"let's",ja:"〜しよう",tip:"Let's go!"},
+  {en:"Why don't we",ja:"私たちは",tip:"Why don't we... = 〜しませんか？"},
+  {en:"how's",ja:"how isの略",tip:"How's the weather?"},
+  {en:"show",ja:"を見せる、を示す",tip:"rakugo show"},
+  {en:"know",ja:"知っている",tip:"I know..."},
+  {en:"minute",ja:"分",tip:"wait a minute"},
+  {en:"wait",ja:"待つ、待機する",tip:"wait for me"},
+  {en:"whose",ja:"誰の",tip:"Whose book is this?"},
+  {en:"yourself",ja:"自分自身",tip:"by yourself"},
+  {en:"mine",ja:"私のもの、自分の物",tip:"It's mine."},
+  {en:"maybe",ja:"たぶん",tip:"Maybe yes."},
+  {en:"careful",ja:"注意深い、用心深い",tip:"Be careful!"},
+  {en:"crowded",ja:"混雑した",tip:"crowded train"},
+  {en:"history",ja:"歴史、史跡",tip:"Japanese history"},
+  {en:"still",ja:"まだ、尚",tip:"still young"},
+  {en:"over",ja:"向こうへ、向こう側へ",tip:"over there = あそこに"},
+  {en:"starter",ja:"スターター",tip:"good starter"},
+  {en:"ticket",ja:"切符",tip:"buy a ticket"},
+  {en:"be careful with",ja:"に注意する、気を付ける",tip:"Be careful with..."},
+  {en:"how old",ja:"何歳",tip:"How old are you?"},
+  {en:"open",ja:"を開ける、開放する",tip:"open the door"},
+  {en:"close",ja:"閉じる、閉める",tip:"close the window"},
+  {en:"window",ja:"窓",tip:"open the window"},
+  {en:"sure",ja:"もちろん、確かに",tip:"Sure, problem!"},
+  {en:"problem",ja:"問題、課題",tip:"no problem"},
+  {en:"little",ja:"小さい、かわいい",tip:"a little girl"},
+  {en:"dark",ja:"暗い",tip:"it's dark"},
+  {en:"light",ja:"光、光源",tip:"turn on the light"},
+  {en:"just",ja:"ちょうど、正に",tip:"just now"},
+  {en:"moment",ja:"瞬間、一瞬",tip:"just a moment"},
+  {en:"off",ja:"オフ",tip:"turn off"},
+  {en:"borrow",ja:"を借りる、借用する",tip:"borrow a book"},
+  {en:"help",ja:"助ける",tip:"help me"},
+  {en:"homework",ja:"宿題",tip:"do homework"},
+  {en:"no problem",ja:"問題がない",tip:"No problem!"},
+  {en:"a little",ja:"少し、わずか",tip:"a little time"},
+  {en:"turn",ja:"曲がる、回る、変化する",tip:"turn left"},
+  {en:"on",ja:"の上に",tip:"turn on"},
+  {en:"help with",ja:"を助ける",tip:"help with homework"},
+  {en:"All right",ja:"大丈夫です。",tip:"All right!"},
+  {en:"just a moment",ja:"少しの間",tip:"Just a moment, please."},
+  {en:"turn off",ja:"を消す",tip:"turn off the light"}
+];
+ 
 // 中1 文法4 三人称単数現在
 const g_j1_4 = [
   {type:"fill",hint:"play（遊ぶ・演奏する）の三単現",ja:"play ➔ ＿＿＿",en:"plays",tip:"playの三単現（sをつける）"},
@@ -1491,7 +1544,7 @@ const g_j3_3 = [
 const db = {
   j1:{
     label:"中学1年",
-    imgSrc:"data:image/jpeg;base64,/9j/4R6wRXhpZgAATU0AKgAAAAgADAEAAAMAAAABAZAAAAEBAAMAAAABAlgAAAECAAMAAAADAAAAngEGAAMAAAABAAIAAAESAAMAAAABAAEAAAEVAAMAAAABAAMAAAEaAAUAAAABAAAApAEbAAUAAAABAAAArAEoAAMAAAABAAIAAAExAAIAAAAhAAAAtAEyAAIAAAAUAAAA1YdpAAQAAAABAAAA7AAAASQACAAIAAgACvyAAAAnEAAK/IAAACcQQWRvYmUgUGhvdG9zaG9wIDI3LjQgKE1hY2ludG9zaCkAMjAyKelaszOYzOjIyIDAwOjA1OjEzAAAAAABJAAAAcAAAAEMDIzMaABAAMAAAAB//8AAKACAAQAAAABAAAA9KADAAQAAAABAAABbgAAAAAAAAAGAQMAAwAAAAEABgAAARoABQAAAAEAAAFyARsABQAAAAEAAAF6ASgAAwAAAAEAAgAAAgEABAAAAAEAAAGCAgIABAAAAAEAAB0mAAAAAAAAAEgAAAABAAAASAAAAAH/2P/tAAxBZG9iZV9DTQAC/+4ADkFkb2JlAGSAAAAAAf/bAIQADAgICAkIDAkJDBELCgsRFQ8MDA8VGBMTFRMTGBEMDAwMDAwRDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAENCwsNDg0QDg4QFA4ODhQUDg4ODhQRDAwMDAwREQwMDAwMDBEMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAoABrAwEiAAIRAQMRAf/dAAQAB//EAT8AAAEFAQEBAQEBAAAAAAAAAAMAAQIEBQYHCAkKCwEAAQUBAQEBAQEAAAAAAAAAAQACAwQFBgcICQoLEAABBAEDAgQCBQcGCAUDDDMBAAIRAwQhEzIeC1E/P6/4O3V8P72s3X3q330+33O/81mX/y+d6f9k=",
+    imgSrc:"...",
     imgAlt:"NEW HORIZON 1",
     units:[
       {tag:"unit",label:"UNIT 0",title:"Nice to Meet You",words:j1_u0},
@@ -1503,7 +1556,8 @@ const db = {
       {tag:"grammar",label:"文法3",title:"疑問詞",words:j1_grammar3},
       {tag:"smalltalk",label:"Small Talk",title:"【質問】自分のこと、相手のこと",words:j1_st},
       {tag:"unit",label:"UNIT 5",title:"My Brother in Hawaii",words:j1_u5},
-      {tag:"grammar",label:"文法4",title:"三人称単数現在",words:g_j1_4}
+      {tag:"grammar",label:"文法4",title:"三人称単数現在",words:g_j1_4},
+      {tag:"unit",label:"UNIT 6",title:"A Rakugo Performer from the U.K.",words:j1_u6}
     ]
   },
   j2:{
