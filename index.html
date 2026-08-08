@@ -8,80 +8,55 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
   
-  /* ヘッダー構造 */
-  .header{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    padding:10px 14px;
-    border-radius:10px;
-    background:linear-gradient(135deg,#1D9E75,#2ecc71);
-    margin-bottom:12px;
-    gap:4px;
-  }
-  .header-title{
-    font-size:22px;
-    font-weight:900;
-    color:#fff;
-    letter-spacing:1px;
-    -webkit-text-stroke:1.5px #000;
-    paint-order:stroke fill;
-    text-shadow:2px 2px 4px rgba(0,0,0,0.4);
-    line-height:1.3;
-  }
-  .header-school{
-    font-size:13px;
-    font-weight:700;
-    color:#fff;
-    opacity:0.95;
-    align-self:flex-end;
-  }
+  /* ヘッダー構造（Macは元通り、スマホは3段配置用） */
+  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
+  .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);white-space:nowrap;}
+  .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
 
-  /* タブのレイアウト（スマホ縦画面で均等配置） */
-  .grade-tabs{
-    display:grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap:6px;
-    margin-bottom:12px;
-  }
-  .grade-btn{
-    padding:8px 0;
-    border-radius:20px;
-    border:1px solid #aaa;
-    background:#fff;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:500;
-    color:#666;
-    text-align:center;
-    width:100%;
-  }
+  /* タブのレイアウト（デフォルト：PC用横並び） */
+  .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
-  
-  .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
-  .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
-  .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
-  
-  .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
-  .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
 
-  /* PC画面調整 */
-  @media screen and (min-width: 768px) {
-    .header{
-      flex-direction:row;
-      align-items:center;
-      justify-content:space-between;
+  /* スマホ縦画面（幅600px以下）の時だけ、ご希望の3段タイトル＆タブ均等配置に切り替え */
+  @media screen and (max-width: 600px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
     }
-    .header-title{ font-size:26px; }
-    .header-school{ font-size:14px; align-self:auto; }
-    .grade-tabs{
-      display:flex;
-      flex-wrap:wrap;
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      font-size: 22px;
+      line-height: 1.2;
+      white-space: nowrap;
     }
-    .grade-btn{
-      width:auto;
-      padding:6px 18px;
+    .header-title .t1 { font-size: 22px; }
+    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
+    .header-title .t3 { font-size: 22px; }
+    
+    .header-school {
+      align-self: flex-end;
+      font-size: 12px;
     }
+
+    .grade-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .grade-btn {
+      width: 100%;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 12px;
+    }
+    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
+    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
+    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
   }
 
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
@@ -154,6 +129,13 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    padding: 6px 18px;
+    position: relative;
+    top: 0.5px;
+  }
+  .grade-btn.special-tab:hover {
+    background-color: #1D9E75;
+    color: #ffffff;
   }
   .grade-btn.special-tab.idiom-tab-style {
     background-color: #e6f4ea;
@@ -165,7 +147,9 @@
 <body>
 
 <div class="header">
-  <div class="header-title">📚 中学英単語&amp;文法演習システム</div>
+  <div class="header-title">
+    <span class="t1">📚 中学英単語</span><span class="t2">&amp;</span><span class="t3">文法演習システム</span>
+  </div>
   <div class="header-school">志学ゼミナール</div>
 </div>
 
@@ -566,6 +550,7 @@ const j3_w50 = [
   {en:"interview",kana:"<span class='accent'>イ</span>ンタビュー",ja:"面接",tip:"インタビューのinterview"},
   {en:"message",kana:"<span class='accent'>メ</span>セッジ",ja:"メッセージ",tip:"LINEのメッセージ！"},
   {en:"sleep",kana:"<span class='accent'>ス</span>リープ",ja:"眠る",tip:"スリープモードのsleep"},
+  {en:"yet",kana:"<span class='accent'>イェ</span>ット",ja:"まだ、尚",tip:"have you finished yet?"},
 ];
 const j3_u2 = [
   {en:"accessory",kana:"ア<span class='accent'>ク</span>セサリー",ja:"アクセサリー",tip:"アクセサリーのaccessory"},
@@ -620,7 +605,7 @@ const j3_u3 = [
   {en:"beginning",kana:"ビ<span class='accent'>ギ</span>ニング",ja:"最初、初め",tip:"at the beginning = 最初に"},
   {en:"century",kana:"<span class='accent'>セ</span>ンチュリー",ja:"世紀、百年",tip:"センチュリーのcentury"},
   {en:"shock",kana:"<span class='accent'>シ</span>ョック",ja:"ショック",tip:"ショックのshock"},
-  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安態に",tip:"safe＋ly"},
+  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安泰に",tip:"safe＋ly"},
   {en:"oil",kana:"<span class='accent'>オ</span>イル",ja:"油、石油",tip:"オイルのoil"},
   {en:"spill",kana:"<span class='accent'>ス</span>ピル",ja:"をこぼす",tip:"oil spillで原油流出"},
   {en:"hunting",kana:"<span class='accent'>ハ</span>ンティング",ja:"狩り、狩猟",tip:"ハンティングのhunting"},
@@ -652,7 +637,53 @@ const j3_u3 = [
   {en:"instead",kana:"イン<span class='accent'>ス</span>テッド",ja:"そのかわりに、代わりに",tip:"instead ofで〜の代わりに"},
 ];
 
-// ===== 文法演習データ =====
+const j3_u4 = [
+  {en:"prepared",kana:"プリ<span class='accent'>ペ</span>アード",ja:"用意ができている、準備完了の",tip:"prepareの過去分詞"},
+  {en:"disaster",kana:"ディ<span class='accent'>ザ</span>スター",ja:"災害、天災",tip:"natural disaster"},
+  {en:"shelter",kana:"<span class='accent'>シ</span>ェルター",ja:"避難所、避難場所",tip:"shelter"},
+  {en:"store",kana:"ス<span class='accent'>ト</span>ーア",ja:"を蓄える、貯蔵する",tip:"store"},
+  {en:"case",kana:"<span class='accent'>ケ</span>イス",ja:"場合、事例",tip:"case"},
+  {en:"extinguisher",kana:"イクス<span class='accent'>テ</span>ィンギッシャー",ja:"消火器、火災消火器",tip:"fire extinguisher"},
+  {en:"done",kana:"<span class='accent'>ダ</span>ン",ja:"完了した",tip:"doの過去分詞"},
+  {en:"emergency",kana:"イ<span class='accent'>マ</span>ージェンシー",ja:"緊急事態、緊急",tip:"emergency"},
+  {en:"kit",kana:"<span class='accent'>キ</span>ット",ja:"道具一式、道具セット",tip:"kit"},
+  {en:"recommend",kana:"レコ<span class='accent'>メ</span>ンド",ja:"を推薦する、を勧める",tip:"recommend"},
+  {en:"earthquake",kana:"<span class='accent'>ア</span>ースクウェイク",ja:"地震、震動",tip:"earthquake"},
+  {en:"we've",kana:"<span class='accent'>ウ</span>ィーヴ",ja:"we haveの略",tip:"we have = we've"},
+  {en:"hasn't",kana:"<span class='accent'>ハ</span>ズント",ja:"has notの略",tip:"has not = hasn't"},
+  {en:"several",kana:"<span class='accent'>セ</span>ヴェラル",ja:"いくつかの",tip:"several"},
+  {en:"bridge",kana:"ブ<span class='accent'>リ</span>ッジ",ja:"橋",tip:"bridge"},
+  {en:"between",kana:"ビト<span class='accent'>ウ</span>ィーン",ja:"と〜の間で、〜との間",tip:"between"},
+  {en:"energetic",kana:"エナ<span class='accent'>ジェ</span>ティッック",ja:"エネルギッシュな",tip:"energetic"},
+  {en:"encourage",kana:"エン<span class='accent'>カ</span>リッジ",ja:"を勇気づける、励ます",tip:"encourage"},
+  {en:"personality",kana:"パーソ<span class='accent'>ナ</span>リティ",ja:"人格、性格",tip:"personality"},
+  {en:"hit",kana:"<span class='accent'>ヒ</span>ット",ja:"打つ、叩く",tip:"hit"},
+  {en:"comfort",kana:"<span class='accent'>カ</span>ムフォート",ja:"快適さ/慰める",tip:"comfort"},
+  {en:"nearby",kana:"ニア<span class='accent'>バ</span>イ",ja:"近くの",tip:"nearby"},
+  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安泰に",tip:"safely"},
+  {en:"the Great East Japan Earthquake",kana:"ザ グレイト イースト ジャパン <span class='accent'>ア</span>ースクウェイク",ja:"東日本大震災",tip:"Great East Japan Earthquake"},
+  {en:"rode",kana:"<span class='accent'>ロ</span>ウド",ja:"乗った、乗車した",tip:"rideの過去形"},
+  {en:"bicycle",kana:"<span class='accent'>バ</span>イシクル",ja:"自転車",tip:"bicycle"},
+  {en:"toward",kana:"ト<span class='accent'>ウォ</span>ード",ja:"向かって、のほうへ",tip:"toward"},
+  {en:"apartment",kana:"ア<span class='accent'>パ</span>ートメント",ja:"アパート",tip:"apartment"},
+  {en:"caught",kana:"<span class='accent'>コ</span>ート",ja:"捕まえた",tip:"catchの過去形"},
+  {en:"tsunami",kana:"ツ<span class='accent'>ナ</span>ミ",ja:"津波",tip:"tsunami"},
+  {en:"sudden",kana:"<span class='accent'>サ</span>ドゥン",ja:"突然の、急な",tip:"sudden"},
+  {en:"news",kana:"<span class='accent'>ニ</span>ューズ",ja:"ニュース",tip:"news"},
+  {en:"shortly",kana:"<span class='accent'>シ</span>ョートリー",ja:"まもなく",tip:"shortly"},
+  {en:"corner",kana:"<span class='accent'>コ</span>ーナー",ja:"かど、隅",tip:"corner"},
+  {en:"exchange",kana:"イクス<span class='accent'>チ</span>ェンジ",ja:"交換、取り交わす",tip:"exchange"},
+  {en:"program",kana:"プ<span class='accent'>ロ</span>グラム",ja:"企画、番組",tip:"program"},
+  {en:"support",kana:"サ<span class='accent'>ポ</span>ート",ja:"を支援する、応援する",tip:"support"},
+  {en:"ordinary",kana:"<span class='accent'>オ</span>ーディナリー",ja:"ふつうの、通常の",tip:"ordinary"},
+  {en:"crisis",kana:"ク<span class='accent'>ラ</span>イシス",ja:"危機、困難",tip:"crisis"},
+  {en:"be caught in",kana:"ビー <span class='accent'>コ</span>ート イン",ja:"に捕まる",tip:"be caught in"},
+  {en:"bring together",kana:"ブリング トゥ<span class='accent'>ゲ</span>ザー",ja:"集める、結びつける",tip:"bring together"},
+  {en:"keep on doing",kana:"キー プ オン <span class='accent'>ド</span>ゥーイング",ja:"し続ける",tip:"keep on doing"},
+  {en:"no longer",kana:"ノウ <span class='accent'>ロ</span>ンガー",ja:"もはや〜でない",tip:"no longer"},
+];
+
+// ===== 文法・その他データ =====
 const g_j1_1 = [
   {type:"fill",hint:"私はタクヤです。",ja:"＿＿＿ Takuya.",en:"I'm",tip:"I am = I'm"},
   {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
@@ -662,12 +693,6 @@ const g_j1_1 = [
   {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
   {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
   {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
-  {type:"fill",hint:"私は先生です。",ja:"＿＿＿ a teacher.",en:"I'm",tip:"I am = I'm"},
-  {type:"fill",hint:"あなたは背が高いです。",ja:"＿＿＿ tall.",en:"You're",tip:"You are = You're"},
-  {type:"fill",hint:"彼女は元気です。",ja:"＿＿＿ fine.",en:"She's",tip:"She is = She's"},
-  {type:"fill",hint:"彼らは学校にいます。",ja:"＿＿＿ in school.",en:"They're",tip:"They are = They're"},
-  {type:"fill",hint:"あなたは親切です。",ja:"＿＿＿ kind.",en:"You're",tip:"You are = You're"},
-  {type:"fill",hint:"彼らは小さいです。",ja:"＿＿＿ small.",en:"They're",tip:"They are = They're"},
   {type:"trans",hint:"",ja:"私は新しい先生です。",en:"I am a new teacher.",tip:"I am a new teacher."},
   {type:"trans",hint:"",ja:"あなたはタクヤです。",en:"You're Takuya.",tip:"You're Takuya."},
   {type:"trans",hint:"",ja:"あなたは生徒です。",en:"You're a student.",tip:"You're a student."},
@@ -795,7 +820,6 @@ const g_j2_2 = [
   {type:"trans",hint:"",ja:"彼は若い時に京都に住んでいました。",en:"He lived in Kyoto when he was young.",tip:"whenで時"},
   {type:"trans",hint:"",ja:"彼女は忙しかったので、勉強出来ませんでした。",en:"Because she was busy, she could not study.",tip:"becauseで理由"},
 ];
-
 const g_j2_3 = [
   {type:"fill",hint:"to不定詞的名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
   {type:"fill",hint:"to不定詞の形容詞的用法の意味は？",ja:"homework to do = する＿＿＿宿題",en:"べき",tip:"形容詞的用法：〜するための"},
@@ -910,79 +934,6 @@ const j1_grammar3 = [
   {en:"How old are you?",kana:"ハウ オールド アー <span class='accent'>ユ</span>ー",ja:"あなたは何才ですか？",tip:"年齢を聞く定番"},
   {en:"What year is Tokyo Olympic?",kana:"ホワット イア イズ トーキョー <span class='accent'>オ</span>リンピック",ja:"何年に東京オリンピックはありますか？",tip:"What year疑問文"},
   {en:"What month is school festival?",kana:"ホワット マンス イズ スクール <span class='accent'>フェ</span>スティバル",ja:"何月に文化祭はありますか？",tip:"What month疑問文"},
-];
-
-const j1_u4 = [
-  {en:"New Zealand",kana:"ニュー <span class='accent'>ジ</span>ーランド",ja:"ニュージーランド",tip:"南半球の島国！羊が多いことで有名"},
-  {en:"puppy",kana:"<span class='accent'>パ</span>ピー",ja:"子犬",tip:"baby dogともいう！かわいい"},
-  {en:"puppies",kana:"<span class='accent'>パ</span>ピーズ",ja:"子犬たち",tip:"puppyの複数形。yをiに変えてes！"},
-  {en:"of",kana:"<span class='accent'>オ</span>ヴ",ja:"〜の、〜の所有の",tip:"one of ～＝〜の一つ"},
-  {en:"someday",kana:"<span class='accent'>サ</span>ムデイ",ja:"いつか",tip:"未来のいつかを表す"},
-  {en:"lot",kana:"<span class='accent'>ロ</span>ット",ja:"多くの、塊",tip:"a lot of ～＝たくさんの〜"},
-  {en:"they",kana:"<span class='accent'>ゼ</span>イ",ja:"彼らは、彼女力が",tip:"複数の人・物を指す"},
-  {en:"animal",kana:"<span class='accent'>ア</span>ニマル",ja:"どうぶつ",tip:"アニマルのanimal"},
-  {en:"visit",kana:"<span class='accent'>ヴ</span>ィジット",ja:"ほうもん、訪問する",tip:"visit Japan＝日本を訪れる"},
-  {en:"Japan",kana:"ジャ<span class='accent'>パ</span>ン",ja:"にほん、日本",tip:"日本！アクセントは後ろ"},
-  {en:"many",kana:"<span class='accent'>メ</span>ニー",ja:"おお、多くの",tip:"many books＝たくさんの本"},
-  {en:"one of",kana:"ワン <span class='accent'>オ</span>ヴ",ja:"の一つ",tip:"one of my friends＝友達の一人"},
-  {en:"a lot of",kana:"ア ロット <span class='accent'>オ</span>ヴ",ja:"たくさんの",tip:"a lot of＝manyと同じ意味！"},
-  {en:"How many",kana:"ハウ <span class='accent'>メ</span>ニー",ja:"いくつ／何個",tip:"数を聞くときの定番表現"},
-  {en:"they're",kana:"<span class='accent'>ゼ</span>イア",ja:"they areの略",tip:"they are＝they're"},
-  {en:"noon",kana:"<span class='accent'>ヌ</span>ーン",ja:"正午、昼",tip:"12時ちょうどのこと"},
-  {en:"last",kana:"<span class='accent'>ラ</span>スト",ja:"この前の、先の",tip:"last week＝先週"},
-  {en:"like",kana:"<span class='accent'>ラ</span>イク",ja:"この、好む",tip:"like this＝このような"},
-  {en:"o'clock",kana:"オ<span class='accent'>ク</span>ロック",ja:"〜時",tip:"It's three o'clock.＝3時です"},
-  {en:"netball",kana:"<span class='accent'>ネ</span>ットボール",ja:"ネットボール",tip:"ニュージーランドで人気のスポーツ！"},
-  {en:"time",kana:"<span class='accent'>タ</span>イム",ja:"時、〜回",tip:"What time is it?＝何時ですか？"},
-  {en:"afternoon",kana:"アフター<span class='accent'>ヌ</span>ーン",ja:"午後",tip:"good afternoon＝こんにちは"},
-  {en:"sport",kana:"<span class='accent'>ス</span>ポーツ",ja:"スポーツ",tip:"そのままスポーツ！"},
-  {en:"a.m.",kana:"<span class='accent'>エ</span>イエム",ja:"午前",tip:"ante meridiemのラテン語略"},
-  {en:"p.m.",kana:"<span class='accent'>ピ</span>ーエム",ja:"午後",tip:"post meridiemのラテン語略"},
-  {en:"basketball",kana:"<span class='accent'>バ</span>スケットボール",ja:"バスケットボール",tip:"バスケのbasketball！"},
-  {en:"sounds",kana:"<span class='accent'>サ</span>ウンズ",ja:"音",tip:"That sounds fun!＝楽しそう！"},
-  {en:"front",kana:"<span class='accent'>フ</span>ロント",ja:"前、正面",tip:"in front of～＝〜の前に"},
-  {en:"nervous",kana:"<span class='accent'>ナ</span>ーヴァス",ja:"神経質な、びくびくして",tip:"緊張してるときにも使う！"},
-  {en:"worry",kana:"<span class='accent'>ワ</span>ーリー",ja:"心配させる、憂慮させる",tip:"Don't worry!＝心配しないで！"},
-  {en:"yourself",kana:"ユア<span class='accent'>セ</span>ルフ",ja:"自分自身",tip:"enjoy yourself＝楽しんでね"},
-  {en:"sheep",kana:"<span class='accent'>シ</span>ープ",ja:"ヒツジ",tip:"複数形もsheep！変化なし"},
-  {en:"kiwi",kana:"<span class='accent'>キ</span>ウイ",ja:"キウイ",tip:"ニュージーランドの国鳥でもある！"},
-  {en:"right",kana:"<span class='accent'>ラ</span>イト",ja:"右に",tip:"turn right＝右に曲がる"},
-  {en:"turn",kana:"<span class='accent'>タ</span>ーン",ja:"曲がる、回る、変化する",tip:"ターンするのturn"},
-  {en:"please",kana:"<span class='accent'>プ</span>リーズ",ja:"喜ばせる",tip:"Yes, please.＝はい、お願いします"},
-  {en:"look",kana:"<span class='accent'>ル</span>ック",ja:"見る",tip:"look at ～＝〜を見る"},
-  {en:"enjoy oneself",kana:"エン<span class='accent'>ジ</span>ョイ ワンセルフ",ja:"楽しく過ごす",tip:"Enjoy yourself!＝楽しんで！"},
-  {en:"look at",kana:"ルック <span class='accent'>ア</span>ット",ja:"を見る",tip:"look at the blackboard＝黒板を見て"},
-  {en:"fun",kana:"<span class='accent'>ファ</span>ン",ja:"楽しみ",tip:"That's fun!＝楽しい！"},
-  {en:"long",kana:"<span class='accent'>ロ</span>ング",ja:"長い",tip:"ロングのlong"},
-  {en:"song",kana:"<span class='accent'>ソ</span>ング",ja:"歌、歌唱",tip:"ソングのsong"},
-  {en:"fine",kana:"<span class='accent'>フ</span>ァイン",ja:"元気な、晴れた",tip:"I'm fine.＝元気です"},
-  {en:"pet",kana:"<span class='accent'>ペ</span>ット",ja:"ペット",tip:"ペットのpet"},
-  {en:"stop",kana:"<span class='accent'>ス</span>トップ",ja:"止める",tip:"stop＝ストップ！"},
-  {en:"eat",kana:"<span class='accent'>イ</span>ート",ja:"食べる",tip:"eat breakfast＝朝食を食べる"},
-  {en:"sad",kana:"<span class='accent'>サ</span>ッド",ja:"悲しい",tip:"I'm sad.＝悲しいです"},
-  {en:"eel",kana:"<span class='accent'>イ</span>ール",ja:"うなぎ",tip:"ニュージーランドにも川うなぎが！"},
-  {en:"gift",kana:"<span class='accent'>ギ</span>フト",ja:"贈り物、贈答品",tip:"ギフトのgift"},
-  {en:"bench",kana:"<span class='accent'>ベ</span>ンチ",ja:"ベンチ",tip:"ベンチのbench"},
-  {en:"picture",kana:"<span class='accent'>ピ</span>クチャー",ja:"絵、写真",tip:"take a picture＝写真を撮る"},
-  {en:"kitchen",kana:"<span class='accent'>キ</span>ッチン",ja:"台所",tip:"キッチンのkitchen"},
-  {en:"table",kana:"<span class='accent'>テ</span>イブル",ja:"机",tip:"テーブルのtable"},
-  {en:"all",kana:"<span class='accent'>オ</span>ール",ja:"全部、全員、全て、みな",tip:"all of us＝私たち全員"},
-  {en:"poster",kana:"<span class='accent'>ポ</span>スター",ja:"ポスター",tip:"ポスターのposter"},
-  {en:"age",kana:"<span class='accent'>エ</span>イジ",ja:"年齢、年数",tip:"What is your age?＝年齢は？"},
-  {en:"movie",kana:"<span class='accent'>ム</span>ービー",ja:"映画、映像作品",tip:"ムービーのmovie"},
-  {en:"student",kana:"<span class='accent'>ス</span>チューデント",ja:"生徒、学生",tip:"スチューデントのstudent"},
-  {en:"much",kana:"<span class='accent'>マ</span>ッチ",ja:"たくさん",tip:"very much＝とても"},
-  {en:"starter",kana:"<span class='accent'>ス</span>ターター",ja:"始める人",tip:"start＋erで「始める人」"},
-  {en:"famous",kana:"<span class='accent'>フ</span>ェイマス",ja:"有名な",tip:"famousな人＝有名人"},
-  {en:"tell",kana:"<span class='accent'>テ</span>ル",ja:"に話す、に対して話す",tip:"tell me＝私に教えて"},
-  {en:"elementary school",kana:"エレメンタリー <span class='accent'>ス</span>クール",ja:"小学校",tip:"elementaryは「基礎の」という意味"},
-  {en:"subject",kana:"<span class='accent'>サ</span>ブジェクト",ja:"科目、題目",tip:"What subject do you like?＝何の科目が好き？"},
-  {en:"junior high school",kana:"ジュニア ハイ <span class='accent'>ス</span>クール",ja:"中学校、中等学校",tip:"juniorは「年少の」という意味"},
-  {en:"everyone",kana:"<span class='accent'>エ</span>ヴリワン",ja:"みんな",tip:"Hello, everyone!＝みなさんこんにちは"},
-  {en:"big",kana:"<span class='accent'>ビ</span>ッグ",ja:"大きい",tip:"ビッグのbig"},
-  {en:"player",kana:"<span class='accent'>プ</span>レイヤー",ja:"選手",tip:"play＋erで「する人」"},
-  {en:"very much",kana:"<span class='accent'>ヴ</span>ェリー マッチ",ja:"とても",tip:"Thank you very much.＝大変ありがとう"},
-  {en:"every day",kana:"<span class='accent'>エ</span>ヴリ デイ",ja:"毎日",tip:"every day＝毎日（副詞句）"},
 ];
 
 const db = {
