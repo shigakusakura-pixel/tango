@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,12 +7,61 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
+  
+  /* ヘッダー構造（PC用） */
   .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
   .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);white-space:nowrap;}
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
+
+  /* タブのレイアウト（PC用横並び） */
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+
+  /* スマホ縦画面（幅600px以下）の時だけタイトル3段＆タブ均等配置に調整 */
+  @media screen and (max-width: 600px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      font-size: 22px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .header-title .t1 { font-size: 22px; }
+    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
+    .header-title .t3 { font-size: 22px; }
+    
+    .header-school {
+      align-self: flex-end;
+      font-size: 12px;
+    }
+
+    .grade-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .grade-btn {
+      width: 100%;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
+    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
+    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
+  }
+
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
   .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
@@ -94,50 +143,6 @@
     background-color: #e6f4ea;
     border-color: #059669;
     color: #059669;
-  }
-
-  /* スマホ縦画面（幅600px以下）の時だけタイトル3段＆タブ均等配置に調整 */
-  @media screen and (max-width: 600px) {
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .header-title {
-      display: flex;
-      flex-direction: column;
-      font-size: 22px;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-    .header-title .t1 { font-size: 22px; }
-    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
-    .header-title .t3 { font-size: 22px; }
-    
-    .header-school {
-      align-self: flex-end;
-      font-size: 12px;
-    }
-
-    .grade-tabs {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-    }
-    .grade-btn {
-      width: 100%;
-      padding: 8px 0;
-      text-align: center;
-      font-size: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
-    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
-    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
   }
 </style>
 </head>
@@ -679,55 +684,6 @@ const j3_u4 = [
   {en:"no longer",kana:"ノウ <span class='accent'>ロ</span>ンガー",ja:"もはや〜でない",tip:"no longer"},
 ];
 
-const g_j1_1 = [
-  {type:"fill",hint:"私はタクヤです。",ja:"＿＿＿ Takuya.",en:"I'm",tip:"I am = I'm"},
-  {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
-  {type:"fill",hint:"彼はケンです。",ja:"＿＿＿ Ken.",en:"He's",tip:"He is = He's"},
-  {type:"fill",hint:"彼女はアンです。",ja:"＿＿＿ Ann.",en:"She's",tip:"She is = She's"},
-  {type:"fill",hint:"それはペンです。",ja:"＿＿＿ a pen.",en:"It's",tip:"It is = It's"},
-  {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
-  {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
-  {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
-  {type:"trans",hint:"",ja:"私は新しい先生です。",en:"I am a new teacher.",tip:"I am a new teacher."},
-  {type:"trans",hint:"",ja:"あなたはタクヤです。",en:"You're Takuya.",tip:"You're Takuya."},
-  {type:"trans",hint:"",ja:"あなたは生徒です。",en:"You're a student.",tip:"You're a student."},
-  {type:"trans",hint:"",ja:"アンは新しい生徒です。",en:"Ann is a new student.",tip:"Ann is a new student."},
-  {type:"trans",hint:"",ja:"私は先生ではありません。",en:"I am not a teacher.",tip:"否定はnot"},
-  {type:"trans",hint:"",ja:"彼は医者ではありません。",en:"He is not a doctor.",tip:"否定はnot"},
-  {type:"trans",hint:"",ja:"あなたは幸せですか？",en:"Are you happy?",tip:"疑問文はAre you...?"}
-];
-const g_j1_2 = [
-  {ja:"1つのボール",en:"a ball",tip:"単数はa/anをつける",type:"trans"},
-  {ja:"2つのボール",en:"two balls",tip:"複数はsをつける",type:"trans"},
-  {ja:"1つのりんご",en:"an apple",tip:"母音で始まる語はan",type:"trans"},
-  {ja:"4つのりんご",en:"four apples",tip:"applesと複数形に",type:"trans"},
-  {ja:"1冊の本",en:"a book",tip:"単数はa book",type:"trans"},
-  {ja:"3冊の本",en:"three books",tip:"複数はbooks",type:"trans"}
-];
-const g_j2_1 = [
-  {type:"fill",hint:"SとはSubjectの略で何ですか？",ja:"S = ＿＿＿",en:"主語",tip:"S = Subject（主語）"},
-  {type:"fill",hint:"CとはComplementの略で何ですか？",ja:"C = ＿＿＿",en:"補語",tip:"C = Complement（補語）"},
-];
-const g_j2_2 = [
-  {type:"fill",hint:"並列を表す接続詞は？",ja:"A ＿＿＿ B（AそしてB）",en:"and",tip:"andは並列を表す"},
-];
-const g_j2_3 = [
-  {type:"fill",hint:"to不定詞的名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
-];
-const g_j3_1 = [
-  {type:"fill",hint:"現在完了の継続用法「〜の間」は？",ja:"I have lived here ＿＿＿ 10 years.",en:"for",tip:"for＋期間"},
-];
-const j1_grammar3 = [
-  {en:"What",kana:"<span class='accent'>ホ</span>ワット",ja:"なに",tip:"物・事を聞くときに使う"},
-  {en:"Where",kana:"<span class='accent'>ホ</span>ウェア",ja:"どこ",tip:"場所を聞くときに使う"},
-  {en:"When",kana:"<span class='accent'>ホ</span>ウェン",ja:"いつ",tip:"時を聞くときに使う"},
-  {en:"Who",kana:"<span class='accent'>フ</span>ー",ja:"だれ",tip:"人を聞くときに使う"},
-];
-const j3_grammar2 = [
-  {en:"I like to swim.",kana:"アイ ライク トゥ <span class='accent'>ス</span>ウィム",ja:"私は泳ぐことが好きです。",tip:"like to＋動詞原形＝〜することが好き"},
-  {en:"We want to go to New York.",kana:"ウィ ウォント トゥ ゴウ トゥ ニュー <span class='accent'>ヨ</span>ーク",ja:"私たちはニューヨークに行きたいです。",tip:"want to＋動詞原形＝〜したい"},
-];
-
 const db = {
   j1:{
     label:"中学1年",
@@ -858,7 +814,7 @@ function updateScore(){
   const total = currentWords.length;
   const sb = document.getElementById('scoreBadge');
   if (sb) {
-    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}語)`;
+    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}${currentWords === j1_grammar3 || currentWords === g_j1_1 || currentWords === g_j1_2 || currentWords === g_j2_1 || currentWords === g_j2_2 || currentWords === g_j2_3 || currentWords === g_j3_1 || currentWords === j3_grammar2 ? '問' : '語'})`;
   }
 }
 
