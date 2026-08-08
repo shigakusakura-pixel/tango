@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,61 +7,12 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  
-  /* ヘッダー構造（PC用） */
   .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
   .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);white-space:nowrap;}
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
-
-  /* タブのレイアウト（PC用横並び） */
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
-
-  /* スマホ縦画面（幅600px以下）の時だけタイトル3段＆タブ均等配置に調整 */
-  @media screen and (max-width: 600px) {
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .header-title {
-      display: flex;
-      flex-direction: column;
-      font-size: 22px;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-    .header-title .t1 { font-size: 22px; }
-    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
-    .header-title .t3 { font-size: 22px; }
-    
-    .header-school {
-      align-self: flex-end;
-      font-size: 12px;
-    }
-
-    .grade-tabs {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-    }
-    .grade-btn {
-      width: 100%;
-      padding: 8px 0;
-      text-align: center;
-      font-size: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
-    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
-    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
-  }
-
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
   .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
@@ -144,6 +95,50 @@
     border-color: #059669;
     color: #059669;
   }
+
+  /* スマホ縦画面（幅600px以下）の時だけタイトル3段＆タブ均等配置に調整 */
+  @media screen and (max-width: 600px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      font-size: 22px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .header-title .t1 { font-size: 22px; }
+    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
+    .header-title .t3 { font-size: 22px; }
+    
+    .header-school {
+      align-self: flex-end;
+      font-size: 12px;
+    }
+
+    .grade-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .grade-btn {
+      width: 100%;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
+    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
+    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
+  }
 </style>
 </head>
 <body>
@@ -176,6 +171,14 @@
 </div>
 
 <script>
+let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
+
+const COVER_IMGS={
+  "j1": "NewHorizon1.jpg",
+  "j2": "NewHorizon2.jpg",
+  "j3": "NewHorizon3.jpg"
+};
+
 // ===== 中1単語データ =====
 const j1_u0 = [
   {en:"Nice to meet you",kana:"<span class='accent'>ナ</span>イス トゥ ミート ユー",ja:"はじめまして",tip:"挨拶の定番フレーズ！"},
@@ -724,14 +727,6 @@ const db = {
       {tag:"unit",label:"UNIT 4",title:"How can we help each other in a disaster",words:j3_u4},
     ]
   }
-};
-
-let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
-
-const COVER_IMGS={
-  "j1": "NewHorizon1.jpg",
-  "j2": "NewHorizon2.jpg",
-  "j3": "NewHorizon3.jpg"
 };
 
 function selectGrade(g,btn){
