@@ -7,37 +7,85 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
   
-  /* 基本タイトルスタイル（Mac/PC） */
+  /* ヘッダー構造（見切れ防止） */
+  .header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#1D9E75,#2ecc71);
+    margin-bottom:12px;
+    gap:4px;
+  }
   .header-title{
-    font-size:26px;
+    font-size:22px;
     font-weight:900;
     color:#fff;
     letter-spacing:1px;
     -webkit-text-stroke:1.5px #000;
     paint-order:stroke fill;
     text-shadow:2px 2px 4px rgba(0,0,0,0.4);
-    white-space:nowrap;
+    line-height:1.3;
+  }
+  .header-school{
+    font-size:13px;
+    font-weight:700;
+    color:#fff;
+    opacity:0.95;
+    align-self:flex-end;
   }
 
-  /* スマホ表示時の調整（画面幅に応じてフォントサイズを縮小し折返しを防ぐ） */
-  @media screen and (max-width: 600px) {
-    .header-title {
-      font-size: 18px;
-      letter-spacing: 0px;
-      -webkit-text-stroke: 1px #000;
-    }
-    .header-school {
-      font-size: 12px;
-      white-space: nowrap;
-    }
+  /* タブのレイアウト（スマホ縦画面で綺麗に均等配置） */
+  .grade-tabs{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap:6px;
+    margin-bottom:12px;
   }
-
-  .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
-  .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-  .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
+  .grade-btn{
+    padding:8px 0;
+    border-radius:20px;
+    border:1px solid #aaa;
+    background:#fff;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:500;
+    color:#666;
+    text-align:center;
+    width:100%;
+  }
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+  
+  /* 上段：学年3つ（均等） */
+  .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
+  .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
+  .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
+  
+  /* 下段：リンク2つ（均等） */
+  .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
+  .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
+
+  /* Mac・PCなどの横長画面では元の1行横並びへ */
+  @media screen and (min-width: 768px) {
+    .header{
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .header-title{ font-size:26px; }
+    .header-school{ font-size:14px; align-self:auto; }
+    .grade-tabs{
+      display:flex;
+      flex-wrap:wrap;
+    }
+    .grade-btn{
+      width:auto;
+      padding:6px 18px;
+    }
+  }
+
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
   .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
@@ -106,17 +154,9 @@
     font-weight: 700;
     text-decoration: none;
     display: inline-flex;
+    justify-content: center;
     align-items: center;
-    padding: 6px 18px;
-    position: relative;
-    top: 0.5px;
   }
-  
-  .grade-btn.special-tab:hover {
-    background-color: #1D9E75;
-    color: #ffffff;
-  }
-
   .grade-btn.special-tab.idiom-tab-style {
     background-color: #e6f4ea;
     border-color: #059669;
@@ -615,7 +655,7 @@ const j3_u3 = [
   {en:"instead",kana:"イン<span class='accent'>ス</span>テッド",ja:"そのかわりに、代わりに",tip:"instead ofで〜の代わりに"},
 ];
 
-// ===== 文法演習データ（日本語→英語、各最初50問）=====
+// ===== 文法演習データ =====
 const g_j1_1 = [
   {type:"fill",hint:"私はタクヤです。",ja:"＿＿＿ Takuya.",en:"I'm",tip:"I am = I'm"},
   {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
@@ -625,15 +665,9 @@ const g_j1_1 = [
   {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
   {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
   {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
-  {type:"fill",hint:"あなたはタクヤです。",ja:"＿＿＿ Takuya.",en:"You're",tip:"You are = You're"},
-  {type:"fill",hint:"彼らは生徒です。",ja:"＿＿＿ students.",en:"They're",tip:"They are = They're"},
   {type:"fill",hint:"私は先生です。",ja:"＿＿＿ a teacher.",en:"I'm",tip:"I am = I'm"},
   {type:"fill",hint:"あなたは背が高いです。",ja:"＿＿＿ tall.",en:"You're",tip:"You are = You're"},
-  {type:"fill",hint:"彼はケンです。",ja:"＿＿＿ Ken.",en:"He's",tip:"He is = He's"},
   {type:"fill",hint:"彼女は元気です。",ja:"＿＿＿ fine.",en:"She's",tip:"She is = She's"},
-  {type:"fill",hint:"それはペンです。",ja:"＿＿＿ a pen.",en:"It's",tip:"It is = It's"},
-  {type:"fill",hint:"ボブはアメリカ人です。",ja:"＿＿＿ American.",en:"Bob's",tip:"Bob is = Bob's"},
-  {type:"fill",hint:"私たちは友達です。",ja:"＿＿＿ friends.",en:"We're",tip:"We are = We're"},
   {type:"fill",hint:"彼らは学校にいます。",ja:"＿＿＿ in school.",en:"They're",tip:"They are = They're"},
   {type:"fill",hint:"あなたは親切です。",ja:"＿＿＿ kind.",en:"You're",tip:"You are = You're"},
   {type:"fill",hint:"彼らは小さいです。",ja:"＿＿＿ small.",en:"They're",tip:"They are = They're"},
@@ -766,7 +800,7 @@ const g_j2_2 = [
 ];
 
 const g_j2_3 = [
-  {type:"fill",hint:"to不定詞的名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
+  {type:"fill",hint:"to不定詞の名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
   {type:"fill",hint:"to不定詞の形容詞的用法の意味は？",ja:"homework to do = する＿＿＿宿題",en:"べき",tip:"形容詞的用法：〜するための"},
   {type:"fill",hint:"to不定詞の副詞的用法（目的）の意味は？",ja:"I study ＿＿＿ be a doctor.",en:"to",tip:"副詞的用法：〜するために"},
   {type:"trans",hint:"",ja:"私は泳ぐことが好きです。",en:"I like to swim.",tip:"like to swim"},
@@ -998,7 +1032,6 @@ const db = {
 
 let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
 
-// ★画像ファイルをGitHub上のファイル名（同フォルダ内）に直接指定★
 const COVER_IMGS={
   "j1": "NewHorizon1.jpg",
   "j2": "NewHorizon2.jpg",
@@ -1185,7 +1218,6 @@ function renderRows(isGrammar){
     const tr=document.createElement('tr');
     tr.id='row-'+i;
     tr.className=i%2===0?'row-even':'row-odd';
-    const safeEn=w.en.replace(/'/g,"\'");
     if(isGrammar){
       const isFill=w.type==='fill';
       const typeTag=isFill
