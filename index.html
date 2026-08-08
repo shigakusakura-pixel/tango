@@ -9,34 +9,29 @@
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
   .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
   
-  /* デフォルト（Mac・PC）：元の1行・大きなフォント・完全な表示を100%維持 */
+  /* 基本タイトルスタイル（Mac/PC） */
   .header-title{
-    font-size: 26px;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 2px;
-    -webkit-text-stroke: 2px #000;
-    paint-order: stroke fill;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
-    white-space: nowrap;
-  }
-  .header-title span {
-    display: inline;
+    font-size:26px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:1px;
+    -webkit-text-stroke:1.5px #000;
+    paint-order:stroke fill;
+    text-shadow:2px 2px 4px rgba(0,0,0,0.4);
+    white-space:nowrap;
   }
 
-  /* スマホ（縦画面・幅600px以下）の時のみ3段配置に自動変換 */
+  /* スマホ表示時の調整（画面幅に応じてフォントサイズを縮小し折返しを防ぐ） */
   @media screen and (max-width: 600px) {
     .header-title {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: flex-start !important;
-      font-size: 22px !important;
-      line-height: 1.2 !important;
-      white-space: nowrap !important;
+      font-size: 18px;
+      letter-spacing: 0px;
+      -webkit-text-stroke: 1px #000;
     }
-    .header-title .t1 { font-size: 22px !important; }
-    .header-title .t2 { font-size: 14px !important; margin: 1px 0 1px 16px !important; }
-    .header-title .t3 { font-size: 22px !important; }
+    .header-school {
+      font-size: 12px;
+      white-space: nowrap;
+    }
   }
 
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
@@ -132,9 +127,7 @@
 <body>
 
 <div class="header">
-  <div class="header-title">
-    <span class="t1">📚 中学英単語</span><span class="t2">&amp;</span><span class="t3">文法演習システム</span>
-  </div>
+  <div class="header-title">📚 中学英単語&amp;文法演習システム</div>
   <div class="header-school">志学ゼミナール</div>
 </div>
 
@@ -590,7 +583,7 @@ const j3_u3 = [
   {en:"beginning",kana:"ビ<span class='accent'>ギ</span>ニング",ja:"最初、初め",tip:"at the beginning = 最初に"},
   {en:"century",kana:"<span class='accent'>セ</span>ンチュリー",ja:"世紀、百年",tip:"センチュリーのcentury"},
   {en:"shock",kana:"<span class='accent'>シ</span>ョック",ja:"ショック",tip:"ショックのshock"},
-  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安泰に",tip:"safe＋ly"},
+  {en:"safely",kana:"<span class='accent'>セ</span>イフリー",ja:"安全に、安態に",tip:"safe＋ly"},
   {en:"oil",kana:"<span class='accent'>オ</span>イル",ja:"油、石油",tip:"オイルのoil"},
   {en:"spill",kana:"<span class='accent'>ス</span>ピル",ja:"をこぼす",tip:"oil spillで原油流出"},
   {en:"hunting",kana:"<span class='accent'>ハ</span>ンティング",ja:"狩り、狩猟",tip:"ハンティングのhunting"},
@@ -773,7 +766,7 @@ const g_j2_2 = [
 ];
 
 const g_j2_3 = [
-  {type:"fill",hint:"to不定詞の名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
+  {type:"fill",hint:"to不定詞的名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
   {type:"fill",hint:"to不定詞の形容詞的用法の意味は？",ja:"homework to do = する＿＿＿宿題",en:"べき",tip:"形容詞的用法：〜するための"},
   {type:"fill",hint:"to不定詞の副詞的用法（目的）の意味は？",ja:"I study ＿＿＿ be a doctor.",en:"to",tip:"副詞的用法：〜するために"},
   {type:"trans",hint:"",ja:"私は泳ぐことが好きです。",en:"I like to swim.",tip:"like to swim"},
