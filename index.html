@@ -7,8 +7,23 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
-  .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
+ .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
+  .header-title{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    -webkit-text-stroke: 2px #000;
+    paint-order: stroke fill;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    line-height: 1.2;
+  }
+  .header-title .t1 { font-size: 24px; white-space: nowrap; }
+  .header-title .t2 { font-size: 16px; margin: 2px 0 2px 20px; white-space: nowrap; }
+  .header-title .t3 { font-size: 24px; white-space: nowrap; }
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
@@ -102,7 +117,11 @@
 <body>
 
 <div class="header">
-  <div class="header-title">📚 中学英単語&amp;文法演習システム</div>
+  <div class="header-title">
+    <span class="t1">📚 中学英単語</span>
+    <span class="t2">&amp;</span>
+    <span class="t3">文法演習システム</span>
+  </div>
   <div class="header-school">志学ゼミナール</div>
 </div>
 
