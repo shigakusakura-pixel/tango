@@ -1,18 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>中学英単語&amp;文法演習システム｜志学ゼミナール</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}/* updated:2026-03-22 07:00:14 */
-    .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
-  .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
-  .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
-  .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
-  .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:8px;}
+  .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:10px;}
+  .header-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;-webkit-text-stroke:1.5px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);}
+  .header-school{font-size:12px;font-weight:700;color:#fff;opacity:0.9;white-space:nowrap;}
+  
+  /* 📱 タブのスマホ最適化（5つのタブを美しく配置） */
+  .grade-tabs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .grade-btn{
+    flex: 1 1 calc(33.33% - 6px); /* 中1・中2・中3を1行目に3等分 */
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    white-space: nowrap;
+  }
+  
+  .grade-btn.active{
+    background: #1D9E75;
+    border-color: #1D9E75;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  /* 下段2つの特別リンク（英文法＆英熟語） */
+  .grade-btn.special-tab {
+    flex: 1 1 calc(50% - 6px); /* 2行目に50%ずつ等分割配置 */
+    background-color: #ffffff;
+    border-color: #1D9E75;
+    color: #1D9E75;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+  }
+  
+  .grade-btn.special-tab.idiom-tab-style {
+    background-color: #e6f4ea;
+    border-color: #059669;
+    color: #059669;
+  }
+
+  .grade-btn.special-tab:hover {
+    background-color: #1D9E75;
+    color: #ffffff;
+  }
+
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
   .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
@@ -74,22 +127,10 @@
   .all-ans-btn:hover{background:#f0faf5;}
   #noResult{display:none;text-align:center;padding:16px;font-size:13px;color:#888;}
 
-.grade-btn.special-tab {
-    background-color: #ffffff;
-    border-color: #1D9E75;
-    color: #1D9E75;
-    font-weight: 700;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 18px;
-    position: relative;
-    top: 0.5px;
-  }
-  
-  .grade-btn.special-tab:hover {
-    background-color: #1D9E75;
-    color: #ffffff;
+  @media (max-width: 480px) {
+    .header-title{font-size:18px;}
+    .grade-btn{font-size:11.5px;}
+    .grade-btn.special-tab{font-size:11.5px;}
   }
 </style>
 </head>
@@ -100,14 +141,14 @@
   <div class="header-school">志学ゼミナール</div>
 </div>
 
+<!-- 5つのタブをスマホ対応デザインに配置 -->
 <div class="grade-tabs">
   <button class="grade-btn active" onclick="selectGrade('j1',this)">中学1年</button>
   <button class="grade-btn" onclick="selectGrade('j2',this)">中学2年</button>
   <button class="grade-btn" onclick="selectGrade('j3',this)">中学3年</button>
   
   <a href="https://shigakusakura-pixel.github.io/grammar/" class="grade-btn special-tab grammar-tab-link" target="_blank" rel="noopener noreferrer">中学英文法 完全マスター</a>
-  <!-- 追加：英熟語300への移動タブ -->
-  <a href="https://shigakusakura-pixel.github.io/idioms/" class="grade-btn special-tab idiom-tab-link" target="_blank" rel="noopener noreferrer">★ 入試英熟語300</a>
+  <a href="https://shigakusakura-pixel.github.io/idioms/" class="grade-btn special-tab idiom-tab-link idiom-tab-style" target="_blank" rel="noopener noreferrer">★ 入試英熟語300</a>
 </div>
 
 <div id="unitView">
@@ -123,11 +164,503 @@
 </div>
 
 <script>
-// データ部分、各種JavaScript処理（元のコードと同じ）
+// ===== 中1単語データ =====
+const j1_u0 = [
+  {en:"Nice to meet you",kana:"<span class='accent'>ナ</span>イス トゥ ミート ユー",ja:"はじめまして",tip:"挨拶の定番フレーズ！"},
+  {en:"meet",kana:"<span class='accent'>ミ</span>ート",ja:"会う",tip:"Nice to meet you のmeet"},
+  {en:"Good morning",kana:"グッド <span class='accent'>モ</span>ーニング",ja:"おはようございます",tip:"朝の挨拶の定番！"},
+  {en:"I'm",kana:"<span class='accent'>ア</span>イム",ja:"I amを短くしたもの",tip:"I am = I'm"},
+  {en:"I",kana:"<span class='accent'>ア</span>イ",ja:"私は",tip:"大文字で書くのがルール"},
+  {en:"am",kana:"<span class='accent'>ア</span>ム",ja:"いる、ある",tip:"I専用のbe動詞"},
+  {en:"my",kana:"<span class='accent'>マ</span>イ",ja:"私の",tip:"My name is...でよく使う"},
+  {en:"name",kana:"<span class='accent'>ネ</span>イム",ja:"名前",tip:"ネームタグのname！"},
+  {en:"is",kana:"<span class='accent'>イ</span>ズ",ja:"ある、いる",tip:"三人称単数のbe動詞"},
+  {en:"hello",kana:"ヘ<span class='accent'>ロ</span>ー",ja:"こんにちは",tip:"アクセントは後ろ！"},
+  {en:"do",kana:"<span class='accent'>ド</span>ゥ",ja:"する",tip:"疑問文で大活躍"},
+  {en:"like",kana:"<span class='accent'>ラ</span>イク",ja:"好む",tip:"SNSのいいね＝like！"},
+  {en:"tennis",kana:"<span class='accent'>テ</span>ニス",ja:"テニス",tip:"そのままテニス！"},
+  {en:"yes",kana:"<span class='accent'>イェ</span>ス",ja:"はい",tip:"Yes!の返事"},
+  {en:"fan",kana:"<span class='accent'>ファ</span>ン",ja:"扇風機",tip:"ファンのfan"},
+  {en:"pen",kana:"<span class='accent'>ペ</span>ン",ja:"ペン",tip:"そのままペン！"},
+  {en:"sun",kana:"<span class='accent'>サ</span>ン",ja:"太陽",tip:"サンサインのsun"},
+  {en:"run",kana:"<span class='accent'>ラ</span>ン",ja:"走る",tip:"ランニングのrun！"},
+  {en:"hat",kana:"<span class='accent'>ハ</span>ット",ja:"帽子",tip:"つばのある帽子"},
+  {en:"hot",kana:"<span class='accent'>ホ</span>ット",ja:"暑い",tip:"ホットコーヒーのhot"},
+  {en:"cup",kana:"<span class='accent'>カ</span>ップ",ja:"カップ",tip:"カップのcup"},
+  {en:"cap",kana:"<span class='accent'>キャ</span>ップ",ja:"帽子",tip:"野球帽などのキャップ"},
+  {en:"map",kana:"<span class='accent'>マ</span>ップ",ja:"地図",tip:"マップアプリのmap"},
+  {en:"mop",kana:"<span class='accent'>モ</span>ップ",ja:"モップ",tip:"そのままモップ"},
+  {en:"cut",kana:"<span class='accent'>カ</span>ット",ja:"切る、断ち切る",tip:"ヘアカットのcut"},
+  {en:"TV",kana:"<span class='accent'>テ</span>ィービー",ja:"テレビ",tip:"televisionの略"},
+  {en:"milk",kana:"<span class='accent'>ミ</span>ルク",ja:"ぎゅうにゅう",tip:"ミルクのmilk"},
+  {en:"box",kana:"<span class='accent'>ボ</span>ックス",ja:"箱",tip:"ボックスのbox"},
+  {en:"bag",kana:"<span class='accent'>バ</span>ッグ",ja:"カバン",tip:"バッグのbag"},
+  {en:"desk",kana:"<span class='accent'>デ</span>スク",ja:"机",tip:"デスクワークのdesk"},
+  {en:"bed",kana:"<span class='accent'>ベ</span>ッド",ja:"ベッド、寝床",tip:"ベッドのbed"},
+];
+const j1_u1 = [
+  {en:"call",kana:"<span class='accent'>コ</span>ール",ja:"に電話をかける、連絡する",tip:"コールするのcall"},
+  {en:"South Africa",kana:"サウス <span class='accent'>ア</span>フリカ",ja:"南アフリカ",tip:"南アフリカ共和国"},
+  {en:"love",kana:"<span class='accent'>ラ</span>ヴ",ja:"愛、愛する",tip:"ラブストーリーのlove"},
+  {en:"everyone",kana:"<span class='accent'>エ</span>ヴリワン",ja:"みんな",tip:"Hello, everyone!"},
+  {en:"meet",kana:"<span class='accent'>ミ</span>ート",ja:"会う",tip:"Nice to meet you"},
+  {en:"from",kana:"<span class='accent'>フ</span>ロム",ja:"〜から",tip:"from Japan = 日本から"},
+  {en:"Japanese",kana:"ジャパ<span class='accent'>ニ</span>ーズ",ja:"日本人",tip:"Japanの形容詞形"},
+  {en:"sweet",kana:"<span class='accent'>ス</span>ウィート",ja:"甘い",tip:"スイーツのsweet"},
+  {en:"and",kana:"<span class='accent'>ア</span>ンド",ja:"そして",tip:"A and Bでよく使う"},
+  {en:"too",kana:"<span class='accent'>トゥ</span>ー",ja:"〜もまた",tip:"Me too!でよく使う"},
+  {en:"join",kana:"<span class='accent'>ジョ</span>イン",ja:"参加する",tip:"ジョインするのjoin"},
+  {en:"the",kana:"<span class='accent'>ザ</span>/ジ",ja:"その",tip:"定冠詞！theは特定のもの"},
+  {en:"club",kana:"<span class='accent'>ク</span>ラブ",ja:"クラブ",tip:"部活動もclub！"},
+  {en:"numbers",kana:"<span class='accent'>ナ</span>ンバーズ",ja:"数字",tip:"numberの複数形"},
+  {en:"often",kana:"<span class='accent'>オ</span>ーフン",ja:"よく、頻繁に",tip:"tは発音しない！"},
+  {en:"with",kana:"<span class='accent'>ウ</span>ィズ",ja:"〜と一緒に",tip:"with you = あなたと"},
+  {en:"but",kana:"<span class='accent'>バ</span>ット",ja:"しかし、けれども",tip:"逆接の接続詞"},
+  {en:"rugby",kana:"<span class='accent'>ラ</span>グビー",ja:"ラグビー",tip:"ラグビーのrugby"},
+  {en:"watch",kana:"<span class='accent'>ウ</span>ォッチ",ja:"見る",tip:"腕時計もwatch！"},
+  {en:"friend",kana:"<span class='accent'>フ</span>レンド",ja:"友達",tip:"フレンドのfriend"},
+  {en:"great",kana:"<span class='accent'>グ</span>レイト",ja:"素晴らしい、広大な",tip:"Great!で感嘆"},
+  {en:"no",kana:"<span class='accent'>ノ</span>ー",ja:"いいえ",tip:"No!の返事"},
+  {en:"not",kana:"<span class='accent'>ノ</span>ット",ja:"〜でない",tip:"否定のnot"},
+  {en:"oh",kana:"<span class='accent'>オ</span>ー",ja:"オー（驚き）",tip:"驚いたときのoh！"},
+  {en:"don't",kana:"<span class='accent'>ド</span>ウント",ja:"しないでください",tip:"do notの短縮形"},
+  {en:"draw",kana:"<span class='accent'>ド</span>ロー",ja:"描く",tip:"ドローイングのdraw"},
+  {en:"anime",kana:"<span class='accent'>ア</span>ニメ",ja:"アニメ",tip:"日本語からの外来語"},
+  {en:"about",kana:"ア<span class='accent'>バ</span>ウト",ja:"について、に関する",tip:"about youで「あなたについて」"},
+  {en:"lesson",kana:"<span class='accent'>レ</span>ッスン",ja:"授業、講習",tip:"レッスンのlesson"},
+  {en:"comic",kana:"<span class='accent'>コ</span>ミック",ja:"漫画",tip:"コミックのcomic"},
+  {en:"are",kana:"<span class='accent'>ア</span>ー",ja:"です、ます",tip:"you/we/theyに使うbe動詞"},
+  {en:"in",kana:"<span class='accent'>イ</span>ン",ja:"中に",tip:"in Tokyo = 東京に"},
+  {en:"art",kana:"<span class='accent'>ア</span>ート",ja:"美術、芸術",tip:"アートのart"},
+  {en:"how",kana:"<span class='accent'>ハ</span>ウ",ja:"どのぐらい",tip:"How are you?"},
+  {en:"school",kana:"<span class='accent'>ス</span>クール",ja:"学校",tip:"スクールバスのschool"},
+  {en:"now",kana:"<span class='accent'>ナ</span>ウ",ja:"今、現在",tip:"Right now = 今すぐ"},
+  {en:"take",kana:"<span class='accent'>テ</span>イク",ja:"取る",tip:"Take a photo = 写真を撮る"},
+  {en:"swimming",kana:"<span class='accent'>ス</span>ウィミング",ja:"水泳、泳ぎ",tip:"スイミングスクールのswimming"},
+  {en:"How about you?",kana:"ハウ ア<span class='accent'>バ</span>ウト ユー",ja:"〜はどうですか？",tip:"相手に質問する便利フレーズ"},
+  {en:"fish",kana:"<span class='accent'>フ</span>ィッシュ",ja:"魚",tip:"フィッシュアンドチップス"},
+  {en:"lunch",kana:"<span class='accent'>ラ</span>ンチ",ja:"昼食",tip:"ランチタイムのlunch"},
+  {en:"king",kana:"<span class='accent'>キ</span>ング",ja:"王様",tip:"キングのking"},
+  {en:"math",kana:"<span class='accent'>マ</span>ス",ja:"数学",tip:"mathematicsの略"},
+  {en:"English",kana:"<span class='accent'>イ</span>ングリッシュ",ja:"英語",tip:"Englandの形容詞形"},
+  {en:"strong",kana:"<span class='accent'>ス</span>トロング",ja:"強い",tip:"ストロングのstrong"},
+  {en:"bath",kana:"<span class='accent'>バ</span>ス",ja:"風呂",tip:"バスルームのbath"},
+  {en:"clock",kana:"<span class='accent'>ク</span>ロック",ja:"置き時計",tip:"時計台のclock"},
+  {en:"lake",kana:"<span class='accent'>レ</span>イク",ja:"湖",tip:"レイクサイドのlake"},
+  {en:"bike",kana:"<span class='accent'>バ</span>イク",ja:"自転車",tip:"バイク（自転車）のbike"},
+  {en:"game",kana:"<span class='accent'>ゲ</span>イム",ja:"ゲーム",tip:"ゲームのgame"},
+  {en:"nose",kana:"<span class='accent'>ノ</span>ウズ",ja:"鼻",tip:"鼻のnose"},
+];
+const j1_u2 = [
+  {en:"class",kana:"<span class='accent'>ク</span>ラス",ja:"授業、講義",tip:"クラスのclass"},
+  {en:"our",kana:"<span class='accent'>ア</span>ワー",ja:"私たちの",tip:"ourは「私たちの」"},
+  {en:"Canada",kana:"<span class='accent'>キャ</span>ナダ",ja:"カナダ",tip:"カナダの英語発音"},
+  {en:"America",kana:"ア<span class='accent'>メ</span>リカ",ja:"アメリカ",tip:"アクセントはメに"},
+  {en:"Ms.",kana:"<span class='accent'>ミ</span>ズ",ja:"ミセス（女の人）",tip:"女性への敬称"},
+  {en:"Mr.",kana:"<span class='accent'>ミ</span>スター",ja:"ミスター（男の人）",tip:"男性への敬称"},
+  {en:"he",kana:"<span class='accent'>ヒ</span>ー",ja:"彼は",tip:"男性を指す代名詞"},
+  {en:"she",kana:"<span class='accent'>シ</span>ー",ja:"彼女は",tip:"女性を指す代名詞"},
+  {en:"new",kana:"<span class='accent'>ニ</span>ュー",ja:"新しい",tip:"ニューのnew"},
+  {en:"teacher",kana:"<span class='accent'>テ</span>ィーチャー",ja:"先生",tip:"teach（教える）＋er"},
+  {en:"on",kana:"<span class='accent'>オ</span>ン",ja:"の上に",tip:"on the table = 机の上に"},
+  {en:"team",kana:"<span class='accent'>テ</span>ィーム",ja:"チーム",tip:"チームのteam"},
+  {en:"at",kana:"<span class='accent'>ア</span>ット",ja:"〜で",tip:"at school = 学校で"},
+  {en:"cool",kana:"<span class='accent'>ク</span>ール",ja:"かっこいい",tip:"クールなcool"},
+  {en:"Chinese",kana:"チャイ<span class='accent'>ニ</span>ーズ",ja:"中国語、中文",tip:"Chinaの形容詞形"},
+  {en:"cannot",kana:"<span class='accent'>キャ</span>ノット",ja:"できない、不可能である",tip:"can notの短縮形"},
+  {en:"some",kana:"<span class='accent'>サ</span>ム",ja:"いくつかの、幾つかの",tip:"someは「いくつかの」"},
+  {en:"parent",kana:"<span class='accent'>ペ</span>アレント",ja:"親、親族",tip:"parentの複数形がparents"},
+  {en:"parents",kana:"<span class='accent'>ペ</span>アレンツ",ja:"両親",tip:"お父さんとお母さん"},
+  {en:"China",kana:"<span class='accent'>チャ</span>イナ",ja:"中国、中華人民共和国",tip:"チャイナのChina"},
+  {en:"food",kana:"<span class='accent'>フ</span>ード",ja:"食べ物",tip:"フードのfood"},
+  {en:"father",kana:"<span class='accent'>ファ</span>ーザー",ja:"父親",tip:"ファーザーのfather"},
+  {en:"can",kana:"<span class='accent'>キャ</span>ン",ja:"〜できる",tip:"Can you...?でよく使う"},
+  {en:"make",kana:"<span class='accent'>メ</span>イク",ja:"作る、〜をにする",tip:"メイクアップのmake"},
+  {en:"very",kana:"<span class='accent'>ヴェ</span>リー",ja:"非常に",tip:"very goodで「とても良い」"},
+  {en:"well",kana:"<span class='accent'>ウ</span>ェル",ja:"健康な",tip:"well done = よくできた"},
+  {en:"that",kana:"<span class='accent'>ザ</span>ット",ja:"あれ",tip:"thatはあちら側のもの"},
+  {en:"read",kana:"<span class='accent'>リ</span>ード",ja:"読む",tip:"readは過去形もread！"},
+  {en:"really",kana:"<span class='accent'>リ</span>アリー",ja:"本当に",tip:"Really?で「本当に？」"},
+  {en:"see",kana:"<span class='accent'>シ</span>ー",ja:"見る",tip:"See you!でまたね"},
+  {en:"excuse",kana:"イク<span class='accent'>ス</span>キューズ",ja:"許す",tip:"Excuse me!でも使う"},
+  {en:"here",kana:"<span class='accent'>ヒ</span>ア",ja:"ここに",tip:"Here we go! = さあ行こう"},
+  {en:"welcome",kana:"<span class='accent'>ウ</span>ェルカム",ja:"歓迎する",tip:"You're welcome!でどういたしまして"},
+  {en:"your",kana:"<span class='accent'>ユ</span>ア",ja:"あなたの",tip:"your nameで「あなたの名前」"},
+  {en:"thank",kana:"<span class='accent'>サ</span>ンク",ja:"に感謝する",tip:"Thank you!でありがとう"},
+  {en:"it",kana:"<span class='accent'>イ</span>ット",ja:"色は",tip:"物や動物を指す代名詞"},
+  {en:"bird",kana:"<span class='accent'>バ</span>ード",ja:"鳥",tip:"バードウォッチングのbird"},
+  {en:"train",kana:"<span class='accent'>ト</span>レイン",ja:"列車",tip:"トレインのtrain"},
+  {en:"rain",kana:"<span class='accent'>レ</span>イン",ja:"雨、降雨",tip:"レインコートのrain"},
+  {en:"fruit",kana:"<span class='accent'>フ</span>ルーツ",ja:"果物",tip:"フルーツのfruit"},
+  {en:"beef",kana:"<span class='accent'>ビ</span>ーフ",ja:"牛肉",tip:"ビーフカレーのbeef"},
+  {en:"sea",kana:"<span class='accent'>シ</span>ー",ja:"海",tip:"シーサイドのsea"},
+  {en:"season",kana:"<span class='accent'>シ</span>ーズン",ja:"季節",tip:"シーズンのseason"},
+  {en:"peach",kana:"<span class='accent'>ピ</span>ーチ",ja:"もも",tip:"ピーチのpeach"},
+  {en:"day",kana:"<span class='accent'>デ</span>イ",ja:"日",tip:"daydreamのday"},
+  {en:"beach",kana:"<span class='accent'>ビ</span>ーチ",ja:"砂浜",tip:"ビーチのbeach"},
+  {en:"speak",kana:"<span class='accent'>ス</span>ピーク",ja:"話す",tip:"スピーカーのspeak"},
+  {en:"rainy",kana:"<span class='accent'>レ</span>イニー",ja:"雨降りの",tip:"rain＋yで形容詞に"},
+  {en:"cheese",kana:"<span class='accent'>チ</span>ーズ",ja:"チーズ",tip:"チーズのcheese"},
+  {en:"room",kana:"<span class='accent'>ル</span>ーム",ja:"部屋",tip:"ルームのroom"},
+  {en:"classroom",kana:"<span class='accent'>ク</span>ラスルーム",ja:"教室",tip:"class＋room = 教室"},
+  {en:"swimming pool",kana:"<span class='accent'>ス</span>ウィミング プール",ja:"スイミングプール",tip:"水泳用プール"},
+  {en:"cook",kana:"<span class='accent'>ク</span>ック",ja:"料理する",tip:"クックのcook"},
+  {en:"cooking",kana:"<span class='accent'>ク</span>ッキング",ja:"料理",tip:"クッキングのcooking"},
+  {en:"textbook",kana:"<span class='accent'>テ</span>キストブック",ja:"教科書",tip:"text＋book = 教科書"},
+  {en:"notebook",kana:"<span class='accent'>ノ</span>ートブック",ja:"ノート、筆記帳",tip:"note＋book"},
+  {en:"today",kana:"トゥ<span class='accent'>デ</span>イ",ja:"今日、現在",tip:"to＋day = 今日"},
+  {en:"usually",kana:"<span class='accent'>ユ</span>ージュアリー",ja:"普通は",tip:"usuallyは頻度の副詞"},
+  {en:"drink",kana:"<span class='accent'>ド</span>ドリンク",ja:"飲む",tip:"ドリンクのdrink"},
+  {en:"green tea",kana:"グリーン <span class='accent'>テ</span>ィー",ja:"緑茶",tip:"green＋tea = 緑茶"},
+];
+const j1_u3 = [
+  {en:"symbol",kana:"<span class='accent'>シ</span>ンボル",ja:"象徴",tip:"シンボルのsymbol"},
+  {en:"for",kana:"<span class='accent'>フォ</span>ー",ja:"のために",tip:"for you = あなたのために"},
+  {en:"interesting",kana:"<span class='accent'>イ</span>ンタレスティング",ja:"面白い",tip:"インタレスティングなinteresting"},
+  {en:"favorite",kana:"<span class='accent'>フェ</span>イバリット",ja:"お気に入りの",tip:"フェイバリットのfavorite"},
+  {en:"character",kana:"<span class='accent'>キャ</span>ラクター",ja:"文字、特性",tip:"キャラクターのcharacter"},
+  {en:"also",kana:"<span class='accent'>オ</span>ールソー",ja:"また、同様に",tip:"alsoはtooと同じ意味"},
+  {en:"what",kana:"<span class='accent'>ウ</span>ォット",ja:"何",tip:"What is this?"},
+  {en:"family",kana:"<span class='accent'>ファ</span>ミリー",ja:"家族",tip:"ファミリーのfamily"},
+  {en:"who",kana:"<span class='accent'>フ</span>ー",ja:"だれ",tip:"Who are you?"},
+  {en:"why",kana:"<span class='accent'>ワ</span>イ",ja:"なぜ",tip:"Why?でなぜ？"},
+  {en:"brave",kana:"<span class='accent'>ブ</span>レイヴ",ja:"勇敢な、勇ましい",tip:"ブレイブのbrave"},
+  {en:"kind",kana:"<span class='accent'>カ</span>インド",ja:"種類",tip:"What kind of...?"},
+  {en:"what's",kana:"<span class='accent'>ウ</span>ォッツ",ja:"what isを短くしたもの",tip:"What's up?でよく使う"},
+  {en:"who's",kana:"<span class='accent'>フ</span>ーズ",ja:"who isの略",tip:"Who's there?"},
+  {en:"around",kana:"ア<span class='accent'>ラ</span>ウンド",ja:"の近くに、接近して",tip:"アラウンドのaround"},
+  {en:"after",kana:"<span class='accent'>ア</span>フター",ja:"〜のあとに、〜の後で",tip:"after schoolで放課後"},
+  {en:"online",kana:"<span class='accent'>オ</span>ンライン",ja:"オンライン",tip:"オンラインのonline"},
+  {en:"live",kana:"<span class='accent'>リ</span>ヴ",ja:"住む",tip:"live in Tokyo = 東京に住む"},
+  {en:"come",kana:"<span class='accent'>カ</span>ム",ja:"来る、訪れる",tip:"Come here!でこっちに来て"},
+  {en:"by",kana:"<span class='accent'>バ</span>イ",ja:"のそばに、によって",tip:"by train = 電車で"},
+  {en:"walk",kana:"<span class='accent'>ウ</span>ォーク",ja:"散歩",tip:"ウォーキングのwalk"},
+  {en:"when",kana:"<span class='accent'>ウ</span>ェン",ja:"〜するとき",tip:"When do you...?"},
+  {en:"study",kana:"<span class='accent'>ス</span>タディ",ja:"勉強する",tip:"スタディのstudy"},
+  {en:"week",kana:"<span class='accent'>ウ</span>ィーク",ja:"週",tip:"weekendで週末"},
+  {en:"hallway",kana:"<span class='accent'>ホ</span>ールウェイ",ja:"廊下、回廊",tip:"hall＋way = 廊下"},
+  {en:"win",kana:"<span class='accent'>ウ</span>ィン",ja:"勝つ",tip:"ウィンのwin"},
+  {en:"next",kana:"<span class='accent'>ネ</span>クスト",ja:"次の",tip:"next timeで次回"},
+  {en:"luck",kana:"<span class='accent'>ラ</span>ック",ja:"運",tip:"Good luck!で頑張って"},
+  {en:"near",kana:"<span class='accent'>ニ</span>ア",ja:"の近くで、のそばで",tip:"near hereで近くに"},
+  {en:"where",kana:"<span class='accent'>ウ</span>ェア",ja:"どこに",tip:"Where are you?"},
+  {en:"practice",kana:"<span class='accent'>プ</span>ラクティス",ja:"練習する",tip:"プラクティスのpractice"},
+  {en:"hard",kana:"<span class='accent'>ハ</span>ード",ja:"一生懸命に",tip:"work hard = 一生懸命働く"},
+  {en:"go",kana:"<span class='accent'>ゴ</span>ー",ja:"行く",tip:"Let's go!で行こう"},
+  {en:"park",kana:"<span class='accent'>パ</span>ーク",ja:"公園",tip:"パークのpark"},
+  {en:"station",kana:"<span class='accent'>ス</span>テーション",ja:"駅",tip:"ステーションのstation"},
+  {en:"under",kana:"<span class='accent'>ア</span>ンダー",ja:"下の",tip:"underlineで下線"},
+  {en:"Good luck",kana:"グッド <span class='accent'>ラ</span>ック",ja:"幸運を",tip:"試験前に使うフレーズ"},
+  {en:"month",kana:"<span class='accent'>マ</span>ンス",ja:"月",tip:"monthlyで毎月の"},
+  {en:"date",kana:"<span class='accent'>デ</span>イト",ja:"日付",tip:"dateはデートにも！"},
+  {en:"water",kana:"<span class='accent'>ウォ</span>ーター",ja:"水",tip:"ウォーターのwater"},
+  {en:"T-shirt",kana:"<span class='accent'>テ</span>ィーシャツ",ja:"Tシャツ",tip:"T-shirtのT-shirt"},
+  {en:"star",kana:"<span class='accent'>ス</span>ター",ja:"星、スター",tip:"スターのstar"},
+  {en:"round",kana:"<span class='accent'>ラ</span>ウンド",ja:"丸い、円形の",tip:"ラウンドのround"},
+  {en:"baseball",kana:"<span class='accent'>ベ</span>イスボール",ja:"野球",tip:"ベースボールのbaseball"},
+  {en:"summer",kana:"<span class='accent'>サ</span>マー",ja:"夏",tip:"サマーのsummer"},
+  {en:"winter",kana:"<span class='accent'>ウ</span>ィンター",ja:"冬",tip:"ウィンターのwinter"},
+  {en:"house",kana:"<span class='accent'>ハ</span>ウス",ja:"家",tip:"ハウスのhouse"},
+  {en:"town",kana:"<span class='accent'>タ</span>ウン",ja:"町",tip:"タウンのtown"},
+  {en:"sound",kana:"<span class='accent'>サ</span>ウンド",ja:"に聞こえる、が聞こえる",tip:"サウンドのsound"},
+  {en:"mother",kana:"<span class='accent'>マ</span>ザー",ja:"母",tip:"マザーのmother"},
+  {en:"enjoy",kana:"エン<span class='accent'>ジョ</span>イ",ja:"楽しむ",tip:"エンジョイのenjoy"},
+  {en:"party",kana:"<span class='accent'>パ</span>ーティー",ja:"政党",tip:"パーティーのparty"},
+  {en:"ball",kana:"<span class='accent'>ボ</span>ール",ja:"ボール",tip:"ボールのball"},
+  {en:"birthday",kana:"<span class='accent'>バ</span>バースデイ",ja:"誕生日",tip:"Happy Birthday!"},
+];
+
+const db = {
+  j1:{
+    label:"中学1年",
+    units:[
+      {tag:"unit",label:"UNIT 0",title:"Nice to Meet You",words:j1_u0},
+      {tag:"unit",label:"UNIT 1",title:"Hello, everyone",words:j1_u1},
+      {tag:"unit",label:"UNIT 2",title:"Our New Teacher",words:j1_u2},
+      {tag:"unit",label:"UNIT 3",title:"Our School",words:j1_u3}
+    ]
+  },
+  j2:{
+    label:"中学2年",
+    units:[
+      {tag:"unit",label:"UNIT 0",title:"単語準備中",words:[]}
+    ]
+  },
+  j3:{
+    label:"中学3年",
+    units:[
+      {tag:"unit",label:"UNIT 0",title:"単語準備中",words:[]}
+    ]
+  }
+};
+
+let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
+
+const COVER_IMGS = {
+  "j1": "https://raw.githubusercontent.com/shigakusakura-pixel/tango/main/NewHorizon1.jpg",
+  "j2": "https://raw.githubusercontent.com/shigakusakura-pixel/tango/main/NewHorizon2.jpg",
+  "j3": "https://raw.githubusercontent.com/shigakusakura-pixel/tango/main/NewHorizon3.jpg"
+};
+
+/* ⭕️ タップ時の切替処理関数（これで復元！） */
+function selectGrade(g,btn){
+  currentGrade=g;
+  document.querySelectorAll('.grade-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showUnitView();
+}
+
+function renderUnits(g){
+  const ul=document.getElementById('unitList');
+  ul.innerHTML='';
+  document.getElementById('gradeLabel').textContent=db[g].label+' の単元一覧';
+  const gi=document.getElementById('gradeIntro');
+  gi.innerHTML='<img src="'+COVER_IMGS[g]+'" alt="'+db[g].label+'" style="width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;">'
+    +'<div class="grade-intro-text"><strong>'+db[g].label+'</strong><br>NEW HORIZON English Course<br>各単元をタップして単語を学習できます。</div>';
+  db[g].units.forEach((u,i)=>{
+    const btn=document.createElement('button');
+    btn.className='unit-btn';
+    let tc='tag-unit';
+    if(u.tag==='grammar') tc='tag-grammar';
+    else if(u.tag==='stage') tc='tag-stage';
+    else if(u.tag==='smalltalk') tc='tag-smalltalk';
+    const badge=u.words.length>0
+      ?`<span class="count-badge">${u.words.length}語</span>`
+      :`<span class="empty-badge">準備中</span>`;
+    btn.innerHTML=`<span class="unit-tag ${tc}">${u.label}</span><span class="unit-title-text">${u.title}</span>${badge}`;
+    btn.onclick=()=>openUnit(g,i);
+    ul.appendChild(btn);
+  });
+}
+
+function toggleAns(i){
+  const el=document.getElementById('ans-'+i);
+  if(!el)return;
+  el.classList.toggle('ans-hidden');
+  el.classList.toggle('ans-visible');
+  const btn=document.getElementById('abtn-'+i);
+  if(btn) btn.textContent=el.classList.contains('ans-visible')?'隠す':'見る';
+}
+
+function showAllAns(){
+  document.querySelectorAll('.ans-hidden').forEach(el=>{
+    el.classList.remove('ans-hidden');el.classList.add('ans-visible');
+  });
+  document.querySelectorAll('.toggle-ans-btn').forEach(btn=>btn.textContent='隠す');
+}
+
+function hideAllAns(){
+  document.querySelectorAll('.ans-visible').forEach(el=>{
+    el.classList.remove('ans-visible');el.classList.add('ans-hidden');
+  });
+  document.querySelectorAll('.toggle-ans-btn').forEach(btn=>btn.textContent='見る');
+}
+
+let missedIndices=[];
+
+function markOk(i){
+  const tr=document.getElementById('row-'+i);
+  if(!tr)return;
+  tr.classList.remove('row-miss');
+  tr.classList.add('row-ok');
+  missedIndices=missedIndices.filter(x=>x!==i);
+  updateScore();
+}
+
+function markMiss(i){
+  const tr=document.getElementById('row-'+i);
+  if(!tr)return;
+  tr.classList.remove('row-ok');
+  tr.classList.add('row-miss');
+  if(!missedIndices.includes(i)) missedIndices.push(i);
+  updateScore();
+}
+
+function updateScore(){
+  const ok = document.querySelectorAll('tr.row-ok').length;
+  const miss = document.querySelectorAll('tr.row-miss').length;
+  const total = currentWords.length;
+  const sb = document.getElementById('scoreBadge');
+  if (sb) {
+    sb.textContent = `正解: ${ok} / ミス: ${miss} (全${total}語)`;
+  }
+}
+
+let isSending = false;
+async function finishAndReturn() {
+  if (isSending) return; 
+  
+  const ok = document.querySelectorAll('tr.row-ok').length;
+  const miss = document.querySelectorAll('tr.row-miss').length;
+  const totalAnswered = ok + miss;
+
+  if (totalAnswered > 0 && window.sendLearningRecord) {
+    isSending = true;
+    const unitName = document.getElementById('unitHeader') ? document.getElementById('unitHeader').textContent : '英単語・文法';
+    const resultText = `完了 (✅正解:${ok} / ❌ミス:${miss})`;
+    await window.sendLearningRecord(unitName, resultText);
+    isSending = false;
+  }
+  
+  showUnitView();
+}
+
+function retryMissed(){
+  if(missedIndices.length===0){alert('ミスした問題がありません！全問正解です🎉');return;}
+  const saved=currentWords;
+  currentWords=missedIndices.map(i=>saved[i]);
+  filtered=currentWords.map((_,j)=>j);
+  missedIndices=[];
+  renderRows(false);
+  updateScore();
+}
+
+function resetCheck(){
+  missedIndices=[];
+  document.querySelectorAll('tr.row-ok,tr.row-miss').forEach(tr=>{
+    tr.classList.remove('row-ok','row-miss');
+  });
+  updateScore();
+}
+
+function openUnit(g,i){
+  const u=db[g].units[i];
+  currentWords=u.words;
+  filtered=currentWords.map((_,j)=>j);
+  missedIndices=[];
+  document.getElementById('unitHeader').textContent=u.label+'：'+u.title+(u.words.length>0?' （'+u.words.length+'語）':'');
+  document.getElementById('unitView').style.display='none';
+  document.getElementById('wordView').style.display='block';
+  const wc=document.getElementById('wordContent');
+  if(!currentWords.length){
+    wc.innerHTML='<div class="empty-msg">この単元のデータはまだ準備中です。</div>';
+    return;
+  }
+  wc.innerHTML=`
+    <div class="ctrl-bar">
+      <button class="ctrl-btn" id="slowBtn" onclick="setSpeed(0.75)">ゆっくり</button>
+      <button class="ctrl-btn active" id="normalBtn" onclick="setSpeed(1.0)">ふつう</button>
+      <button class="ctrl-btn" onclick="speakAll()">▶ 全部聴く</button>
+      <button class="ctrl-btn" onclick="stopAll()">■ 停止</button>
+    </div>
+    <div class="all-ans-bar">
+      日本語訳：
+      <button class="all-ans-btn" onclick="showAllAns()">全部見せる</button>
+      <button class="all-ans-btn" onclick="hideAllAns()">全部隠す</button>
+    </div>
+    <div class="retry-bar">
+      <span id="scoreBadge" class="score-badge">採点結果がここに表示されます</span>
+      <button class="retry-btn" onclick="retryMissed()">❌ ミスした問題だけやり直す</button>
+      <button class="all-ans-btn" onclick="resetCheck()">リセット</button>
+    </div>
+    <input class="search-box" id="searchBox" placeholder="🔍 単語を検索..." oninput="filterTable()">
+    <div class="legend"><span>赤下線</span>＝アクセント位置</div>
+    <table>
+      <thead><tr><th>#</th><th></th><th>英語・発音</th><th>日本語</th><th>採点</th></tr></thead>
+      <tbody id="wordTable"></tbody>
+    </table>
+    <div id="noResult">一致する項目がありません</div>`;
+  renderRows(false);
+  updateScore();
+}
+
+function renderRows(isGrammar){
+  const tb=document.getElementById('wordTable');
+  if(!tb)return;
+  tb.innerHTML='';
+  currentWords.forEach((w,i)=>{
+    const tr=document.createElement('tr');
+    tr.id='row-'+i;
+    tr.className=i%2===0?'row-even':'row-odd';
+    tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
+      +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
+      +'<td><span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+(w.kana||'')+'</span><div class="tip">'+w.tip+'</div></td>'
+      +'<td>'
+      +'<span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-size:12px;color:#555;display:inline-block;">'+w.ja+'</span>'
+      +' <button id="abtn-'+i+'" class="toggle-ans-btn" onclick="toggleAns('+i+')">見る</button>'
+      +'</td>'
+      +'<td><button class="check-btn ok-btn" onclick="markOk('+i+')">✅</button>'
+      +'<button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
+    tb.appendChild(tr);
+  });
+}
+
+function filterTable(){
+  const q=document.getElementById('searchBox').value.toLowerCase();
+  filtered=[];let c=0;
+  currentWords.forEach((w,i)=>{
+    const r=document.getElementById('row-'+i);
+    const m=!q||w.en.toLowerCase().includes(q)||(w.ja&&w.ja.includes(q));
+    if(r)r.style.display=m?'':'none';
+    if(m){filtered.push(i);c++;}
+  });
+  const nr=document.getElementById('noResult');
+  if(nr)nr.style.display=c===0?'block':'none';
+}
+
+function showUnitView(){
+  stopAll();
+  document.getElementById('wordView').style.display='none';
+  document.getElementById('unitView').style.display='block';
+  renderUnits(currentGrade);
+}
+
+function setSpeed(s){
+  speed=s;
+  const sb=document.getElementById('slowBtn');
+  const nb=document.getElementById('normalBtn');
+  if(sb)sb.classList.toggle('active',s===0.75);
+  if(nb)nb.classList.toggle('active',s===1.0);
+}
+
+function speakWord(i,btn){
+  if(!currentWords[i])return;
+  speakEnglish(currentWords[i].en,btn);
+}
+
+function speakEnglish(text, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('playing'));
+
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = speed;
+  if (btn) {
+    btn.classList.add('playing');
+    u.onend = function() { btn.classList.remove('playing'); };
+  }
+  window.speechSynthesis.speak(u);
+}
+
+function speakAll(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  if(allTimer)clearTimeout(allTimer);
+  allIdx=0;speakNext();
+}
+
+function speakNext(){
+  if(allIdx>=filtered.length){allIdx=-1;return;}
+  const wi=filtered[allIdx];
+  const text=currentWords[wi].en;
+  const btn=document.querySelector('[data-wi="'+wi+'"]');
+  speakEnglish(text,btn);
+  const dur=(text.split(' ').length*700/speed)+800;
+  allTimer=setTimeout(()=>{allIdx++;speakNext();},dur);
+}
+
+function stopAll(){
+  if(window.speechSynthesis)window.speechSynthesis.cancel();
+  if(allTimer)clearTimeout(allTimer);
+  allIdx=-1;
+  document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('playing'));
+}
+
+showUnitView();
 </script>
 
-<!-- 中略：データ部分（長いため省略表示していますが、既存コードのままで動作します） -->
-
+<!-- Firebase学習記録連携スクリプト -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -147,13 +680,11 @@
   const urlParams = new URLSearchParams(window.location.search);
   const studentId = urlParams.get('student') || 'ゲスト';
 
-  // 英文法タブへの生徒ID引き継ぎ
   const grammarLink = document.querySelector('.grammar-tab-link');
   if (grammarLink && studentId !== 'ゲスト') {
     grammarLink.href = "https://shigakusakura-pixel.github.io/grammar/?student=" + encodeURIComponent(studentId);
   }
 
-  // 追加：英熟語300タブへの生徒ID引き継ぎ
   const idiomLink = document.querySelector('.idiom-tab-link');
   if (idiomLink && studentId !== 'ゲスト') {
     idiomLink.href = "https://shigakusakura-pixel.github.io/idioms/?student=" + encodeURIComponent(studentId);
