@@ -7,58 +7,12 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f9fa;color:#333;padding:10px;}
-  
-  /* ヘッダー構造（PC用） */
   .header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:10px;background:linear-gradient(135deg,#1D9E75,#2ecc71);margin-bottom:12px;}
   .header-title{font-size:26px;font-weight:900;color:#fff;letter-spacing:2px;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:2px 2px 4px rgba(0,0,0,0.4);white-space:nowrap;}
   .header-school{font-size:14px;font-weight:700;color:#fff;opacity:0.9;}
-
-  /* タブのレイアウト（PC用横並び） */
   .grade-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
   .grade-btn{padding:6px 18px;border-radius:20px;border:1px solid #aaa;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:#666;}
   .grade-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;}
-
-  /* スマホ縦画面（幅600px以下）の時だけ適用 */
-  @media screen and (max-width: 600px) {
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .header-title {
-      display: flex;
-      flex-direction: column;
-      font-size: 22px;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-    .header-title .t1 { font-size: 22px; }
-    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
-    .header-title .t3 { font-size: 22px; }
-    
-    .header-school {
-      align-self: flex-end;
-      font-size: 12px;
-    }
-
-    .grade-tabs {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
-    }
-    .grade-btn {
-      width: 100%;
-      padding: 8px 0;
-      text-align: center;
-      font-size: 12px;
-    }
-    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
-    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
-    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
-    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
-  }
-
   .grade-intro{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:8px 12px;background:#f0faf5;border-radius:8px;border:1px solid #c0e8d5;}
   .grade-intro img{width:56px;height:72px;object-fit:cover;border-radius:4px;border:1px solid #ccc;}
   .grade-intro-text{font-size:13px;color:#444;line-height:1.6;}
@@ -127,7 +81,6 @@
     font-weight: 700;
     text-decoration: none;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
     padding: 6px 18px;
     position: relative;
@@ -141,6 +94,50 @@
     background-color: #e6f4ea;
     border-color: #059669;
     color: #059669;
+  }
+
+  /* スマホ縦画面（幅600px以下）の時だけ適用するレスポンシブ調整 */
+  @media screen and (max-width: 600px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      font-size: 22px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .header-title .t1 { font-size: 22px; }
+    .header-title .t2 { font-size: 14px; margin: 1px 0 1px 16px; }
+    .header-title .t3 { font-size: 22px; }
+    
+    .header-school {
+      align-self: flex-end;
+      font-size: 12px;
+    }
+
+    .grade-tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .grade-btn {
+      width: 100%;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .grade-tabs .grade-btn:nth-child(1){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(2){ grid-column: span 2; }
+    .grade-tabs .grade-btn:nth-child(3){ grid-column: span 2; }
+    .grade-tabs .special-tab:nth-child(4){ grid-column: span 3; }
+    .grade-tabs .special-tab:nth-child(5){ grid-column: span 3; }
   }
 </style>
 </head>
@@ -680,48 +677,6 @@ const j3_u4 = [
   {en:"bring together",kana:"ブリング トゥ<span class='accent'>ゲ</span>ザー",ja:"集める、結びつける",tip:"bring together"},
   {en:"keep on doing",kana:"キー プ オン <span class='accent'>ド</span>ゥーイング",ja:"し続ける",tip:"keep on doing"},
   {en:"no longer",kana:"ノウ <span class='accent'>ロ</span>ンガー",ja:"もはや〜でない",tip:"no longer"},
-];
-const j1_st = [
-  {en:"Do you like sports?",kana:"ドゥ ユー ライク <span class='accent'>ス</span>ポーツ",ja:"スポーツは好きですか？",tip:"sports好きか尋ねる定番"},
-  {en:"Can you cook takoyaki?",kana:"キャ ユー クック タコ<span class='accent'>ヤ</span>キ",ja:"たこ焼きは作れますか？",tip:"Can you cook...?"},
-  {en:"What's your favorite subject?",kana:"ホワッツ ユア <span class='accent'>フェ</span>イバリット サブジェクト",ja:"好きな教科は何ですか？",tip:"favorite subject"},
-  {en:"Who's your hero?",kana:"フーズ ユア <span class='accent'>ヒ</span>ーロー",ja:"あこがれの人は誰ですか？",tip:"Who's your hero?"},
-  {en:"What do you usually have for breakfast?",kana:"ホワット ドゥ ユー <span class='accent'>ユ</span>ージュアリー ハヴ フォア ブレックファスト",ja:"いつも朝ごはんに何を食べますか？",tip:"have for breakfast"},
-  {en:"How do you come to school?",kana:"ハウ ドゥ ユー カム トゥ <span class='accent'>ス</span>クール",ja:"どうやって学校まで来ましたか？",tip:"通学方法を尋ねる"},
-  {en:"When's your birthday?",kana:"ホウェンズ ユア <span class='accent'>バ</span>ースデイ",ja:"誕生日はいつですか？",tip:"When is your birthday?"},
-  {en:"Where's your favorite place in our town?",kana:"ホウェアズ ユア フェイバリット プレイス イン アワ <span class='accent'>タ</span>ウン",ja:"私たちの町で好きな場所はどこですか？",tip:"favorite place"},
-  {en:"How many books do you have?",kana:"ハウ メニー ブックス ドゥ ユー <span class='accent'>ハ</span>ヴ",ja:"何冊の本を持っていますか？",tip:"How many＋複数名詞"},
-  {en:"What time do you usually get home?",kana:"ホワット タイム ドゥ ユー ユージュアリー ゲット <span class='accent'>ホ</span>ウム",ja:"いつも何時に家に帰りますか？",tip:"get home"},
-  {en:"What food do you like?",kana:"What food do you like?",ja:"どんな食べ物が好きですか？",tip:"What food...?"},
-];
-const j2_stage1 = [
-  {en:"I like traveling.",kana:"アイ ライク トラ<span class='accent'>ヴ</span>ェリング",ja:"私は旅行が好きです。",tip:"traveling"},
-  {en:"I like to travel.",kana:"アイ ライク トゥ トラ<span class='accent'>ヴ</span>ェル",ja:"私は旅行が好きです。",tip:"to travel"},
-  {en:"I'm good at talking with people.",kana:"アイム グッド アット トーキング ウィズ <span class='accent'>ピ</span>ープル",ja:"私は人と話すことが得意です。",tip:"be good at"},
-  {en:"My favorite subject is English.",kana:"マイ フェイバリット サブジェクト イズ <span class='accent'>イ</span>ングリッシュ",ja:"私の好きな教科は英語です。",tip:"favorite subject"},
-  {en:"I'm interested in historical places.",kana:"アイム インタレスティッド イン ヒストリカル <span class='accent'>プ</span>レイシズ",ja:"私は歴史のある場所に興味があります。",tip:"be interested in"},
-  {en:"It's interesting to learn about different countries and culture.",kana:"It's interesting to learn about different countries and culture.",ja:"違った国や文化について学ぶことに興味があります。",tip:"It is〜to..."},
-];
-const j3_grammar2 = [
-  {en:"I like to swim.",kana:"アイ ライク トゥ <span class='accent'>ス</span>ウィム",ja:"私は泳ぐことが好きです。",tip:"like to＋動詞原形＝〜することが好き"},
-  {en:"We want to go to New York.",kana:"ウィ ウォント トゥ ゴウ トゥ ニュー <span class='accent'>ヨ</span>ーク",ja:"私たちはニューヨークに行きたいです。",tip:"want to＋動詞原形＝〜したい"},
-  {en:"He tried to open the box.",kana:"ヒー トライド トゥ <span class='accent'>オ</span>ープン ザ ボックス",ja:"彼はその箱を開けようと試みました",tip:"try to＋動詞原形＝〜しようとする"},
-];
-const g_j2_1 = [
-  {type:"fill",hint:"SとはSubjectの略で何ですか？",ja:"S = ＿＿＿",en:"主語",tip:"S = Subject（主語）"},
-  {type:"fill",hint:"CとはComplementの略で何ですか？",ja:"C = ＿＿＿",en:"補語",tip:"C = Complement（補語）"},
-];
-const g_j2_2 = [
-  {type:"fill",hint:"並列を表す接続詞は？",ja:"A ＿＿＿ B（AそしてB）",en:"and",tip:"andは並列を表す"},
-];
-const g_j2_3 = [
-  {type:"fill",hint:"to不定詞の名詞的用法の意味は？",ja:"to swim = 泳ぐ＿＿＿",en:"こと",tip:"名詞的用法：〜すること"},
-];
-const g_j3_1 = [
-  {type:"fill",hint:"現在完了の継続用法「〜の間」は？",ja:"I have lived here ＿＿＿ 10 years.",en:"for",tip:"for＋期間"},
-];
-const j1_grammar3 = [
-  {en:"What",kana:"<span class='accent'>ホ</span>ワット",ja:"なに",tip:"物・事を聞くときに使う"},
 ];
 
 const db = {
