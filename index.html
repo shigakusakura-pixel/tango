@@ -171,15 +171,7 @@
 </div>
 
 <script>
-let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
-
-const COVER_IMGS={
-  "j1": "NewHorizon1.jpg",
-  "j2": "NewHorizon2.jpg",
-  "j3": "NewHorizon3.jpg"
-};
-
-// ===== 中1単語データ =====
+// ===== データ定義（最初にすべて配置） =====
 const j1_u0 = [
   {en:"Nice to meet you",kana:"<span class='accent'>ナ</span>イス トゥ ミート ユー",ja:"はじめまして",tip:"挨拶の定番フレーズ！"},
   {en:"meet",kana:"<span class='accent'>ミ</span>ート",ja:"会う",tip:"Nice to meet you のmeet"},
@@ -384,8 +376,79 @@ const j1_u3 = [
   {en:"ball",kana:"<span class='accent'>ボ</span>ール",ja:"ボール",tip:"ボールのball"},
   {en:"birthday",kana:"<span class='accent'>バ</span>ースデイ",ja:"誕生日",tip:"Happy Birthday!"},
 ];
+const j1_u4 = [
+  {en:"New Zealand",kana:"ニュー <span class='accent'>ジ</span>ーランド",ja:"ニュージーランド",tip:"南半球の島国！羊が多いことで有名"},
+  {en:"puppy",kana:"<span class='accent'>パ</span>ピー",ja:"子犬",tip:"baby dogともいう！かわいい"},
+  {en:"puppies",kana:"<span class='accent'>パ</span>ピーズ",ja:"子犬たち",tip:"puppyの複数形。yをiに変えてes！"},
+  {en:"of",kana:"<span class='accent'>オ</span>ヴ",ja:"〜の、〜の所有の",tip:"one of ～＝〜の一つ"},
+  {en:"someday",kana:"<span class='accent'>サ</span>ムデイ",ja:"いつか",tip:"未来のいつかを表す"},
+  {en:"lot",kana:"<span class='accent'>ロ</span>ット",ja:"多くの、塊",tip:"a lot of ～＝たくさんの〜"},
+  {en:"they",kana:"<span class='accent'>ゼ</span>イ",ja:"彼らは、彼女力が",tip:"複数の人・物を指す"},
+  {en:"animal",kana:"<span class='accent'>ア</span>ニマル",ja:"どうぶつ",tip:"アニマルのanimal"},
+  {en:"visit",kana:"<span class='accent'>ヴ</span>ィジット",ja:"ほうもん、訪問する",tip:"visit Japan＝日本を訪れる"},
+  {en:"Japan",kana:"ジャ<span class='accent'>パ</span>ン",ja:"にほん、日本",tip:"日本！アクセントは後ろ"},
+  {en:"many",kana:"<span class='accent'>メ</span>ニー",ja:"おお、多くの",tip:"many books＝たくさんの本"},
+  {en:"one of",kana:"ワン <span class='accent'>オ</span>ヴ",ja:"の一つ",tip:"one of my friends＝友達の一人"},
+  {en:"a lot of",kana:"ア ロット <span class='accent'>オ</span>ヴ",ja:"たくさんの",tip:"a lot of＝manyと同じ意味！"},
+  {en:"How many",kana:"ハウ <span class='accent'>メ</span>ニー",ja:"いくつ／何個",tip:"数を聞くときの定番表現"},
+  {en:"they're",kana:"<span class='accent'>ゼ</span>イア",ja:"they areの略",tip:"they are＝they're"},
+  {en:"noon",kana:"<span class='accent'>ヌ</span>ーン",ja:"正午、昼",tip:"12時ちょうどのこと"},
+  {en:"last",kana:"<span class='accent'>ラ</span>スト",ja:"この前の、先の",tip:"last week＝先週"},
+  {en:"like",kana:"<span class='accent'>ラ</span>イク",ja:"この、好む",tip:"like this＝このような"},
+  {en:"o'clock",kana:"オ<span class='accent'>ク</span>ロック",ja:"〜時",tip:"It's three o'clock.＝3時です"},
+  {en:"netball",kana:"<span class='accent'>ネ</span>ットボール",ja:"ネットボール",tip:"ニュージーランドで人気のスポーツ！"},
+  {en:"time",kana:"<span class='accent'>タ</span>イム",ja:"時、〜回",tip:"What time is it?＝何時ですか？"},
+  {en:"afternoon",kana:"アフター<span class='accent'>ヌ</span>ーン",ja:"午後",tip:"good afternoon＝こんにちは"},
+  {en:"sport",kana:"<span class='accent'>ス</span>ポーツ",ja:"スポーツ",tip:"そのままスポーツ！"},
+  {en:"a.m.",kana:"<span class='accent'>エ</span>イエム",ja:"午前",tip:"ante meridiemのラテン語略"},
+  {en:"p.m.",kana:"<span class='accent'>ピ</span>ーエム",ja:"午後",tip:"post meridiemのラテン語略"},
+  {en:"basketball",kana:"<span class='accent'>バ</span>スケットボール",ja:"バスケットボール",tip:"バスケのbasketball！"},
+  {en:"sounds",kana:"<span class='accent'>サ</span>ウンズ",ja:"音",tip:"That sounds fun!＝楽しそう！"},
+  {en:"front",kana:"<span class='accent'>フ</span>ロント",ja:"前、正面",tip:"in front of～＝〜の前に"},
+  {en:"nervous",kana:"<span class='accent'>ナ</span>ーヴァス",ja:"神経質な、びくびくして",tip:"緊張してるときにも使う！"},
+  {en:"worry",kana:"<span class='accent'>ワ</span>ーリー",ja:"心配させる、憂慮させる",tip:"Don't worry!＝心配しないで！"},
+  {en:"yourself",kana:"ユア<span class='accent'>セ</span>ルフ",ja:"自分自身",tip:"enjoy yourself＝楽しんでね"},
+  {en:"sheep",kana:"<span class='accent'>シ</span>ープ",ja:"ヒツジ",tip:"複数形もsheep！変化なし"},
+  {en:"kiwi",kana:"<span class='accent'>キ</span>ウイ",ja:"キウイ",tip:"ニュージーランドの国鳥でもある！"},
+  {en:"right",kana:"<span class='accent'>ラ</span>イト",ja:"右に",tip:"turn right＝右に曲がる"},
+  {en:"turn",kana:"<span class='accent'>タ</span>ーン",ja:"曲がる、回る、変化する",tip:"ターンするのturn"},
+  {en:"please",kana:"<span class='accent'>プ</span>リーズ",ja:"喜ばせる",tip:"Yes, please.＝はい、お願いします"},
+  {en:"look",kana:"<span class='accent'>ル</span>ック",ja:"見る",tip:"look at ～＝〜を見る"},
+  {en:"enjoy oneself",kana:"エン<span class='accent'>ジ</span>ョイ ワンセルフ",ja:"楽しく過ごす",tip:"Enjoy yourself!＝楽しんで！"},
+  {en:"look at",kana:"ルック <span class='accent'>ア</span>ット",ja:"を見る",tip:"look at the blackboard＝黒板を見て"},
+  {en:"fun",kana:"<span class='accent'>ファ</span>ン",ja:"楽しみ",tip:"That's fun!＝楽しい！"},
+  {en:"long",kana:"<span class='accent'>ロ</span>ング",ja:"長い",tip:"ロングのlong"},
+  {en:"song",kana:"<span class='accent'>ソ</span>ング",ja:"歌、歌唱",tip:"ソングのsong"},
+  {en:"fine",kana:"<span class='accent'>フ</span>ァイン",ja:"元気な、晴れた",tip:"I'm fine.＝元気です"},
+  {en:"pet",kana:"<span class='accent'>ペ</span>ット",ja:"ペット",tip:"ペットのpet"},
+  {en:"stop",kana:"<span class='accent'>ス</span>トップ",ja:"止める",tip:"stop＝ストップ！"},
+  {en:"eat",kana:"<span class='accent'>イ</span>ート",ja:"食べる",tip:"eat breakfast＝朝食を食べる"},
+  {en:"sad",kana:"<span class='accent'>サ</span>ッド",ja:"悲しい",tip:"I'm sad.＝悲しいです"},
+  {en:"eel",kana:"<span class='accent'>イ</span>ール",ja:"うなぎ",tip:"ニュージーランドにも川うなぎが！"},
+  {en:"gift",kana:"<span class='accent'>ギ</span>フト",ja:"贈り物、贈答品",tip:"ギフトのgift"},
+  {en:"bench",kana:"<span class='accent'>ベ</span>ンチ",ja:"ベンチ",tip:"ベンチのbench"},
+  {en:"picture",kana:"<span class='accent'>ピ</span>クチャー",ja:"絵、写真",tip:"take a picture＝写真を撮る"},
+  {en:"kitchen",kana:"<span class='accent'>キ</span>ッチン",ja:"台所",tip:"キッチンのkitchen"},
+  {en:"table",kana:"<span class='accent'>テ</span>イブル",ja:"机",tip:"テーブルのtable"},
+  {en:"all",kana:"<span class='accent'>オ</span>ール",ja:"全部、全員、全て、みな",tip:"all of us＝私たち全員"},
+  {en:"poster",kana:"<span class='accent'>ポ</span>スター",ja:"ポスター",tip:"ポスターのposter"},
+  {en:"age",kana:"<span class='accent'>エ</span>イジ",ja:"年齢、年数",tip:"What is your age?＝年齢は？"},
+  {en:"movie",kana:"<span class='accent'>ム</span>ービー",ja:"映画、映像作品",tip:"ムービーのmovie"},
+  {en:"student",kana:"<span class='accent'>ス</span>チューデント",ja:"生徒、学生",tip:"スチューデントのstudent"},
+  {en:"much",kana:"<span class='accent'>マ</span>ッチ",ja:"たくさん",tip:"very much＝とても"},
+  {en:"starter",kana:"<span class='accent'>ス</span>ターター",ja:"始める人",tip:"start＋erで「始める人」"},
+  {en:"famous",kana:"<span class='accent'>フ</span>ェイマス",ja:"有名な",tip:"famousな人＝有名人"},
+  {en:"tell",kana:"<span class='accent'>テ</span>ル",ja:"に話す、に対して話す",tip:"tell me＝私に教えて"},
+  {en:"elementary school",kana:"エレメンタリー <span class='accent'>ス</span>クール",ja:"小学校",tip:"elementaryは「基礎の」という意味"},
+  {en:"subject",kana:"<span class='accent'>サ</span>ブジェクト",ja:"科目、題目",tip:"What subject do you like?＝何の科目が好き？"},
+  {en:"junior high school",kana:"ジュニア ハイ <span class='accent'>ス</span>クール",ja:"中学校、中等学校",tip:"juniorは「年少の」という意味"},
+  {en:"everyone",kana:"<span class='accent'>エ</span>ヴリワン",ja:"みんな",tip:"Hello, everyone!＝みなさんこんにちは"},
+  {en:"big",kana:"<span class='accent'>ビ</span>ッグ",ja:"大きい",tip:"ビッグのbig"},
+  {en:"player",kana:"<span class='accent'>プ</span>レイヤー",ja:"選手",tip:"play＋erで「する人」"},
+  {en:"very much",kana:"<span class='accent'>ヴ</span>ェリー マッチ",ja:"とても",tip:"Thank you very much.＝大変ありがとう"},
+  {en:"every day",kana:"<span class='accent'>エ</span>ヴリ デイ",ja:"毎日",tip:"every day＝毎日（副詞句）"},
+];
 
-// ===== 中2単語データ =====
 const j2_u01 = [
   {en:"same",kana:"<span class='accent'>セ</span>イム",ja:"同じ",tip:"the same = 同じもの"},
   {en:"experience",kana:"イク<span class='accent'>ス</span>ピアリエンス",ja:"を経験する、体験する",tip:"エクスペリエンスのexperience"},
@@ -504,8 +567,15 @@ const j2_u3 = [
   {en:"come up",kana:"カム <span class='accent'>ア</span>ップ",ja:"思いつく",tip:"come up with an idea"},
   {en:"come out of",kana:"カム アウト <span class='accent'>オ</span>ブ",ja:"出てくる",tip:"〜から出てくる"},
 ];
+const j2_stage1 = [
+  {en:"I like traveling.",kana:"アイ ライク トラ<span class='accent'>ヴ</span>ェリング",ja:"私は旅行が好きです。",tip:"traveling"},
+  {en:"I like to travel.",kana:"アイ ライク トゥ トラ<span class='accent'>ヴ</span>ェル",ja:"私は旅行が好きです。",tip:"to travel"},
+  {en:"I'm good at talking with people.",kana:"アイム グッド アット トーキング ウィズ <span class='accent'>ピ</span>ープル",ja:"私は人と話すことが得意です。",tip:"be good at"},
+  {en:"My favorite subject is English.",kana:"マイ フェイバリット サブジェクト イズ <span class='accent'>イ</span>ングリッシュ",ja:"私の好きな教科は英語です。",tip:"favorite subject"},
+  {en:"I'm interested in historical places.",kana:"アイム インタレスティッド イン ヒストリカル <span class='accent'>プ</span>レイシズ",ja:"私は歴史のある場所に興味があります。",tip:"be interested in"},
+  {en:"It's interesting to learn about different countries and culture.",kana:"It's interesting to learn about different countries and culture.",ja:"違った国や文化について学ぶことに興味があります。",tip:"It is〜to..."},
+];
 
-// ===== 中3単語データ =====
 const j3_w50 = [
   {en:"discover",kana:"ディ<span class='accent'>ス</span>カヴァー",ja:"発見する、見出す",tip:"ディスカバリーのdiscover！"},
   {en:"side",kana:"<span class='accent'>サ</span>イド",ja:"側面、脇",tip:"サイドメニューそのまま！"},
@@ -727,6 +797,14 @@ const db = {
       {tag:"unit",label:"UNIT 4",title:"How can we help each other in a disaster",words:j3_u4},
     ]
   }
+};
+
+let currentGrade='j1',currentWords=[],speed=1.0,allTimer=null,allIdx=-1,filtered=[];
+
+const COVER_IMGS={
+  "j1": "NewHorizon1.jpg",
+  "j2": "NewHorizon2.jpg",
+  "j3": "NewHorizon3.jpg"
 };
 
 function selectGrade(g,btn){
