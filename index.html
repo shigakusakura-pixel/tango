@@ -1139,6 +1139,12 @@ function markOk(i){
   tr.classList.remove('row-miss'); tr.classList.add('row-ok');
   missedIndices=missedIndices.filter(x=>x!==i);
   updateScore();
+
+  // Firebaseへ記録送信
+  if (window.sendLearningRecord && currentWords[i]) {
+    const unitTitle = document.getElementById('unitHeader')?.textContent || '英単語';
+    window.sendLearningRecord(unitTitle, currentWords[i].en + ' (正解)');
+  }
 }
 
 function markMiss(i){
@@ -1147,6 +1153,12 @@ function markMiss(i){
   tr.classList.remove('row-ok'); tr.classList.add('row-miss');
   if(!missedIndices.includes(i)) missedIndices.push(i);
   updateScore();
+
+  // Firebaseへ記録送信
+  if (window.sendLearningRecord && currentWords[i]) {
+    const unitTitle = document.getElementById('unitHeader')?.textContent || '英単語';
+    window.sendLearningRecord(unitTitle, currentWords[i].en + ' (ミス)');
+  }
 }
 
 function updateScore(){
@@ -1246,5 +1258,6 @@ function stopAll(){ if(window.speechSynthesis) window.speechSynthesis.cancel(); 
 
 showUnitView();
 </script>
+<script type="module" src="./mystudy.js"></script>
 </body>
 </html>
