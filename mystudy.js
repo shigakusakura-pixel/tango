@@ -1,5 +1,6 @@
 // mystudy.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -12,17 +13,25 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ① 生徒IDチェック（未ログインならポータルへ戻す）
-const urlParams = new URLSearchParams(window.location.search);
-const studentId = urlParams.get('student');
 const PORTAL_URL = "https://shigakusakura-pixel.github.io/mystudyroom/";
 
-if (!studentId || studentId === 'ゲスト' || studentId.trim() === '') {
-  alert("ログイン（生徒IDの確認）が必要です。ポータルへ戻ります。");
-  window.location.replace(PORTAL_URL);
-}
+// ① Firebaseで認証済みの本人だけを学習記録に使用する
+const authenticatedUserPromise = new Promise((resolve, reject) => {
+  let unsubscribe = () => {};
+  unsubscribe = onAuthStateChanged(auth, (user) => {
+    unsubscribe();
+    if (user && user.email) {
+      resolve(user);
+      return;
+    }
+    alert("ログインが必要です。ポータルへ戻ります。");
+    window.location.replace(PORTAL_URL);
+    reject(new Error("Firebase Authenticationのログイン情報がありません。"));
+  }, reject);
+});
 
 // ② 重複送信防止
 const sentRecords = new Set();
@@ -43,11 +52,13 @@ window.sendLearningRecord = async function(unitId, questionId) {
   document.body.appendChild(lock);
 
   try {
+    const user = await authenticatedUserPromise;
     // ページタイトルやパスから教科名を自動判定（例: 数学、理科など）
     const subjectName = document.title || "教材";
 
     await addDoc(collection(db, "learning_records"), {
-      studentId: studentId,
+      uid: user.uid,
+      studentId: user.email.trim().toLowerCase(),
       subject: subjectName,
       unit: unitId,
       questionId: questionId,
