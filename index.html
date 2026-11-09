@@ -1240,18 +1240,39 @@ function toggleAns(i){
   if(btn) btn.textContent=el.classList.contains('ans-visible')?'隠す':'見る';
 }
 
+function toggleEnglish(i){
+  const el=document.getElementById('english-'+i);
+  const btn=document.getElementById('ebtn-'+i);
+  if(!el||!btn)return;
+  const hidden=el.classList.toggle('ans-hidden');
+  el.classList.toggle('ans-visible',!hidden);
+  btn.textContent=hidden?'見る':'隠す';
+  btn.setAttribute('aria-expanded',String(!hidden));
+}
+
+function setAllEnglish(visible){
+  document.querySelectorAll('[id^="english-"]').forEach(el=>{
+    el.classList.toggle('ans-hidden',!visible);
+    el.classList.toggle('ans-visible',visible);
+  });
+  document.querySelectorAll('[id^="ebtn-"]').forEach(btn=>{
+    btn.textContent=visible?'隠す':'見る';
+    btn.setAttribute('aria-expanded',String(visible));
+  });
+}
+
 function showAllAns(){
-  document.querySelectorAll('.ans-hidden').forEach(el=>{
+  document.querySelectorAll('[id^="ans-"].ans-hidden').forEach(el=>{
     el.classList.remove('ans-hidden');el.classList.add('ans-visible');
   });
-  document.querySelectorAll('.toggle-ans-btn').forEach(btn=>btn.textContent='隠す');
+  document.querySelectorAll('[id^="abtn-"]').forEach(btn=>btn.textContent='隠す');
 }
 
 function hideAllAns(){
-  document.querySelectorAll('.ans-visible').forEach(el=>{
+  document.querySelectorAll('[id^="ans-"].ans-visible').forEach(el=>{
     el.classList.remove('ans-visible');el.classList.add('ans-hidden');
   });
-  document.querySelectorAll('.toggle-ans-btn').forEach(btn=>btn.textContent='見る');
+  document.querySelectorAll('[id^="abtn-"]').forEach(btn=>btn.textContent='見る');
 }
 
 let missedIndices=[];
@@ -1313,6 +1334,7 @@ function openUnit(g,i){
       <button class="ctrl-btn" onclick="speakAll()">▶ 全部聴く</button>
       <button class="ctrl-btn" onclick="stopAll()">■ 停止</button>
     </div>
+    ${isGrammar ? '<div class="all-ans-bar">英文：<button class="all-ans-btn" onclick="setAllEnglish(true)">全部見せる</button><button class="all-ans-btn" onclick="setAllEnglish(false)">全部隠す</button></div>' : ''}
     <div class="all-ans-bar">
       日本語訳：
       <button class="all-ans-btn" onclick="showAllAns()">全部見せる</button>
@@ -1340,7 +1362,7 @@ function renderRows(isGrammar){
     tr.className=i%2===0?'row-even':'row-odd';
     tr.innerHTML='<td style="color:#aaa;font-size:12px;">'+(i+1)+'</td>'
       +'<td><button class="speak-btn" data-wi="'+i+'" onclick="speakWord('+i+',this)">🔊</button></td>'
-      +'<td><span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+(w.kana||'')+'</span><div class="tip">'+(w.tip||'')+'</div></td>'
+      +'<td>'+(isGrammar?'<div id="english-'+i+'" class="ans-visible">':'<div>')+'<span style="font-weight:600;font-size:14px;">'+w.en+'</span><br><span style="font-size:12px;color:#888;">'+(w.kana||'')+'</span><div class="tip">'+(w.tip||'')+'</div></div>'+(isGrammar?' <button id="ebtn-'+i+'" class="toggle-ans-btn" aria-label="英文 '+(i+1)+' の表示切替" aria-controls="english-'+i+'" aria-expanded="true" onclick="toggleEnglish('+i+')">隠す</button>':'')+'</td>'
       +'<td><span id="ans-'+i+'" class="ans-hidden" onclick="toggleAns('+i+')" style="font-size:12px;color:#555;display:inline-block;">'+w.ja+'</span> <button id="abtn-'+i+'" class="toggle-ans-btn" onclick="toggleAns('+i+')">見る</button></td>'
       +'<td><button class="check-btn ok-btn" onclick="markOk('+i+')">✅</button><button class="check-btn miss-btn" onclick="markMiss('+i+')">❌</button></td>';
     tb.appendChild(tr);
